@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
         primaryColor: Colors.blue,
       ),
       routes: {
-        "/": (context) => const Home(title: "Flutter Demo Home Page")
+        "/": (context) => Home(title: "Flutter Demo Home Page")
       },
     );
   }

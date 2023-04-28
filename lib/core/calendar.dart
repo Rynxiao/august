@@ -4,10 +4,19 @@ import 'package:lunar/lunar.dart';
 const daysOfWeek = 7;
 
 class Calendar {
+  late int currentYear;
+  late int currentMonth;
+  late int currentDay;
 
-  Calendar();
+  Calendar() {
+    final now = DateTime.now();
 
-  List<List<CalendarDate>> getCalendarForMonth(int year, int month, {bool startWithSunday = false}) {
+    currentYear = now.year;
+    currentMonth = now.month;
+    currentDay = now.day;
+  }
+
+  List<CalendarDate> getCalendarForMonth(int year, int month, {bool startWithSunday = false}) {
     int daysInMonth = _getDaysInMonth(year, month);
     int firstWeekday = _getWeekday(year, month, 1);
     int lastWeekday = _getWeekday(year, month, daysInMonth);
@@ -24,7 +33,7 @@ class Calendar {
     calendar.addAll(_getDaysFromCurrentMonth(year, month, daysInMonth, daysFromPreviousMonth, startWithSunday));
     calendar.addAll(_getDaysFromNextMonth(year, month, daysFromNextMonth));
 
-    return _format(calendar);
+    return calendar;
   }
 
   int _getDaysInMonth(int year, int month) {
@@ -36,7 +45,7 @@ class Calendar {
   }
 
   String _getWeekdayAbbreviation(int weekday) {
-    const List<String> weekdays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+    const List<String> weekdays = ['一', '二', '三', '四', '五', '六', '日'];
     return weekdays[weekday];
   }
 
@@ -56,7 +65,7 @@ class Calendar {
     List<CalendarDate> days = [];
     for (int i = 0; i < daysFromPreviousMonth; i++) {
       int day = _getDaysInMonth(year, month - 1) - daysFromPreviousMonth + i + 1;
-      days.add(_assembleCalendarDate(year, month, day));
+      days.add(_assembleCalendarDate(year, month - 1, day));
     }
     return days;
   }
@@ -73,7 +82,15 @@ class Calendar {
     List<CalendarDate> days = [];
     for (int i = 0; i < daysFromNextMonth; i++) {
       int day = i + 1;
-      days.add(_assembleCalendarDate(year, month, day));
+
+      var nextMonth = month + 1;
+      var nextYear = year;
+
+      if (nextMonth > 12) {
+        nextMonth = 1;
+        nextYear += 1;
+      }
+      days.add(_assembleCalendarDate(nextYear, nextMonth, day));
     }
     return days;
   }
@@ -88,6 +105,22 @@ class Calendar {
     }
 
     return twoDimensionCalendar;
+  }
+
+  bool isPreviousMonth(int year, int month) {
+    if (year == currentYear) {
+      return month < currentMonth;
+    }
+
+    return year < currentYear;
+  }
+
+  bool isNextMonth(int year, int month) {
+    if (year == currentYear) {
+      return month > currentMonth;
+    }
+
+    return year > currentYear;
   }
 
   CalendarDate _assembleCalendarDate(int year, int month, int day) {
