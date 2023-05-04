@@ -6,4 +6,5 @@ class AppFontSize {
   static const double large = 18.0;
   static const double extraLarge = 20.0;
   static const double fontSize_11 = 11.0;
+  static const double fontSize_8 = 8.0;
 }
