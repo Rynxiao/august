@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:simple_calendar/core/calendar.dart';
-import 'package:simple_calendar/theme/colors.dart';
 import 'package:simple_calendar/components/month_header.dart';
 
 import '../components/calendar_grid.dart';
@@ -21,14 +19,14 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     final homeState = Provider.of<HomeState>(context);
-    
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Calendar'),
-        backgroundColor: AppColors.black,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         elevation: 0,
       ),
-      backgroundColor: AppColors.black,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Column(
         children: [
           MonthHeader(
@@ -45,10 +43,11 @@ class _HomeState extends State<Home> {
 
   Future<void> _selectDate(BuildContext context, HomeState homeState) async {
     final DateTime? picked = await showDatePicker(
-        context: context,
-        initialDate: DateTime.now(),
-        firstDate: DateTime(2015, 8),
-        lastDate: DateTime(2101));
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2015, 8),
+      lastDate: DateTime(2101),
+    );
     if (picked != null) {
       homeState.select(picked.year, picked.month, picked.day);
     }

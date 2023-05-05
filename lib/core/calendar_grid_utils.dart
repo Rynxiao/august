@@ -1,20 +1,28 @@
-import 'dart:ui';
+import 'package:flutter/material.dart';
 
 import '../models/calendar_date.dart';
 import '../theme/colors.dart';
 
 String getLunarText(List<String> festivals, LunarDate lunar) {
   final solarTerm = lunar.solarTerm;
-  return festivals.isNotEmpty ? festivals[0] : solarTerm ?? lunar.day;
+  if (festivals.isNotEmpty) {
+    final festival = festivals[0];
+    return festival.length < 4 ? festival : lunar.day;
+  } else {
+    return solarTerm ?? lunar.day;
+  }
 }
 
-Color getLunarDateColor(List<String> festivals, LunarDate lunar) {
+Color? getLunarDateColor(
+    List<String> festivals, LunarDate lunar, BuildContext context) {
+  var highlightColor = Theme.of(context).highlightColor;
+
   final solarTerm = lunar.solarTerm;
   return festivals.isNotEmpty
-      ? AppColors.orangeRed
+      ? highlightColor
       : solarTerm != null
-      ? AppColors.green
-      : AppColors.white;
+          ? AppColors.green
+          : Theme.of(context).colorScheme.surface;
 }
 
 List<String> getFestivals(CalendarDate date) {
@@ -24,10 +32,11 @@ List<String> getFestivals(CalendarDate date) {
   return festivals;
 }
 
-Color getSubscriptTextColor(LunarDate lunar) {
+Color getSubscriptBackgroundColor(LunarDate lunar, BuildContext context) {
+  final highlightColor = Theme.of(context).highlightColor;
   final isWork = lunar.isWork;
   var topTextColor =
-  isWork != null && isWork ? AppColors.orangeRed : AppColors.green;
+      isWork != null && isWork ? highlightColor : AppColors.green;
   return topTextColor;
 }
 
@@ -37,9 +46,11 @@ String getSubscriptText(LunarDate lunar) {
   return topText;
 }
 
-Color getDateColor(CalendarDate date) {
+Color getDateColor(CalendarDate date, BuildContext context) {
+  var highlightColor = Theme.of(context).highlightColor;
+
   var dateColor = date.weekday == 6 || date.weekday == 7
-      ? AppColors.orangeRed.withOpacity(0.7)
-      : AppColors.white;
+      ? highlightColor.withOpacity(0.7)
+      : Theme.of(context).colorScheme.surface;
   return dateColor;
 }

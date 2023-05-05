@@ -20,15 +20,14 @@ class MonthHeader extends StatelessWidget {
     final homeState = Provider.of<HomeState>(context);
 
     return Container(
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         border: Border(
           bottom: BorderSide(
-            color: AppColors.lightGray,
+            color: Theme.of(context).dividerColor,
             width: 0.1,
           ),
         ),
       ),
-      margin: const EdgeInsets.symmetric(vertical: 10.0),
       child: GestureDetector(
         onTap: onNavigateToMonth,
         child: Container(
@@ -40,14 +39,10 @@ class MonthHeader extends StatelessWidget {
             children: [
               Text(
                 '${homeState.selectedYear} 年 ${homeState.selectedMonth} 月',
-                style: const TextStyle(
-                    color: AppColors.white,
-                    fontSize: AppFontSize.medium,
-                    fontWeight: AppFontWeight.semiBold),
+                style: Theme.of(context).textTheme.titleMedium,
               ),
               const Icon(
                 Icons.arrow_drop_down,
-                color: AppColors.white,
               )
             ],
           ),

@@ -20,8 +20,8 @@ class WeekHeader extends StatelessWidget {
     return Row(
       children: List.generate(headers.length, (index) {
         var textColor = index == 0 || index == headers.length - 1
-            ? AppColors.orangeRed
-            : AppColors.gray100;
+            ? Theme.of(context).highlightColor
+            : Theme.of(context).colorScheme.surface;
         return Expanded(
           child: Container(
             height: Spacing.xxs * 8,

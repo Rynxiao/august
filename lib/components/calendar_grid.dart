@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:simple_calendar/components/positioned_border.dart';
-import 'package:simple_calendar/theme/colors.dart';
-import 'package:simple_calendar/theme/fontsize.dart';
 import 'package:simple_calendar/theme/spacing.dart';
 
 import '../core/calendar_grid_utils.dart';
 import '../states/home_state.dart';
-import '../theme/fontweight.dart';
 
 class CalendarGrid extends StatelessWidget {
   const CalendarGrid({
@@ -34,15 +31,19 @@ class CalendarGrid extends StatelessWidget {
         final isPrevious = homeState.isPreviousMonth(year, month);
         final isNext = homeState.isNextMonth(year, month);
 
-        final dateColor = getDateColor(date);
-        final topText = getSubscriptText(lunar);
-        final topTextColor = getSubscriptTextColor(lunar);
+        final dateColor = getDateColor(date, context);
+        final subscript = getSubscriptText(lunar);
+        final subscriptBackgroundColor =
+            getSubscriptBackgroundColor(lunar, context);
         final festivals = getFestivals(date);
-        final lunarDateColor = getLunarDateColor(festivals, lunar);
+        final lunarDateColor = getLunarDateColor(festivals, lunar, context);
         final lunarText = getLunarText(festivals, lunar);
         var opacity = (isPrevious || isNext) ? 0.5 : 1.0;
         var isToday = calendar.isToday(year, month, day);
         var isSelected = homeState.isSelected(year, month, day);
+
+        var highlightColor = Theme.of(context).highlightColor;
+        var hintColor = Theme.of(context).hintColor;
 
         return GestureDetector(
           onTap: () {
@@ -55,30 +56,27 @@ class CalendarGrid extends StatelessWidget {
                 opacity: opacity,
                 child: Stack(children: [
                   if (isToday)
-                    PositionedBorder(color: AppColors.white.withOpacity(0.5)),
-                  if (isSelected)
-                    const PositionedBorder(color: AppColors.orangeRed),
+                    PositionedBorder(color: hintColor.withOpacity(0.3)),
+                  if (isSelected) PositionedBorder(color: highlightColor),
                   SizedBox(
                     width: double.infinity,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Text(
-                          '${date.day}',
-                          style: TextStyle(
-                              color: dateColor,
-                              fontWeight: AppFontWeight.regular,
-                              fontSize: AppFontSize.large),
-                        ),
+                        Text('${date.day}',
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium
+                                ?.copyWith(color: dateColor)),
                         Text(
                           lunarText,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                              color: lunarDateColor,
-                              fontWeight: AppFontWeight.regular,
-                              fontSize: AppFontSize.fontSize_11),
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodySmall
+                              ?.copyWith(color: lunarDateColor),
                         ),
                       ],
                     ),
@@ -90,15 +88,12 @@ class CalendarGrid extends StatelessWidget {
                       child: Container(
                         padding: const EdgeInsets.all(Spacing.two),
                         decoration: BoxDecoration(
-                          color: topTextColor,
+                          color: subscriptBackgroundColor,
                           shape: BoxShape.circle,
                         ),
                         child: Text(
-                          topText,
-                          style: const TextStyle(
-                            color: AppColors.white,
-                            fontSize: AppFontSize.fontSize_8,
-                          ),
+                          subscript,
+                          style: Theme.of(context).textTheme.labelSmall,
                         ),
                       ),
                     ),
