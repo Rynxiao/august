@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:simple_calendar/theme/colors.dart';
 import 'package:simple_calendar/theme/fontsize.dart';
+import 'package:simple_calendar/theme/fontweight.dart';
+
+import '../states/home_state.dart';
 
 class MonthHeader extends StatelessWidget {
   final int year;
@@ -16,6 +20,8 @@ class MonthHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final homeState = Provider.of<HomeState>(context);
+
     return Container(
       decoration: const BoxDecoration(
         border: Border(
@@ -30,10 +36,11 @@ class MonthHeader extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
-            '$year年$month月',
+            '${homeState.selectedYear} 年 ${homeState.selectedMonth} 月',
             style: const TextStyle(
               color: AppColors.white,
               fontSize: AppFontSize.medium,
+              fontWeight: AppFontWeight.semiBold
             ),
           ),
           IconButton(

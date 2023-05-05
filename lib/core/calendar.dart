@@ -107,22 +107,6 @@ class Calendar {
     return twoDimensionCalendar;
   }
 
-  bool isPreviousMonth(int year, int month) {
-    if (year == currentYear) {
-      return month < currentMonth;
-    }
-
-    return year < currentYear;
-  }
-
-  bool isNextMonth(int year, int month) {
-    if (year == currentYear) {
-      return month > currentMonth;
-    }
-
-    return year > currentYear;
-  }
-
   bool isToday(int year, int month, int day) {
     return year == currentYear && month == currentMonth && day == currentDay;
   }
