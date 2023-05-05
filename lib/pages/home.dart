@@ -19,8 +19,6 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
-    var calendar = widget.calendar;
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('Calendar'),
@@ -31,14 +29,12 @@ class _HomeState extends State<Home> {
       body: Column(
         children: [
           MonthHeader(
-            year: calendar.currentYear,
-            month: calendar.currentMonth,
             onNavigateToMonth: () {
               // TODO: Implement month navigation
             },
           ),
-          WeekHeader(calendar: calendar),
-          CalendarGrid(calendar: calendar),
+          const WeekHeader(),
+          const CalendarGrid(),
         ],
       ),
     );

@@ -1,20 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:simple_calendar/theme/colors.dart';
 import 'package:simple_calendar/theme/fontsize.dart';
 import 'package:simple_calendar/core/calendar.dart';
 import 'package:simple_calendar/theme/spacing.dart';
 
-class WeekHeader extends StatelessWidget {
-  final Calendar calendar;
+import '../states/home_state.dart';
 
+class WeekHeader extends StatelessWidget {
   const WeekHeader({
     Key? key,
-    required this.calendar,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    var headers = calendar.getWeekdayHeaders(true);
+    final homeState = Provider.of<HomeState>(context);
+    var headers = homeState.calendar.getWeekdayHeaders(true);
+
     return Row(
       children: List.generate(headers.length, (index) {
         var textColor = index == 0 || index == headers.length - 1

@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 import 'package:simple_calendar/components/positioned_border.dart';
 import 'package:simple_calendar/theme/colors.dart';
 import 'package:simple_calendar/theme/fontsize.dart';
-import 'package:simple_calendar/core/calendar.dart';
 import 'package:simple_calendar/theme/spacing.dart';
 
 import '../core/calendar_grid_utils.dart';
@@ -11,17 +10,15 @@ import '../states/home_state.dart';
 import '../theme/fontweight.dart';
 
 class CalendarGrid extends StatelessWidget {
-  final Calendar calendar;
-
   const CalendarGrid({
     Key? key,
-    required this.calendar,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final homeState = Provider.of<HomeState>(context);
     var calendarDates = homeState.calendarDates;
+    var calendar = homeState.calendar;
 
     return GridView.count(
       crossAxisCount: 7,
@@ -50,9 +47,6 @@ class CalendarGrid extends StatelessWidget {
         return GestureDetector(
           onTap: () {
             homeState.select(year, month, day);
-            if (isPrevious || isNext) {
-              homeState.setCalendarDates();
-            }
           },
           child: SizedBox(
               width: double.infinity,

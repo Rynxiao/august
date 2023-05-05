@@ -4,16 +4,16 @@ import '../core/calendar.dart';
 import '../models/calendar_date.dart';
 
 class HomeState extends ChangeNotifier {
-  late int _selectedYear;
-  late int _selectedMonth;
-  late int _selectedDay;
+  int _selectedYear = 0;
+  int _selectedMonth = 0;
+  int _selectedDay = 0;
   late List<CalendarDate> _calendarDates;
   final Calendar _calendar = Calendar();
 
   HomeState() {
     final now = DateTime.now();
-    select(now.year, now.month, now.day);
-    setCalendarDates();
+    setSelectedYMD(now.year, now.month, now.day);
+    setCalendarDates(now.year, now.month);
   }
 
   int get selectedYear => _selectedYear;
@@ -22,19 +22,29 @@ class HomeState extends ChangeNotifier {
 
   int get selectedDay => _selectedDay;
 
+  Calendar get calendar => _calendar;
+
   List<CalendarDate> get calendarDates => _calendarDates;
 
   void select(int year, int month, int day) {
-    _selectedYear = year;
-    _selectedMonth = month;
-    _selectedDay = day;
+    if (isPreviousMonth(year, month) || isNextMonth(year, month)) {
+      setCalendarDates(year, month);
+    }
+
+    setSelectedYMD(year, month, day);
     notifyListeners();
   }
 
-  void setCalendarDates() {
-    _calendarDates = _calendar.getCalendarForMonth(
-        _selectedYear, _selectedMonth,
-        startWithSunday: true);
+  void setSelectedYMD(int year, int month, int day) {
+    _selectedYear = year;
+    _selectedMonth = month;
+    _selectedDay = day;
+  }
+
+  void setCalendarDates(int year, int month) {
+    _calendarDates =
+        _calendar.getCalendarForMonth(year, month, startWithSunday: true);
+
     notifyListeners();
   }
 

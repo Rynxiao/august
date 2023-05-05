@@ -18,14 +18,10 @@ class Calendar {
 
   List<CalendarDate> getCalendarForMonth(int year, int month, {bool startWithSunday = false}) {
     int daysInMonth = _getDaysInMonth(year, month);
-    int firstWeekday = _getWeekday(year, month, 1);
-    int lastWeekday = _getWeekday(year, month, daysInMonth);
-    int daysFromPreviousMonth = firstWeekday - (startWithSunday ? 0 : 1);
-    int daysFromNextMonth = 2 * daysOfWeek - ((startWithSunday ? 1 : 0) + lastWeekday);
-
-    if (daysFromNextMonth < 0) {
-      daysFromNextMonth += lastWeekday;
-    }
+    int firstWeekday = _getWeekdayIndex(year, month, 1, startWithSunday);
+    int lastWeekday = _getWeekdayIndex(year, month, daysInMonth, startWithSunday);
+    int daysFromPreviousMonth = firstWeekday - 1;
+    int daysFromNextMonth = daysOfWeek - lastWeekday;
 
     List<CalendarDate> calendar = [];
 
@@ -38,6 +34,15 @@ class Calendar {
 
   int _getDaysInMonth(int year, int month) {
     return DateTime(year, month + 1, 0).day;
+  }
+
+  int _getWeekdayIndex(int year, int month, int day, bool startWithSunday) {
+    var weekday = DateTime(year, month, day).weekday;
+    if (startWithSunday) {
+      return weekday == daysOfWeek ? 1 : weekday + 1;
+    }
+
+    return weekday;
   }
 
   int _getWeekday(int year, int month, int day) {
@@ -64,7 +69,14 @@ class Calendar {
   List<CalendarDate> _getDaysFromPreviousMonth(int year, int month, int daysFromPreviousMonth) {
     List<CalendarDate> days = [];
     for (int i = 0; i < daysFromPreviousMonth; i++) {
-      int day = _getDaysInMonth(year, month - 1) - daysFromPreviousMonth + i + 1;
+      var prevMonth = month - 1;
+      var prevYear = year;
+
+      if (prevMonth < 1) {
+        prevMonth = 12;
+        prevYear -= 1;
+      }
+      int day = _getDaysInMonth(prevYear, prevMonth) - daysFromPreviousMonth + i + 1;
       days.add(_assembleCalendarDate(year, month - 1, day));
     }
     return days;

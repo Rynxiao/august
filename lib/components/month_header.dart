@@ -7,14 +7,10 @@ import 'package:simple_calendar/theme/fontweight.dart';
 import '../states/home_state.dart';
 
 class MonthHeader extends StatelessWidget {
-  final int year;
-  final int month;
   final VoidCallback? onNavigateToMonth;
 
   const MonthHeader({
     Key? key,
-    required this.year,
-    required this.month,
     this.onNavigateToMonth,
   }) : super(key: key);
 
