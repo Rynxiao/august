@@ -123,6 +123,10 @@ class Calendar {
     return year > currentYear;
   }
 
+  bool isToday(int year, int month, int day) {
+    return year == currentYear && month == currentMonth && day == currentDay;
+  }
+
   CalendarDate _assembleCalendarDate(int year, int month, int day) {
     Solar solar = Solar.fromYmd(year, month, day);
     Lunar lunar = solar.getLunar();
