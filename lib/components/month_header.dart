@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:simple_calendar/theme/colors.dart';
 import 'package:simple_calendar/theme/fontsize.dart';
 import 'package:simple_calendar/theme/fontweight.dart';
+import 'package:simple_calendar/theme/spacing.dart';
 
 import '../states/home_state.dart';
 
@@ -28,23 +29,29 @@ class MonthHeader extends StatelessWidget {
         ),
       ),
       margin: const EdgeInsets.symmetric(vertical: 10.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            '${homeState.selectedYear} 年 ${homeState.selectedMonth} 月',
-            style: const TextStyle(
-              color: AppColors.white,
-              fontSize: AppFontSize.medium,
-              fontWeight: AppFontWeight.semiBold
-            ),
+      child: GestureDetector(
+        onTap: onNavigateToMonth,
+        child: Container(
+          width: double.infinity,
+          margin: const EdgeInsets.symmetric(vertical: Spacing.xs),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                '${homeState.selectedYear} 年 ${homeState.selectedMonth} 月',
+                style: const TextStyle(
+                    color: AppColors.white,
+                    fontSize: AppFontSize.medium,
+                    fontWeight: AppFontWeight.semiBold),
+              ),
+              const Icon(
+                Icons.arrow_drop_down,
+                color: AppColors.white,
+              )
+            ],
           ),
-          IconButton(
-            icon: const Icon(Icons.arrow_drop_down),
-            color: AppColors.white,
-            onPressed: onNavigateToMonth,
-          ),
-        ],
+        ),
       ),
     );
   }

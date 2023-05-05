@@ -77,7 +77,7 @@ class Calendar {
         prevYear -= 1;
       }
       int day = _getDaysInMonth(prevYear, prevMonth) - daysFromPreviousMonth + i + 1;
-      days.add(_assembleCalendarDate(year, month - 1, day));
+      days.add(_assembleCalendarDate(prevYear, prevMonth, day));
     }
     return days;
   }
