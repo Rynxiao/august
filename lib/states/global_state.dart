@@ -4,7 +4,7 @@ import '../core/calendar.dart';
 import '../models/calendar_date.dart';
 
 class GlobalState extends ChangeNotifier {
-  bool isDarkMode = true;
+  bool isDarkMode = false;
 
   void toggleTheme() {
     isDarkMode = !isDarkMode;

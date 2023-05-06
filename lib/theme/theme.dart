@@ -18,6 +18,7 @@ const Color _lightOnSurfaceColor = AppColors.black;
 const Color _lightHighlightColor = AppColors.orangeRed;
 const Color _lightHintColor = AppColors.black;
 const Color _lightDividerColor = AppColors.lightGray;
+const Color _lightScaffoldBackgroundColor = AppColors.lightWhite;
 
 // Dark theme colors
 const Color _darkPrimaryColor = AppColors.orangeRed;
@@ -33,6 +34,7 @@ const Color _darkOnSurfaceColor = AppColors.white;
 const Color _darkHighlightColor = AppColors.orangeRed;
 const Color _darkHintColor = AppColors.white;
 const Color _darkDividerColor = AppColors.lightGray;
+const Color _darkScaffoldBackgroundColor = AppColors.darkBlack;
 
 // Light theme
 final ThemeData lightTheme = ThemeData(
@@ -40,7 +42,7 @@ final ThemeData lightTheme = ThemeData(
   highlightColor: _lightHighlightColor,
   hintColor: _lightHintColor,
   dividerColor: _lightDividerColor,
-  scaffoldBackgroundColor: _lightBackgroundColor,
+  scaffoldBackgroundColor: _lightScaffoldBackgroundColor,
   iconTheme: const IconThemeData(color: AppColors.black),
   textTheme: const TextTheme(
     titleMedium: TextStyle(
@@ -84,7 +86,7 @@ final ThemeData darkTheme = ThemeData(
   highlightColor: _darkHighlightColor,
   hintColor: _darkHintColor,
   dividerColor: _darkDividerColor,
-  scaffoldBackgroundColor: _darkBackgroundColor,
+  scaffoldBackgroundColor: _darkScaffoldBackgroundColor,
   iconTheme: const IconThemeData(color: AppColors.white),
   textTheme: const TextTheme(
     titleMedium: TextStyle(

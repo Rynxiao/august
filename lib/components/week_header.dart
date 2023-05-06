@@ -13,15 +13,17 @@ class WeekHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final homeState = Provider.of<HomeState>(context);
-    var headers = homeState.calendar.getWeekdayHeaders(true);
+    final headers = homeState.calendar.getWeekdayHeaders(true);
+    final themeData = Theme.of(context);
 
     return Container(
-      margin: const EdgeInsets.symmetric(vertical: Spacing.s),
+      padding: const EdgeInsets.symmetric(vertical: Spacing.s),
+      color: themeData.colorScheme.background,
       child: Row(
         children: List.generate(headers.length, (index) {
           var textColor = index == 0 || index == headers.length - 1
-              ? Theme.of(context).highlightColor
-              : Theme.of(context).colorScheme.surface;
+              ? themeData.highlightColor
+              : themeData.colorScheme.surface;
           return Expanded(
             child: Container(
               // height: Spacing.xxs * 8,

@@ -20,24 +20,30 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     final homeState = Provider.of<HomeState>(context);
     final globalState = Provider.of<GlobalState>(context);
+    var themeData = Theme.of(context);
 
     return Scaffold(
-      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-      body: SafeArea(
-        child: Column(
-          children: [
-            MonthHeader(
-              onNavigateToMonth: () {
-                _selectDate(context, homeState, globalState);
-              },
+      backgroundColor: themeData.scaffoldBackgroundColor,
+      body: Stack(
+        children: [
+          Container(
+            height: MediaQuery.of(context).padding.top,
+            color: themeData.colorScheme.background,
+          ),
+          SafeArea(
+            child: Column(
+              children: [
+                MonthHeader(
+                  onNavigateToMonth: () {
+                    _selectDate(context, homeState, globalState);
+                  },
+                ),
+                const WeekHeader(),
+                const CalendarGrid(),
+              ],
             ),
-            const WeekHeader(),
-            const CalendarGrid(),
-            Container(
-              height: MediaQuery.of(context).padding.top,
-            ),
-          ],
-        ),
+          )
+        ],
       ),
       bottomNavigationBar: renderBottomNavigationBar(context, 0),
     );

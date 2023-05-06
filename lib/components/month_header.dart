@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:simple_calendar/theme/colors.dart';
-import 'package:simple_calendar/theme/fontsize.dart';
-import 'package:simple_calendar/theme/fontweight.dart';
-import 'package:simple_calendar/theme/spacing.dart';
 
+import '../theme/spacing.dart';
 import '../states/home_state.dart';
 
 class MonthHeader extends StatelessWidget {
@@ -18,12 +15,14 @@ class MonthHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final homeState = Provider.of<HomeState>(context);
+    final themeData = Theme.of(context);
 
     return Container(
       decoration: BoxDecoration(
+        color: themeData.colorScheme.background,
         border: Border(
           bottom: BorderSide(
-            color: Theme.of(context).dividerColor,
+            color: themeData.dividerColor,
             width: 0.2,
           ),
         ),
@@ -39,7 +38,7 @@ class MonthHeader extends StatelessWidget {
             children: [
               Text(
                 '${homeState.selectedYear} 年 ${homeState.selectedMonth} 月',
-                style: Theme.of(context).textTheme.titleMedium,
+                style: themeData.textTheme.titleMedium,
               ),
               const Icon(
                 Icons.arrow_drop_down,
