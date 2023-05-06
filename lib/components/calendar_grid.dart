@@ -42,8 +42,9 @@ class CalendarGrid extends StatelessWidget {
         var isToday = calendar.isToday(year, month, day);
         var isSelected = homeState.isSelected(year, month, day);
 
-        var highlightColor = Theme.of(context).highlightColor;
-        var hintColor = Theme.of(context).hintColor;
+        var themeData = Theme.of(context);
+        var highlightColor = themeData.highlightColor;
+        var hintColor = themeData.hintColor;
 
         return GestureDetector(
           onTap: () {
@@ -65,17 +66,13 @@ class CalendarGrid extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text('${date.day}',
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyMedium
+                            style: themeData.textTheme.bodyMedium
                                 ?.copyWith(color: dateColor)),
                         Text(
                           lunarText,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodySmall
+                          style: themeData.textTheme.bodySmall
                               ?.copyWith(color: lunarDateColor),
                         ),
                       ],
@@ -93,7 +90,7 @@ class CalendarGrid extends StatelessWidget {
                         ),
                         child: Text(
                           subscript,
-                          style: Theme.of(context).textTheme.labelSmall,
+                          style: themeData.textTheme.labelSmall,
                         ),
                       ),
                     ),

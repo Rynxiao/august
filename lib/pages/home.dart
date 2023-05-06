@@ -23,19 +23,21 @@ class _HomeState extends State<Home> {
 
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-      body: Column(
-        children: [
-          Container(
-            height: MediaQuery.of(context).padding.top,
-          ),
-          MonthHeader(
-            onNavigateToMonth: () {
-              _selectDate(context, homeState, globalState);
-            },
-          ),
-          const WeekHeader(),
-          const CalendarGrid(),
-        ],
+      body: SafeArea(
+        child: Column(
+          children: [
+            MonthHeader(
+              onNavigateToMonth: () {
+                _selectDate(context, homeState, globalState);
+              },
+            ),
+            const WeekHeader(),
+            const CalendarGrid(),
+            Container(
+              height: MediaQuery.of(context).padding.top,
+            ),
+          ],
+        ),
       ),
       bottomNavigationBar: renderBottomNavigationBar(context, 0),
     );
