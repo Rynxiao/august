@@ -20,37 +20,49 @@ class Routes {
   }
 }
 
-BottomNavigationBar renderBottomNavigationBar(
+Container renderBottomNavigationBar(
     BuildContext context, int currentIndex) {
-  return BottomNavigationBar(
-    items: const [
-      BottomNavigationBarItem(
-        icon: Icon(Icons.calendar_month),
-        label: '万年历',
+  return Container(
+    decoration: BoxDecoration(
+      border: Border(
+        top: BorderSide(
+          color: Theme.of(context).dividerColor,
+          width: 0.2,
+        ),
       ),
-      BottomNavigationBarItem(
-        icon: Icon(Icons.settings),
-        label: '设置',
-      ),
-    ],
-    currentIndex: currentIndex,
-    onTap: (index) {
-      switch (index) {
-        case 0:
-          Application.router.navigateTo(
-            context,
-            Routes.home,
-            transition: TransitionType.none,
-          );
-          break;
-        case 1:
-          Application.router.navigateTo(
-            context,
-            Routes.settings,
-            transition: TransitionType.none,
-          );
-          break;
-      }
-    },
+    ),
+    child: BottomNavigationBar(
+      items: const [
+        BottomNavigationBarItem(
+          icon: Icon(Icons.calendar_month),
+          label: '万年历',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.settings),
+          label: '设置',
+        ),
+      ],
+      selectedItemColor: Theme.of(context).primaryColor,
+      backgroundColor: Theme.of(context).colorScheme.background,
+      currentIndex: currentIndex,
+      onTap: (index) {
+        switch (index) {
+          case 0:
+            Application.router.navigateTo(
+              context,
+              Routes.home,
+              transition: TransitionType.none,
+            );
+            break;
+          case 1:
+            Application.router.navigateTo(
+              context,
+              Routes.settings,
+              transition: TransitionType.none,
+            );
+            break;
+        }
+      },
+    ),
   );
 }

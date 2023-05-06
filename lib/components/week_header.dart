@@ -17,22 +17,25 @@ class WeekHeader extends StatelessWidget {
     final homeState = Provider.of<HomeState>(context);
     var headers = homeState.calendar.getWeekdayHeaders(true);
 
-    return Row(
-      children: List.generate(headers.length, (index) {
-        var textColor = index == 0 || index == headers.length - 1
-            ? Theme.of(context).highlightColor
-            : Theme.of(context).colorScheme.surface;
-        return Expanded(
-          child: Container(
-            height: Spacing.xxs * 8,
-            alignment: Alignment.center,
-            child: Text(
-              headers[index],
-              style: TextStyle(color: textColor, fontSize: AppFontSize.small),
+    return Container(
+      margin: const EdgeInsets.only(top: Spacing.s),
+      child: Row(
+        children: List.generate(headers.length, (index) {
+          var textColor = index == 0 || index == headers.length - 1
+              ? Theme.of(context).highlightColor
+              : Theme.of(context).colorScheme.surface;
+          return Expanded(
+            child: Container(
+              height: Spacing.xxs * 8,
+              alignment: Alignment.center,
+              child: Text(
+                headers[index],
+                style: TextStyle(color: textColor, fontSize: AppFontSize.small),
+              ),
             ),
-          ),
-        );
-      }),
+          );
+        }),
+      ),
     );
   }
 }

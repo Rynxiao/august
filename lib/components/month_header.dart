@@ -24,7 +24,7 @@ class MonthHeader extends StatelessWidget {
         border: Border(
           bottom: BorderSide(
             color: Theme.of(context).dividerColor,
-            width: 0.1,
+            width: 0.2,
           ),
         ),
       ),
@@ -32,7 +32,7 @@ class MonthHeader extends StatelessWidget {
         onTap: onNavigateToMonth,
         child: Container(
           width: double.infinity,
-          margin: const EdgeInsets.symmetric(vertical: Spacing.xs),
+          margin: const EdgeInsets.symmetric(vertical: Spacing.s),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             mainAxisSize: MainAxisSize.min,
