@@ -22,14 +22,12 @@ class _HomeState extends State<Home> {
     final globalState = Provider.of<GlobalState>(context);
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Calendar'),
-        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        elevation: 0,
-      ),
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Column(
         children: [
+          Container(
+            height: MediaQuery.of(context).padding.top,
+          ),
           MonthHeader(
             onNavigateToMonth: () {
               _selectDate(context, homeState, globalState);

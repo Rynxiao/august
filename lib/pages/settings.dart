@@ -11,8 +11,11 @@ class Settings extends StatelessWidget {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
-        children: const [
-          Text("Settings")
+        children: [
+          Container(
+            height: MediaQuery.of(context).padding.top,
+          ),
+          const Text("Settings")
         ],
       ),
       bottomNavigationBar: renderBottomNavigationBar(context, 1),
