@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../components/custom_scaffold.dart';
 import '../routes/routes.dart';
 
 class Settings extends StatelessWidget {
@@ -7,7 +8,7 @@ class Settings extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return CustomScaffold(
       body: SafeArea(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

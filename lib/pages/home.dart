@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:simple_calendar/components/custom_scaffold.dart';
 import 'package:simple_calendar/components/month_header.dart';
 import 'package:simple_calendar/states/global_state.dart';
 
@@ -20,30 +21,20 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     final homeState = Provider.of<HomeState>(context);
     final globalState = Provider.of<GlobalState>(context);
-    var themeData = Theme.of(context);
 
-    return Scaffold(
-      backgroundColor: themeData.scaffoldBackgroundColor,
-      body: Stack(
-        children: [
-          Container(
-            height: MediaQuery.of(context).padding.top,
-            color: themeData.colorScheme.background,
-          ),
-          SafeArea(
-            child: Column(
-              children: [
-                MonthHeader(
-                  onNavigateToMonth: () {
-                    _selectDate(context, homeState, globalState);
-                  },
-                ),
-                const WeekHeader(),
-                const CalendarGrid(),
-              ],
+    return CustomScaffold(
+      body: SafeArea(
+        child: Column(
+          children: [
+            MonthHeader(
+              onNavigateToMonth: () {
+                _selectDate(context, homeState, globalState);
+              },
             ),
-          )
-        ],
+            const WeekHeader(),
+            const CalendarGrid(),
+          ],
+        ),
       ),
       bottomNavigationBar: renderBottomNavigationBar(context, 0),
     );

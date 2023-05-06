@@ -38,6 +38,7 @@ const Color _darkScaffoldBackgroundColor = AppColors.darkBlack;
 
 // Light theme
 final ThemeData lightTheme = ThemeData(
+  brightness: Brightness.light,
   primaryColor: _lightPrimaryColor,
   highlightColor: _lightHighlightColor,
   hintColor: _lightHintColor,
@@ -82,6 +83,7 @@ final ThemeData lightTheme = ThemeData(
 
 // Dark theme
 final ThemeData darkTheme = ThemeData(
+  brightness: Brightness.dark,
   primaryColor: _darkPrimaryColor,
   highlightColor: _darkHighlightColor,
   hintColor: _darkHintColor,
