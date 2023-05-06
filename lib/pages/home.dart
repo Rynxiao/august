@@ -4,12 +4,11 @@ import 'package:simple_calendar/components/month_header.dart';
 
 import '../components/calendar_grid.dart';
 import '../components/week_header.dart';
+import '../routes/routes.dart';
 import '../states/home_state.dart';
 
 class Home extends StatefulWidget {
-  const Home({super.key, required this.title});
-
-  final String title;
+  const Home({super.key});
 
   @override
   State<Home> createState() => _HomeState();
@@ -38,6 +37,7 @@ class _HomeState extends State<Home> {
           const CalendarGrid(),
         ],
       ),
+      bottomNavigationBar: renderBottomNavigationBar(context, 0),
     );
   }
 
@@ -45,7 +45,7 @@ class _HomeState extends State<Home> {
     final DateTime? picked = await showDatePicker(
       context: context,
       initialDate: DateTime.now(),
-      firstDate: DateTime(2015, 8),
+      firstDate: DateTime(1900, 8),
       lastDate: DateTime(2101),
     );
     if (picked != null) {

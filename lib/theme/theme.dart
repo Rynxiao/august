@@ -5,7 +5,7 @@ import 'fontsize.dart';
 import 'fontweight.dart';
 
 // Light theme colors
-const Color _lightPrimaryColor = Colors.blue;
+const Color _lightPrimaryColor = AppColors.orangeRed;
 const Color _lightOnPrimaryColor = AppColors.white;
 const Color _lightSecondaryColor = AppColors.lightGray;
 const Color _lightOnSecondaryColor = AppColors.black;
@@ -20,7 +20,7 @@ const Color _lightHintColor = AppColors.black;
 const Color _lightDividerColor = AppColors.lightGray;
 
 // Dark theme colors
-const Color _darkPrimaryColor = Colors.blue;
+const Color _darkPrimaryColor = AppColors.orangeRed;
 const Color _darkOnPrimaryColor = AppColors.black;
 const Color _darkSecondaryColor = AppColors.black;
 const Color _darkOnSecondaryColor = AppColors.white;

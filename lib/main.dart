@@ -1,18 +1,18 @@
+import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:simple_calendar/pages/home.dart';
+import 'package:simple_calendar/routes/application.dart';
+import 'package:simple_calendar/routes/routes.dart';
 import 'package:simple_calendar/states/home_state.dart';
 import 'package:simple_calendar/theme/theme.dart';
 
 void main() {
-  runApp(
-    MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (context) => HomeState())
-      ],
-      child: const MyApp(),
-    )
-  );
+  runApp(MultiProvider(
+    providers: [
+      ChangeNotifierProvider(create: (context) => HomeState()),
+    ],
+    child: const MyApp(),
+  ));
 }
 
 class MyApp extends StatefulWidget {
@@ -23,6 +23,12 @@ class MyApp extends StatefulWidget {
 }
 
 class MyAppState extends State<MyApp> {
+  MyAppState() {
+    final router = FluroRouter();
+    Routes.configureRoutes(router);
+    Application.router = router;
+  }
+
   @override
   Widget build(BuildContext context) {
     bool isDarkMode = true;
@@ -36,9 +42,7 @@ class MyAppState extends State<MyApp> {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: isDarkMode ? darkTheme : lightTheme,
-      routes: {
-        "/": (context) => const Home(title: "Flutter Demo Home Page")
-      },
+      onGenerateRoute: Application.router.generator,
     );
   }
 }
