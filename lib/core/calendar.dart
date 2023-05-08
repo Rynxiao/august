@@ -1,5 +1,8 @@
 import 'package:simple_calendar/models/calendar_date.dart';
 import 'package:lunar/lunar.dart';
+import 'package:simple_calendar/models/year_and_month.dart';
+
+import 'calendar_grid_utils.dart';
 
 const daysOfWeek = 7;
 
@@ -16,17 +19,21 @@ class Calendar {
     currentDay = now.day;
   }
 
-  List<CalendarDate> getCalendarForMonth(int year, int month, {bool startWithSunday = false}) {
+  List<CalendarDate> getCalendarForMonth(int year, int month,
+      {bool startWithSunday = false}) {
     int daysInMonth = _getDaysInMonth(year, month);
     int firstWeekday = _getWeekdayIndex(year, month, 1, startWithSunday);
-    int lastWeekday = _getWeekdayIndex(year, month, daysInMonth, startWithSunday);
+    int lastWeekday =
+        _getWeekdayIndex(year, month, daysInMonth, startWithSunday);
     int daysFromPreviousMonth = firstWeekday - 1;
     int daysFromNextMonth = daysOfWeek - lastWeekday;
 
     List<CalendarDate> calendar = [];
 
-    calendar.addAll(_getDaysFromPreviousMonth(year, month, daysFromPreviousMonth));
-    calendar.addAll(_getDaysFromCurrentMonth(year, month, daysInMonth, daysFromPreviousMonth, startWithSunday));
+    calendar
+        .addAll(_getDaysFromPreviousMonth(year, month, daysFromPreviousMonth));
+    calendar.addAll(_getDaysFromCurrentMonth(
+        year, month, daysInMonth, daysFromPreviousMonth, startWithSunday));
     calendar.addAll(_getDaysFromNextMonth(year, month, daysFromNextMonth));
 
     return calendar;
@@ -66,23 +73,22 @@ class Calendar {
     return headers;
   }
 
-  List<CalendarDate> _getDaysFromPreviousMonth(int year, int month, int daysFromPreviousMonth) {
+  List<CalendarDate> _getDaysFromPreviousMonth(
+      int year, int month, int daysFromPreviousMonth) {
     List<CalendarDate> days = [];
     for (int i = 0; i < daysFromPreviousMonth; i++) {
-      var prevMonth = month - 1;
-      var prevYear = year;
-
-      if (prevMonth < 1) {
-        prevMonth = 12;
-        prevYear -= 1;
-      }
-      int day = _getDaysInMonth(prevYear, prevMonth) - daysFromPreviousMonth + i + 1;
+      final prevYearAndMonth = getPrevYearAndMonth(year, month);
+      final prevYear = prevYearAndMonth.year;
+      final prevMonth = prevYearAndMonth.month;
+      int day =
+          _getDaysInMonth(prevYear, prevMonth) - daysFromPreviousMonth + i + 1;
       days.add(_assembleCalendarDate(prevYear, prevMonth, day));
     }
     return days;
   }
 
-  List<CalendarDate> _getDaysFromCurrentMonth(int year, int month, int daysInMonth, int daysFromPreviousMonth, bool startWithSunday) {
+  List<CalendarDate> _getDaysFromCurrentMonth(int year, int month,
+      int daysInMonth, int daysFromPreviousMonth, bool startWithSunday) {
     List<CalendarDate> days = [];
     for (int i = 1; i <= daysInMonth; i++) {
       days.add(_assembleCalendarDate(year, month, i));
@@ -90,18 +96,15 @@ class Calendar {
     return days;
   }
 
-  List<CalendarDate> _getDaysFromNextMonth(int year, int month, int daysFromNextMonth) {
+  List<CalendarDate> _getDaysFromNextMonth(
+      int year, int month, int daysFromNextMonth) {
     List<CalendarDate> days = [];
     for (int i = 0; i < daysFromNextMonth; i++) {
       int day = i + 1;
 
-      var nextMonth = month + 1;
-      var nextYear = year;
-
-      if (nextMonth > 12) {
-        nextMonth = 1;
-        nextYear += 1;
-      }
+      final nextYearAndMonth = getNextYearAndMonth(year, month);
+      final nextYear = nextYearAndMonth.year;
+      final nextMonth = nextYearAndMonth.month;
       days.add(_assembleCalendarDate(nextYear, nextMonth, day));
     }
     return days;
@@ -145,8 +148,6 @@ class Calendar {
             festivals: lunar.getFestivals(),
             chineseZodiac: lunar.getYearShengXiao(),
             solarTerm: lunar.getCurrentJieQi()?.getName(),
-            isWork: holiday?.isWork()
-        )
-    );
+            isWork: holiday?.isWork()));
   }
 }

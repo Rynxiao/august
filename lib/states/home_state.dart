@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:simple_calendar/core/calendar_grid_utils.dart';
 
 import '../core/calendar.dart';
 import '../models/calendar_date.dart';
@@ -6,8 +7,10 @@ import '../models/calendar_date.dart';
 class HomeState extends ChangeNotifier {
   int _selectedYear = 0;
   int _selectedMonth = 0;
-  int _selectedDay = 0;
+  int? _selectedDay;
   late List<CalendarDate> _calendarDates;
+  late List<CalendarDate> _prevCalendarDates;
+  late List<CalendarDate> _nextCalendarDates;
   final Calendar _calendar = Calendar();
 
   HomeState() {
@@ -20,13 +23,15 @@ class HomeState extends ChangeNotifier {
 
   int get selectedMonth => _selectedMonth;
 
-  int get selectedDay => _selectedDay;
+  int? get selectedDay => _selectedDay;
 
   Calendar get calendar => _calendar;
 
   List<CalendarDate> get calendarDates => _calendarDates;
+  List<CalendarDate> get prevCalendarDates => _prevCalendarDates;
+  List<CalendarDate> get nextCalendarDates => _nextCalendarDates;
 
-  void select(int year, int month, int day) {
+  void select(int year, int month, int? day) {
     if (isPreviousMonth(year, month) || isNextMonth(year, month)) {
       setCalendarDates(year, month);
     }
@@ -35,7 +40,7 @@ class HomeState extends ChangeNotifier {
     notifyListeners();
   }
 
-  void setSelectedYMD(int year, int month, int day) {
+  void setSelectedYMD(int year, int month, int? day) {
     _selectedYear = year;
     _selectedMonth = month;
     _selectedDay = day;
@@ -44,6 +49,14 @@ class HomeState extends ChangeNotifier {
   void setCalendarDates(int year, int month) {
     _calendarDates =
         _calendar.getCalendarForMonth(year, month, startWithSunday: true);
+
+    final prevYearAndMonth = getPrevYearAndMonth(year, month);
+    _prevCalendarDates = _calendar.getCalendarForMonth(
+        prevYearAndMonth.year, prevYearAndMonth.month);
+
+    final nextYearAndMonth = getNextYearAndMonth(year, month);
+    _nextCalendarDates = _calendar.getCalendarForMonth(
+        nextYearAndMonth.year, nextYearAndMonth.month);
 
     notifyListeners();
   }

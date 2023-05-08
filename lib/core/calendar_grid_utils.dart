@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../models/calendar_date.dart';
+import '../models/year_and_month.dart';
 import '../theme/colors.dart';
 
 String getLunarText(List<String> festivals, LunarDate lunar) {
@@ -53,4 +54,26 @@ Color getDateColor(CalendarDate date, BuildContext context) {
       ? highlightColor.withOpacity(0.7)
       : Theme.of(context).colorScheme.surface;
   return dateColor;
+}
+
+YearAndMonth getPrevYearAndMonth(int year, int month) {
+  var prevMonth = month - 1;
+  var prevYear = year;
+
+  if (prevMonth < 1) {
+    prevMonth = 12;
+    prevYear -= 1;
+  }
+  return YearAndMonth(year: prevYear, month: prevMonth);
+}
+
+YearAndMonth getNextYearAndMonth(int year, int month) {
+  var nextMonth = month + 1;
+  var nextYear = year;
+
+  if (nextMonth > 12) {
+    nextMonth = 1;
+    nextYear += 1;
+  }
+  return YearAndMonth(year: nextYear, month: nextMonth);
 }
