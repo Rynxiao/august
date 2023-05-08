@@ -18,33 +18,30 @@ class MonthHeader extends StatelessWidget {
     final themeData = Theme.of(context);
 
     return Container(
-      decoration: BoxDecoration(
-        color: themeData.colorScheme.background,
-        border: Border(
-          bottom: BorderSide(
-            color: themeData.dividerColor,
-            width: 0.2,
-          ),
-        ),
-      ),
+      color: themeData.colorScheme.background,
       child: GestureDetector(
         onTap: onNavigateToMonth,
-        child: Container(
-          width: double.infinity,
-          margin: const EdgeInsets.symmetric(vertical: Spacing.s),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                '${homeState.selectedYear} 年 ${homeState.selectedMonth} 月',
-                style: themeData.textTheme.titleMedium,
+        child: Column(
+          children: [
+            Container(
+              width: double.infinity,
+              margin: const EdgeInsets.symmetric(vertical: Spacing.xs),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    '${homeState.selectedYear} 年 ${homeState.selectedMonth} 月',
+                    style: themeData.textTheme.titleMedium,
+                  ),
+                  const Icon(
+                    Icons.arrow_drop_down,
+                  )
+                ],
               ),
-              const Icon(
-                Icons.arrow_drop_down,
-              )
-            ],
-          ),
+            ),
+            const Divider(),
+          ],
         ),
       ),
     );

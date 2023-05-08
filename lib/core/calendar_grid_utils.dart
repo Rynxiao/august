@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:lunar/calendar/Lunar.dart';
+import 'package:lunar/calendar/Solar.dart';
 
 import '../models/calendar_date.dart';
 import '../models/year_and_month.dart';
@@ -76,4 +78,9 @@ YearAndMonth getNextYearAndMonth(int year, int month) {
     nextYear += 1;
   }
   return YearAndMonth(year: nextYear, month: nextMonth);
+}
+
+Lunar getLunarDetail(int year, int month, int day) {
+  Solar solar = Solar.fromYmd(year, month, day);
+  return solar.getLunar();
 }

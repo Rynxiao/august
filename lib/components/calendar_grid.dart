@@ -26,20 +26,36 @@ class CalendarGrid extends StatelessWidget {
 
     return AnimatedContainer(
       color: themeData.colorScheme.background,
-      height: calendarDates.length > 35 ? 334 : 279, // 5 lines or 6 lines
+      height: calendarDates.length > 35 ? 334 : 279,
+      // 5 lines or 6 lines
       duration: const Duration(milliseconds: 300),
+      margin: const EdgeInsets.only(bottom: Spacing.xs),
       child: Swiper(
         index: 1,
         itemCount: list.length,
         onIndexChanged: (int index) {
-          if (index == 0) { // left
+          if (index == 0) {
+            // left
             final prevYearAndMonth = getPrevYearAndMonth(
-                homeState.selectedYear, homeState.selectedMonth);
-            homeState.select(prevYearAndMonth.year, prevYearAndMonth.month, null);
-          } else if (index == 2) { // right
+              homeState.selectedYear,
+              homeState.selectedMonth,
+            );
+            final days = calendar.getDaysInMonth(
+              prevYearAndMonth.year,
+              prevYearAndMonth.month,
+            );
+            homeState.select(
+              prevYearAndMonth.year,
+              prevYearAndMonth.month,
+              days,
+            );
+          } else if (index == 2) {
+            // right
             final nextYearAndMonth = getNextYearAndMonth(
-                homeState.selectedYear, homeState.selectedMonth);
-            homeState.select(nextYearAndMonth.year, nextYearAndMonth.month, null);
+              homeState.selectedYear,
+              homeState.selectedMonth,
+            );
+            homeState.select(nextYearAndMonth.year, nextYearAndMonth.month, 1);
           }
         },
         itemBuilder: (BuildContext context, int index) {

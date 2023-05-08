@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:simple_calendar/components/custom_scaffold.dart';
+import 'package:simple_calendar/components/lunar_detail.dart';
 import 'package:simple_calendar/components/month_header.dart';
 import 'package:simple_calendar/states/global_state.dart';
 
@@ -33,6 +34,7 @@ class _HomeState extends State<Home> {
             ),
             const WeekHeader(),
             const CalendarGrid(),
+            const LunarDetail(),
           ],
         ),
       ),

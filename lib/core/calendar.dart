@@ -1,8 +1,7 @@
-import 'package:simple_calendar/models/calendar_date.dart';
 import 'package:lunar/lunar.dart';
-import 'package:simple_calendar/models/year_and_month.dart';
 
 import 'calendar_grid_utils.dart';
+import '../models/calendar_date.dart';
 
 const daysOfWeek = 7;
 
@@ -21,7 +20,7 @@ class Calendar {
 
   List<CalendarDate> getCalendarForMonth(int year, int month,
       {bool startWithSunday = false}) {
-    int daysInMonth = _getDaysInMonth(year, month);
+    int daysInMonth = getDaysInMonth(year, month);
     int firstWeekday = _getWeekdayIndex(year, month, 1, startWithSunday);
     int lastWeekday =
         _getWeekdayIndex(year, month, daysInMonth, startWithSunday);
@@ -39,7 +38,7 @@ class Calendar {
     return calendar;
   }
 
-  int _getDaysInMonth(int year, int month) {
+  int getDaysInMonth(int year, int month) {
     return DateTime(year, month + 1, 0).day;
   }
 
@@ -81,7 +80,7 @@ class Calendar {
       final prevYear = prevYearAndMonth.year;
       final prevMonth = prevYearAndMonth.month;
       int day =
-          _getDaysInMonth(prevYear, prevMonth) - daysFromPreviousMonth + i + 1;
+          getDaysInMonth(prevYear, prevMonth) - daysFromPreviousMonth + i + 1;
       days.add(_assembleCalendarDate(prevYear, prevMonth, day));
     }
     return days;
@@ -128,7 +127,7 @@ class Calendar {
 
   CalendarDate _assembleCalendarDate(int year, int month, int day) {
     Solar solar = Solar.fromYmd(year, month, day);
-    Lunar lunar = solar.getLunar();
+    Lunar lunar = getLunarDetail(year, month, day);
     Holiday? holiday = HolidayUtil.getHolidayByYmd(year, month, day);
 
     return CalendarDate(

@@ -7,7 +7,7 @@ import 'fontweight.dart';
 // Light theme colors
 const Color _lightPrimaryColor = AppColors.orangeRed;
 const Color _lightOnPrimaryColor = AppColors.white;
-const Color _lightSecondaryColor = AppColors.lightGray;
+const Color _lightSecondaryColor = AppColors.darkGray;
 const Color _lightOnSecondaryColor = AppColors.black;
 const Color _lightBackgroundColor = AppColors.white;
 const Color _lightOnBackgroundColor = AppColors.lightBlack;
@@ -23,7 +23,7 @@ const Color _lightScaffoldBackgroundColor = AppColors.lightWhite;
 // Dark theme colors
 const Color _darkPrimaryColor = AppColors.orangeRed;
 const Color _darkOnPrimaryColor = AppColors.black;
-const Color _darkSecondaryColor = AppColors.black;
+const Color _darkSecondaryColor = AppColors.darkGray;
 const Color _darkOnSecondaryColor = AppColors.white;
 const Color _darkBackgroundColor = AppColors.lightBlack;
 const Color _darkOnBackgroundColor = AppColors.white;
@@ -46,6 +46,11 @@ final ThemeData lightTheme = ThemeData(
   scaffoldBackgroundColor: _lightScaffoldBackgroundColor,
   iconTheme: const IconThemeData(color: AppColors.black),
   textTheme: const TextTheme(
+    titleLarge: TextStyle(
+      color: AppColors.black,
+      fontSize: AppFontSize.large,
+      fontWeight: AppFontWeight.semiBold,
+    ),
     titleMedium: TextStyle(
       color: AppColors.black,
       fontSize: AppFontSize.medium,
@@ -55,6 +60,11 @@ final ThemeData lightTheme = ThemeData(
       color: AppColors.black,
       fontWeight: AppFontWeight.regular,
       fontSize: AppFontSize.large,
+    ),
+    bodySmall: TextStyle(
+      color: AppColors.black,
+      fontWeight: AppFontWeight.regular,
+      fontSize: AppFontSize.fontSize_11,
     ),
     labelMedium: TextStyle(
       color: AppColors.black,
@@ -91,10 +101,15 @@ final ThemeData darkTheme = ThemeData(
   scaffoldBackgroundColor: _darkScaffoldBackgroundColor,
   iconTheme: const IconThemeData(color: AppColors.white),
   textTheme: const TextTheme(
+    titleLarge: TextStyle(
+      color: AppColors.white,
+      fontSize: AppFontSize.large,
+      fontWeight: AppFontWeight.semiBold,
+    ),
     titleMedium: TextStyle(
       color: AppColors.white,
       fontSize: AppFontSize.medium,
-      fontWeight: AppFontWeight.semiBold,
+      fontWeight: AppFontWeight.bold,
     ),
     bodyMedium: TextStyle(
       color: AppColors.white,

@@ -5,9 +5,9 @@ import '../core/calendar.dart';
 import '../models/calendar_date.dart';
 
 class HomeState extends ChangeNotifier {
-  int _selectedYear = 0;
-  int _selectedMonth = 0;
-  int? _selectedDay;
+  int _selectedYear = 1970;
+  int _selectedMonth = 1;
+  int _selectedDay = 1;
   late List<CalendarDate> _calendarDates;
   late List<CalendarDate> _prevCalendarDates;
   late List<CalendarDate> _nextCalendarDates;
@@ -23,7 +23,7 @@ class HomeState extends ChangeNotifier {
 
   int get selectedMonth => _selectedMonth;
 
-  int? get selectedDay => _selectedDay;
+  int get selectedDay => _selectedDay;
 
   Calendar get calendar => _calendar;
 
@@ -31,7 +31,7 @@ class HomeState extends ChangeNotifier {
   List<CalendarDate> get prevCalendarDates => _prevCalendarDates;
   List<CalendarDate> get nextCalendarDates => _nextCalendarDates;
 
-  void select(int year, int month, int? day) {
+  void select(int year, int month, int day) {
     if (isPreviousMonth(year, month) || isNextMonth(year, month)) {
       setCalendarDates(year, month);
     }
@@ -40,7 +40,7 @@ class HomeState extends ChangeNotifier {
     notifyListeners();
   }
 
-  void setSelectedYMD(int year, int month, int? day) {
+  void setSelectedYMD(int year, int month, int day) {
     _selectedYear = year;
     _selectedMonth = month;
     _selectedDay = day;
