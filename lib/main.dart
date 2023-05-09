@@ -1,5 +1,6 @@
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
 import 'package:simple_calendar/routes/application.dart';
 import 'package:simple_calendar/routes/routes.dart';
@@ -7,7 +8,11 @@ import 'package:simple_calendar/states/global_state.dart';
 import 'package:simple_calendar/states/home_state.dart';
 import 'package:simple_calendar/theme/theme.dart';
 
-void main() {
+import 'network/api.dart';
+
+Future<void> main() async {
+  await dotenv.load(fileName: ".env");
+  getWeatherLocation("大冶");
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider(create: (context) => GlobalState()),
