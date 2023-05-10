@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:simple_calendar/core/calendar_grid_utils.dart';
 
 import '../core/calendar.dart';
-import '../models/calendar_date.dart';
+import '../models/calendar/calendar_date.dart';
 
 class HomeState extends ChangeNotifier {
   int _selectedYear = 1970;

@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:simple_calendar/theme/fontsize.dart';
 import 'package:simple_calendar/theme/spacing.dart';
 
-import '../states/home_state.dart';
+import '../../states/home_state.dart';
 
 class WeekHeader extends StatelessWidget {
   const WeekHeader({

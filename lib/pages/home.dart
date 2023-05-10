@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:simple_calendar/components/custom_scaffold.dart';
-import 'package:simple_calendar/components/lunar_detail.dart';
-import 'package:simple_calendar/components/month_header.dart';
-import 'package:simple_calendar/states/global_state.dart';
 
-import '../components/calendar_grid.dart';
-import '../components/week_header.dart';
+import '../components/custom_scaffold.dart';
+import '../components/calendar/lunar_detail.dart';
+import '../components/calendar/month_header.dart';
+import '../states/global_state.dart';
+import '../components/calendar/calendar_grid.dart';
+import '../components/calendar/week_header.dart';
 import '../routes/routes.dart';
 import '../states/home_state.dart';
 

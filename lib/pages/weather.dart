@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_weather_bg/bg/weather_bg.dart';
 import 'package:flutter_weather_bg/flutter_weather_bg.dart';
 import 'package:provider/provider.dart';
 
-import '../components/custom_scaffold.dart';
 import '../routes/routes.dart';
 import '../states/global_state.dart';
 

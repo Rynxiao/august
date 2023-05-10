@@ -5,8 +5,8 @@ import 'package:simple_calendar/core/lunar_untils.dart';
 import 'package:simple_calendar/theme/fontsize.dart';
 import 'package:simple_calendar/theme/spacing.dart';
 
-import '../states/home_state.dart';
-import '../theme/colors.dart';
+import '../../states/home_state.dart';
+import '../../theme/colors.dart';
 
 class LunarDetail extends StatelessWidget {
   const LunarDetail({

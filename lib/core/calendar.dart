@@ -1,7 +1,7 @@
 import 'package:lunar/lunar.dart';
 
 import 'calendar_grid_utils.dart';
-import '../models/calendar_date.dart';
+import '../models/calendar/calendar_date.dart';
 
 const daysOfWeek = 7;
 

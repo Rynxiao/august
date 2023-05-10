@@ -3,11 +3,11 @@ import 'package:provider/provider.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 
 import 'positioned_border.dart';
-import '../core/calendar.dart';
-import '../models/calendar_date.dart';
-import '../theme/spacing.dart';
-import '../core/calendar_grid_utils.dart';
-import '../states/home_state.dart';
+import '../../core/calendar.dart';
+import '../../models/calendar/calendar_date.dart';
+import '../../theme/spacing.dart';
+import '../../core/calendar_grid_utils.dart';
+import '../../states/home_state.dart';
 
 class CalendarGrid extends StatelessWidget {
   const CalendarGrid({

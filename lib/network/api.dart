@@ -1,9 +1,9 @@
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:simple_calendar/models/weather_location.dart';
-import 'package:simple_calendar/models/weather_now.dart';
-import 'package:simple_calendar/models/weather_seven_days.dart';
 
-import '../models/weather_twenty_four_hours.dart';
+import '../models/weather/weather_location.dart';
+import '../models/weather/weather_now.dart';
+import '../models/weather/weather_seven_days.dart';
+import '../models/weather/weather_twenty_four_hours.dart';
 import 'http.dart';
 
 const locationUrl = "https://geoapi.qweather.com/v2/city/lookup";

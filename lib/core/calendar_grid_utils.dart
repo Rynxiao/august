@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:lunar/calendar/Lunar.dart';
 import 'package:lunar/calendar/Solar.dart';
 
-import '../models/calendar_date.dart';
-import '../models/year_and_month.dart';
+import '../models/calendar/calendar_date.dart';
+import '../models/calendar/year_and_month.dart';
 import '../theme/colors.dart';
 
 String getLunarText(List<String> festivals, LunarDate lunar) {

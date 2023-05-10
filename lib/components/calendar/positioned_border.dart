@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../theme/spacing.dart';
+import '../../theme/spacing.dart';
 
 class PositionedBorder extends StatelessWidget {
   final Color color;

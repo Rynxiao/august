@@ -15,7 +15,7 @@ Future<void> main() async {
   await dotenv.load(fileName: ".env");
   final position = await _determinePosition();
   final weatherState = WeatherState(position);
-  await weatherState.getWeatherInfo();
+  // await weatherState.getWeatherInfo();
 
   runApp(
     MultiProvider(
