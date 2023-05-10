@@ -7,6 +7,7 @@ import 'handlers.dart';
 // https://pub.dev/packages/fluro
 class Routes {
   static String home = "/";
+  static String weather = "/weather";
   static String settings = "/settings";
 
   static void configureRoutes(FluroRouter router) {
@@ -16,12 +17,12 @@ class Routes {
       return;
     });
     router.define(home, handler: homeHandler);
+    router.define(weather, handler: weatherHandler);
     router.define(settings, handler: settingsHandler);
   }
 }
 
-Container renderBottomNavigationBar(
-    BuildContext context, int currentIndex) {
+Container renderBottomNavigationBar(BuildContext context, int currentIndex) {
   return Container(
     decoration: BoxDecoration(
       border: Border(
@@ -38,6 +39,10 @@ Container renderBottomNavigationBar(
           label: '万年历',
         ),
         BottomNavigationBarItem(
+          icon: Icon(Icons.sunny),
+          label: '天气',
+        ),
+        BottomNavigationBarItem(
           icon: Icon(Icons.settings),
           label: '设置',
         ),
@@ -48,21 +53,24 @@ Container renderBottomNavigationBar(
       onTap: (index) {
         switch (index) {
           case 0:
-            Application.router.navigateTo(
-              context,
-              Routes.home,
-              transition: TransitionType.none,
-            );
+            navigateTo(context, Routes.home);
             break;
           case 1:
-            Application.router.navigateTo(
-              context,
-              Routes.settings,
-              transition: TransitionType.none,
-            );
+            navigateTo(context, Routes.weather);
+            break;
+          case 2:
+            navigateTo(context, Routes.settings);
             break;
         }
       },
     ),
+  );
+}
+
+void navigateTo(BuildContext context, String route) {
+  Application.router.navigateTo(
+    context,
+    route,
+    transition: TransitionType.none,
   );
 }

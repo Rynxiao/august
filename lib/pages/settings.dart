@@ -37,7 +37,7 @@ class Settings extends StatelessWidget {
           ),
         ),
       ),
-      bottomNavigationBar: renderBottomNavigationBar(context, 1),
+      bottomNavigationBar: renderBottomNavigationBar(context, 2),
     );
   }
 
