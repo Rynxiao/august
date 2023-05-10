@@ -2,24 +2,17 @@ import 'package:dio/dio.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 class Http {
-  static Dio getDioInstance() {
-    final options = BaseOptions(
+  static final Dio _dio = Dio(
+    BaseOptions(
       connectTimeout: const Duration(seconds: 60),
       receiveTimeout: const Duration(seconds: 3 * 60),
-    );
-    final dio = Dio(options);
-
-    // interceptors
-    dio.interceptors.add(PrettyDioLogger());
-
-    return dio;
-  }
-
+    ),
+  )..interceptors.add(PrettyDioLogger());
 
   static Future<Response> get(String url,
       {required Map<String, dynamic> params}) async {
     try {
-      final response = await getDioInstance().get(url, queryParameters: params);
+      final response = await _dio.get(url, queryParameters: params);
       return response;
     } catch (e) {
       rethrow;
@@ -29,7 +22,7 @@ class Http {
   static Future<Response> post(String url,
       {required Map<String, dynamic> params, dynamic data}) async {
     try {
-      final response = await getDioInstance().post(url,
+      final response = await _dio.post(url,
           queryParameters: params, data: data ?? FormData());
       return response;
     } catch (e) {

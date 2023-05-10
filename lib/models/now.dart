@@ -51,6 +51,24 @@ class Now {
     dew = json['dew'];
   }
 
+  Now.empty() {
+    obsTime = '';
+    temp = '';
+    feelsLike = '';
+    icon = '';
+    text = '';
+    wind360 = '';
+    windDir = '';
+    windScale = '';
+    windSpeed = '';
+    humidity = '';
+    precip = '';
+    pressure = '';
+    vis = '';
+    cloud = '';
+    dew = '';
+  }
+
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['obsTime'] = obsTime;

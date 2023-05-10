@@ -45,6 +45,22 @@ class Location {
     fxLink = json['fxLink'];
   }
 
+  Location.empty() {
+    name = '';
+    id = '';
+    lat = '';
+    lon = '';
+    adm2 = '';
+    adm1 = '';
+    country = '';
+    tz = '';
+    utcOffset = '';
+    isDst = '';
+    type = '';
+    rank = '';
+    fxLink = '';
+  }
+
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['name'] = name;
