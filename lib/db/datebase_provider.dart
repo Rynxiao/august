@@ -34,10 +34,11 @@ class DatabaseProvider {
               title TEXT,
               content TEXT,
               date INTEGER,
-              lunar_date INTEGER,
-              cycle_by INTEGER,
-              create_time INTEGER,
-              modify_time INTEGER,
+              lunarDate TEXT,
+              isCycle INTEGER,
+              cycleBy INTEGER,
+              createTime INTEGER,
+              modifyTime INTEGER,
               deleted INTEGER
             )
           ''');

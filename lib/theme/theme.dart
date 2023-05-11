@@ -76,6 +76,18 @@ final ThemeData lightTheme = ThemeData(
       fontSize: AppFontSize.fontSize_8,
     ),
   ),
+  switchTheme: SwitchThemeData(
+    thumbColor: MaterialStateProperty.resolveWith<Color>(
+          (Set<MaterialState> states) {
+        return AppColors.orangeRed;
+      },
+    ),
+    trackColor: MaterialStateProperty.resolveWith<Color>(
+          (Set<MaterialState> states) {
+        return AppColors.orangeRed.withOpacity(0.5);
+      },
+    ),
+  ),
   colorScheme: const ColorScheme(
     brightness: Brightness.light,
     primary: _lightPrimaryColor,
@@ -124,6 +136,18 @@ final ThemeData darkTheme = ThemeData(
     labelSmall: TextStyle(
       color: AppColors.white,
       fontSize: AppFontSize.fontSize_8,
+    ),
+  ),
+  switchTheme: SwitchThemeData(
+    thumbColor: MaterialStateProperty.resolveWith<Color>(
+          (Set<MaterialState> states) {
+        return AppColors.orangeRed;
+      },
+    ),
+    trackColor: MaterialStateProperty.resolveWith<Color>(
+          (Set<MaterialState> states) {
+        return AppColors.orangeRed.withOpacity(0.5);
+      },
     ),
   ),
   colorScheme: const ColorScheme(

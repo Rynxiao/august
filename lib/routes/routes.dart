@@ -14,9 +14,9 @@ class Routes {
   static void configureRoutes(FluroRouter router) {
     router.notFoundHandler = Handler(
         handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
-      print("ROUTE WAS NOT FOUND !!!");
-      return;
-    });
+          print("ROUTE WAS NOT FOUND !!!");
+          return;
+        });
     router.define(home, handler: homeHandler);
     router.define(eventCreate, handler: eventCreateHandler);
     router.define(weather, handler: weatherHandler);
@@ -29,7 +29,9 @@ Container renderBottomNavigationBar(BuildContext context, int currentIndex) {
     decoration: BoxDecoration(
       border: Border(
         top: BorderSide(
-          color: Theme.of(context).dividerColor,
+          color: Theme
+              .of(context)
+              .dividerColor,
           width: 0.2,
         ),
       ),
@@ -49,8 +51,13 @@ Container renderBottomNavigationBar(BuildContext context, int currentIndex) {
           label: '设置',
         ),
       ],
-      selectedItemColor: Theme.of(context).primaryColor,
-      backgroundColor: Theme.of(context).colorScheme.background,
+      selectedItemColor: Theme
+          .of(context)
+          .primaryColor,
+      backgroundColor: Theme
+          .of(context)
+          .colorScheme
+          .background,
       currentIndex: currentIndex,
       onTap: (index) {
         switch (index) {
@@ -69,10 +76,11 @@ Container renderBottomNavigationBar(BuildContext context, int currentIndex) {
   );
 }
 
-void navigateTo(BuildContext context, String route) {
+void navigateTo(BuildContext context, String route,
+    {TransitionType transitionType = TransitionType.none}) {
   Application.router.navigateTo(
     context,
     route,
-    transition: TransitionType.none,
+    transition: transitionType,
   );
 }

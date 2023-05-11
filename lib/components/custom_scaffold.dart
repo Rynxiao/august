@@ -12,7 +12,7 @@ class CustomScaffold extends StatelessWidget {
   const CustomScaffold({
     super.key,
     required this.body,
-    required this.bottomNavigationBar,
+    this.bottomNavigationBar,
     this.floatingActionButton,
   });
 

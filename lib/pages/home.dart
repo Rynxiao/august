@@ -1,6 +1,7 @@
+import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_cupertino_datetime_picker/flutter_cupertino_datetime_picker.dart';
 import 'package:provider/provider.dart';
-import 'package:simple_calendar/db/datebase_provider.dart';
 
 import '../components/custom_scaffold.dart';
 import '../components/calendar/lunar_detail.dart';
@@ -10,6 +11,7 @@ import '../components/calendar/calendar_grid.dart';
 import '../components/calendar/week_header.dart';
 import '../routes/routes.dart';
 import '../states/home_state.dart';
+import '../utils/date_utils.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -23,7 +25,7 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     final homeState = Provider.of<HomeState>(context);
     final globalState = Provider.of<GlobalState>(context);
-    print("events ${DatabaseProvider().getEvents()}");
+    final isDarkMode = globalState.isDarkMode;
 
     return CustomScaffold(
       body: SafeArea(
@@ -31,7 +33,9 @@ class _HomeState extends State<Home> {
           children: [
             MonthHeader(
               onNavigateToMonth: () {
-                _selectDate(context, homeState, globalState);
+                showDateTimePicker(context, isDarkMode, (picked) {
+                  homeState.select(picked.year, picked.month, picked.day);
+                }, pickerMode: DateTimePickerMode.date);
               },
             ),
             const WeekHeader(),
@@ -45,37 +49,14 @@ class _HomeState extends State<Home> {
         backgroundColor: Theme.of(context).primaryColor,
         foregroundColor: Theme.of(context).colorScheme.onSurface,
         onPressed: () {
+          navigateTo(
+            context,
+            Routes.eventCreate,
+            transitionType: TransitionType.inFromRight,
+          );
         },
         child: const Icon(Icons.add),
       ),
     );
-  }
-
-  Future<void> _selectDate(
-    BuildContext context,
-    HomeState homeState,
-    GlobalState globalState,
-  ) async {
-    final MaterialLocalizations localizations =
-        MaterialLocalizations.of(context);
-
-    final DateTime? picked = await showDatePicker(
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(1900, 8),
-      lastDate: DateTime(2101),
-      cancelText: localizations.cancelButtonLabel,
-      confirmText: localizations.okButtonLabel,
-      locale: Localizations.localeOf(context),
-      builder: (BuildContext context, Widget? child) {
-        return Theme(
-          data: globalState.isDarkMode ? ThemeData.dark() : ThemeData.light(),
-          child: child ?? Container(),
-        );
-      },
-    );
-    if (picked != null) {
-      homeState.select(picked.year, picked.month, picked.day);
-    }
   }
 }

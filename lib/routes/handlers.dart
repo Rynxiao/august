@@ -1,5 +1,6 @@
 import 'package:fluro/fluro.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:simple_calendar/pages/create_event.dart';
 import 'package:simple_calendar/pages/home.dart';
 import 'package:simple_calendar/pages/weather.dart';
 
@@ -12,7 +13,7 @@ var homeHandler = Handler(
 
 var eventCreateHandler = Handler(
     handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
-      return const Home();
+      return const CreateEvent();
     });
 
 var weatherHandler = Handler(

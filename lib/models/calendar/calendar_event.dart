@@ -1,13 +1,16 @@
+import 'package:simple_calendar/utils/date_utils.dart';
+
 class CalendarEvent {
   late String id;
   late String dateId;
   late String title;
   late String content;
   late int date;
-  late int lunarDate;
+  late String lunarDate;
+  int isCycle = 1; // 0: 不循环，1: 循环
   int cycleBy = 0; // 0: 公历，1: 农历
-  late int createTime;
-  late int modifyTime;
+  int? createTime;
+  int? modifyTime;
   int deleted = 0;
 
   CalendarEvent({
@@ -17,11 +20,16 @@ class CalendarEvent {
     required this.content,
     required this.date,
     required this.lunarDate,
+    this.isCycle = 0,
     this.cycleBy = 0,
-    required this.createTime,
-    required this.modifyTime,
+    this.createTime,
+    this.modifyTime,
     this.deleted = 0,
-  });
+  }) {
+    final now = DateTime.now();
+    createTime = getTimestamp(now);
+    modifyTime = createTime;
+  }
 
   CalendarEvent.fromJson(dynamic json) {
     id = json['id'];
@@ -30,6 +38,7 @@ class CalendarEvent {
     content = json['content'];
     date = json['date'];
     lunarDate = json['lunarDate'];
+    isCycle = json['isCycle'];
     cycleBy = json['cycleBy'];
     createTime = json['createTime'];
     modifyTime = json['modifyTime'];
@@ -44,6 +53,7 @@ class CalendarEvent {
     map['content'] = content;
     map['date'] = date;
     map['lunarDate'] = lunarDate;
+    map['isCycle'] = isCycle;
     map['cycleBy'] = cycleBy;
     map['createTime'] = createTime;
     map['modifyTime'] = modifyTime;
