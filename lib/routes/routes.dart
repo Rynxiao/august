@@ -7,6 +7,7 @@ import 'handlers.dart';
 // https://pub.dev/packages/fluro
 class Routes {
   static String home = "/";
+  static String eventCreate = "/event/create";
   static String weather = "/weather";
   static String settings = "/settings";
 
@@ -17,6 +18,7 @@ class Routes {
       return;
     });
     router.define(home, handler: homeHandler);
+    router.define(eventCreate, handler: eventCreateHandler);
     router.define(weather, handler: weatherHandler);
     router.define(settings, handler: settingsHandler);
   }

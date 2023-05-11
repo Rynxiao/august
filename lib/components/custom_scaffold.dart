@@ -7,11 +7,13 @@ import '../states/global_state.dart';
 class CustomScaffold extends StatelessWidget {
   final Widget? body;
   final Widget? bottomNavigationBar;
+  final Widget? floatingActionButton;
 
   const CustomScaffold({
     super.key,
     required this.body,
     required this.bottomNavigationBar,
+    this.floatingActionButton,
   });
 
   @override
@@ -33,6 +35,7 @@ class CustomScaffold extends StatelessWidget {
       backgroundColor: themeData.scaffoldBackgroundColor,
       body: body,
       bottomNavigationBar: bottomNavigationBar,
+      floatingActionButton: floatingActionButton,
     );
   }
 }

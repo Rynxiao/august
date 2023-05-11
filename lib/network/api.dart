@@ -6,6 +6,7 @@ import '../models/weather/weather_seven_days.dart';
 import '../models/weather/weather_twenty_four_hours.dart';
 import 'http.dart';
 
+// 和风天气
 const locationUrl = "https://geoapi.qweather.com/v2/city/lookup";
 const baseUrl = "https://devapi.qweather.com/v7/weather";
 

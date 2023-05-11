@@ -37,6 +37,7 @@ class LunarDetail extends StatelessWidget {
         vertical: Spacing.s,
         horizontal: Spacing.l,
       ),
+      margin: const EdgeInsets.only(bottom: Spacing.xs),
       color: themeData.colorScheme.background,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

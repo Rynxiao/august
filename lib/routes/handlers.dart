@@ -10,6 +10,11 @@ var homeHandler = Handler(
   return const Home();
 });
 
+var eventCreateHandler = Handler(
+    handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
+      return const Home();
+    });
+
 var weatherHandler = Handler(
     handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
       return const Weather();

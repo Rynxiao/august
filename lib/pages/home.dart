@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:simple_calendar/db/datebase_provider.dart';
 
 import '../components/custom_scaffold.dart';
 import '../components/calendar/lunar_detail.dart';
@@ -22,6 +23,7 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     final homeState = Provider.of<HomeState>(context);
     final globalState = Provider.of<GlobalState>(context);
+    print("events ${DatabaseProvider().getEvents()}");
 
     return CustomScaffold(
       body: SafeArea(
@@ -39,6 +41,13 @@ class _HomeState extends State<Home> {
         ),
       ),
       bottomNavigationBar: renderBottomNavigationBar(context, 0),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Theme.of(context).primaryColor,
+        foregroundColor: Theme.of(context).colorScheme.onSurface,
+        onPressed: () {
+        },
+        child: const Icon(Icons.add),
+      ),
     );
   }
 
