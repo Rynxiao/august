@@ -131,22 +131,24 @@ class Calendar {
     Holiday? holiday = HolidayUtil.getHolidayByYmd(year, month, day);
 
     return CalendarDate(
-        date: '$year-$month-$day',
-        year: year,
-        month: month,
-        day: day,
-        weekday: _getWeekday(year, month, day),
-        constellation: solar.getXingZuo(),
-        festivals: solar.getFestivals(),
-        lunar: LunarDate(
-            date: lunar.toString(),
-            year: lunar.getYearInChinese(),
-            month: lunar.getMonthInChinese(),
-            day: lunar.getDayInChinese(),
-            week: lunar.getWeekInChinese(),
-            festivals: lunar.getFestivals(),
-            chineseZodiac: lunar.getYearShengXiao(),
-            solarTerm: lunar.getCurrentJieQi()?.getName(),
-            isWork: holiday?.isWork()));
+      date: '$year-$month-$day',
+      year: year,
+      month: month,
+      day: day,
+      weekday: _getWeekday(year, month, day),
+      constellation: solar.getXingZuo(),
+      festivals: solar.getFestivals(),
+      lunar: LunarDate(
+        date: lunar.toString(),
+        year: lunar.getYearInChinese(),
+        month: lunar.getMonthInChinese(),
+        day: lunar.getDayInChinese(),
+        week: lunar.getWeekInChinese(),
+        festivals: lunar.getFestivals(),
+        chineseZodiac: lunar.getYearShengXiao(),
+        solarTerm: lunar.getCurrentJieQi()?.getName(),
+        isWork: holiday?.isWork(),
+      ),
+    );
   }
 }

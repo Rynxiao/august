@@ -108,7 +108,7 @@ List<CalendarEvent> getDateEvents(
             '${date.month}${date.day}';
       }
     } else {
-      return false;
+      return dateEvent.lunarDate == date.lunar.date;
     }
   }).toList();
 }

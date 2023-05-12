@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:lunar/calendar/Lunar.dart';
 import 'package:provider/provider.dart';
+import 'package:simple_calendar/components/calendar/create_event_header.dart';
 import 'package:simple_calendar/components/custom_scaffold.dart';
 import 'package:simple_calendar/models/calendar/calendar_event.dart';
+import 'package:simple_calendar/states/home_state.dart';
 import 'package:simple_calendar/theme/fontsize.dart';
 import 'package:simple_calendar/theme/fontweight.dart';
 import 'package:simple_calendar/utils/logger.dart';
@@ -57,6 +59,7 @@ class CreateEventState extends State<CreateEvent> with WidgetsBindingObserver {
   @override
   Widget build(BuildContext context) {
     final globalState = Provider.of<GlobalState>(context);
+    final homeState = Provider.of<HomeState>(context);
     final themeData = Theme.of(context);
     final isDarkMode = globalState.isDarkMode;
 
@@ -70,54 +73,13 @@ class CreateEventState extends State<CreateEvent> with WidgetsBindingObserver {
           child: SafeArea(
             child: Column(
               children: [
-                Container(
-                  color: themeData.colorScheme.background,
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: Spacing.m,
-                          vertical: Spacing.xs,
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            IconButton(
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                              icon: Icon(
-                                Icons.arrow_back_ios,
-                                color: themeData.colorScheme.surface,
-                                size: 20,
-                              ),
-                            ),
-                            Text(
-                              '添加提醒',
-                              style: themeData.textTheme.titleLarge,
-                            ),
-                            GestureDetector(
-                              onTap: () async {
-                                await addEvent(() {
-                                  Navigator.of(context).pop();
-                                });
-                              },
-                              child: Text(
-                                '完成',
-                                style:
-                                    themeData.textTheme.titleMedium?.copyWith(
-                                  color: themeData.primaryColor,
-                                  fontWeight: AppFontWeight.regular,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      const Divider()
-                    ],
-                  ),
-                ),
+                CreateEventHeader(onAddEvent: () async {
+                  await addEvent(() {
+                    backToInitialState();
+                    homeState.setDateEvents();
+                    Navigator.of(context).pop();
+                  });
+                },),
                 Container(
                   color: themeData.colorScheme.background,
                   child: Padding(
@@ -339,5 +301,16 @@ class CreateEventState extends State<CreateEvent> with WidgetsBindingObserver {
         }
       }
     }
+  }
+
+  void backToInitialState() {
+    _titleController.clear();
+    _contentController.clear();
+    _dateController.clear();
+    setState(() {
+      _isCycle = true;
+      _cycleBy = true;
+    });
+    _formKey.currentState?.reset();
   }
 }
