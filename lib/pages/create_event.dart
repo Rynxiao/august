@@ -5,6 +5,7 @@ import 'package:simple_calendar/components/custom_scaffold.dart';
 import 'package:simple_calendar/models/calendar/calendar_event.dart';
 import 'package:simple_calendar/theme/fontsize.dart';
 import 'package:simple_calendar/theme/fontweight.dart';
+import 'package:simple_calendar/utils/logger.dart';
 import 'package:uuid/uuid.dart';
 
 import '../db/datebase_provider.dart';
@@ -310,7 +311,7 @@ class CreateEventState extends State<CreateEvent> with WidgetsBindingObserver {
           cycleBy: cycleBy,
         );
 
-        print("$title, $content, $date, $isCycle, $cycleBy");
+        Logger.d(calendarEvent.toJson());
         final created = await DatabaseProvider().createEvent(calendarEvent);
 
         if (created) {

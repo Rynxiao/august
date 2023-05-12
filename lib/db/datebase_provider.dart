@@ -1,5 +1,6 @@
 import 'package:path/path.dart';
 import 'package:simple_calendar/models/calendar/calendar_event.dart';
+import 'package:simple_calendar/utils/logger.dart';
 import 'package:sqflite/sqflite.dart';
 
 class DatabaseProvider {
@@ -22,6 +23,8 @@ class DatabaseProvider {
   Future<Database> _initDatabase() async {
     final databasesPath = await getDatabasesPath();
     final path = join(databasesPath, 'calendar.db');
+
+    Logger.d("databasesPath: $path");
 
     return await openDatabase(
       path,
