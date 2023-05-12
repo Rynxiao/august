@@ -26,8 +26,7 @@ class CalendarGrid extends StatelessWidget {
 
     return AnimatedContainer(
       color: themeData.colorScheme.background,
-      height: calendarDates.length > 35 ? 334 : 279,
-      // 5 lines or 6 lines
+      height: calendarDates.length > 35 ? 334 : 279, // 5 lines or 6 lines
       duration: const Duration(milliseconds: 300),
       margin: const EdgeInsets.only(bottom: Spacing.xs),
       child: Swiper(

@@ -88,15 +88,16 @@ class DateEvents extends StatelessWidget {
                         ),
                       ],
                     ),
-                    Padding(
-                      padding:
-                      const EdgeInsets.only(left: Spacing.s, top: Spacing.xxs),
-                      child: Text(
-                        event.content,
-                        style: themeData.textTheme.bodySmall
-                            ?.copyWith(fontSize: AppFontSize.regular),
+                    if (event.content.isNotEmpty)
+                      Padding(
+                        padding:
+                        const EdgeInsets.only(left: Spacing.s, top: Spacing.xxs),
+                        child: Text(
+                          event.content,
+                          style: themeData.textTheme.bodySmall
+                              ?.copyWith(fontSize: AppFontSize.regular),
+                        ),
                       ),
-                    ),
                   ],
                 );
               }),
