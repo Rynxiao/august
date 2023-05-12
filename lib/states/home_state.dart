@@ -1,8 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:simple_calendar/core/calendar_grid_utils.dart';
+import 'package:simple_calendar/db/datebase_provider.dart';
 
 import '../core/calendar.dart';
 import '../models/calendar/calendar_date.dart';
+import '../models/calendar/calendar_event.dart';
 
 class HomeState extends ChangeNotifier {
   int _selectedYear = 1970;
@@ -11,6 +13,7 @@ class HomeState extends ChangeNotifier {
   late List<CalendarDate> _calendarDates;
   late List<CalendarDate> _prevCalendarDates;
   late List<CalendarDate> _nextCalendarDates;
+  List<CalendarEvent> _dateEvents = [];
   final Calendar _calendar = Calendar();
 
   HomeState() {
@@ -28,12 +31,24 @@ class HomeState extends ChangeNotifier {
   Calendar get calendar => _calendar;
 
   List<CalendarDate> get calendarDates => _calendarDates;
+
   List<CalendarDate> get prevCalendarDates => _prevCalendarDates;
+
   List<CalendarDate> get nextCalendarDates => _nextCalendarDates;
+
+  List<CalendarEvent> get dateEvents => _dateEvents;
+
+  Future<void> setDateEvents({int? month}) async {
+    List<CalendarEvent> dateEvents =
+        await DatabaseProvider().getEventsByPeriod(month ?? _selectedMonth);
+    _dateEvents = dateEvents;
+    notifyListeners();
+  }
 
   void select(int year, int month, int day) {
     if (isPreviousMonth(year, month) || isNextMonth(year, month)) {
       setCalendarDates(year, month);
+      setDateEvents(month: month);
     }
 
     setSelectedYMD(year, month, day);

@@ -1,7 +1,8 @@
 import 'package:path/path.dart';
 import 'package:simple_calendar/models/calendar/calendar_event.dart';
-import 'package:simple_calendar/utils/logger.dart';
 import 'package:sqflite/sqflite.dart';
+
+import '../utils/date_utils.dart';
 
 class DatabaseProvider {
   static final DatabaseProvider _instance = DatabaseProvider._();
@@ -23,8 +24,6 @@ class DatabaseProvider {
   Future<Database> _initDatabase() async {
     final databasesPath = await getDatabasesPath();
     final path = join(databasesPath, 'calendar.db');
-
-    Logger.d("databasesPath: $path");
 
     return await openDatabase(
       path,
@@ -58,7 +57,25 @@ class DatabaseProvider {
   Future<List<CalendarEvent>> getEventsByDateId(String dateId) async {
     final db = await database;
     var events = await db.query(calendarEvent,
-        where: 'dateId = ?', whereArgs: [dateId], orderBy: 'create_time');
+        where: 'dateId = ?', whereArgs: [dateId], orderBy: 'createTime');
+    return events.map((event) => CalendarEvent.fromJson(event)).toList();
+  }
+
+  Future<List<CalendarEvent>> getEventsByPeriod(int month) async {
+    int prevMonth = month - 1 <= 0 ? 12 : month - 1;
+    int nextMonth = month + 1 >= 12 ? 1 : month + 1;
+
+    final db = await database;
+    var events = await db.query(
+      calendarEvent,
+      where: 'dateId LIKE ? OR dateId LIKE ? OR dateId LIKE ?',
+      whereArgs: [
+        '%${formatNumber(prevMonth)}%',
+        '%${formatNumber(month)}%',
+        '%${formatNumber(nextMonth)}%'
+      ],
+      orderBy: 'createTime',
+    );
     return events.map((event) => CalendarEvent.fromJson(event)).toList();
   }
 

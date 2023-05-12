@@ -14,7 +14,16 @@ import '../theme/spacing.dart';
 import '../utils/date_utils.dart';
 
 class CreateEvent extends StatefulWidget {
-  const CreateEvent({super.key});
+  final int year;
+  final int month;
+  final int day;
+
+  const CreateEvent({
+    super.key,
+    required this.year,
+    required this.month,
+    required this.day,
+  });
 
   @override
   CreateEventState createState() => CreateEventState();
@@ -24,11 +33,26 @@ class CreateEventState extends State<CreateEvent> with WidgetsBindingObserver {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _contentController = TextEditingController();
-  final TextEditingController _dateController =
-      TextEditingController(text: formatDateTime(DateTime.now()));
+  late TextEditingController _dateController;
+
   bool _isCycle = true;
   bool _cycleBy = true;
   final _controller = ScrollController();
+
+  @override
+  void initState() {
+    super.initState();
+    _dateController = TextEditingController(
+      text: formatTime(
+        widget.year,
+        widget.month,
+        widget.day,
+        DateTime.now(),
+      ),
+    );
+
+    WidgetsBinding.instance.addObserver(this);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -237,11 +261,13 @@ class CreateEventState extends State<CreateEvent> with WidgetsBindingObserver {
                                       ),
                                       Switch(
                                         value: _cycleBy,
-                                        onChanged: _isCycle ? (value) {
-                                          setState(() {
-                                            _cycleBy = value;
-                                          });
-                                        } : null,
+                                        onChanged: _isCycle
+                                            ? (value) {
+                                                setState(() {
+                                                  _cycleBy = value;
+                                                });
+                                              }
+                                            : null,
                                       ),
                                     ],
                                   ),
@@ -260,12 +286,6 @@ class CreateEventState extends State<CreateEvent> with WidgetsBindingObserver {
         ),
       ),
     );
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addObserver(this);
   }
 
   @override

@@ -13,15 +13,19 @@ import 'theme/theme.dart';
 
 Future<void> main() async {
   await dotenv.load(fileName: ".env");
+
   final position = await _determinePosition();
   final weatherState = WeatherState(position);
   // await weatherState.getWeatherInfo();
+
+  final homeState = HomeState();
+  await homeState.setDateEvents();
 
   runApp(
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => GlobalState()),
-        ChangeNotifierProvider(create: (context) => HomeState()),
+        ChangeNotifierProvider(create: (context) => homeState),
         ChangeNotifierProvider(create: (context) => weatherState),
       ],
       child: const MyApp(),

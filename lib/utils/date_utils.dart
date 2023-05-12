@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 const String minDatetime = '1900-00-00 00:00:00';
 const String maxDatetime = '2101-00-00 00:00:00';
 const String format = 'yyyy-MM-dd HH:mm:ss';
+const String timeFormat = 'HH:mm:ss';
 
 Future<void> showDateTimePicker(
   BuildContext context,
@@ -48,10 +49,19 @@ String formatDateTime(DateTime dateTime) {
 
 String formatDate(String dateTimeString) {
   DateTime dateTime = DateTime.parse(dateTimeString);
-  return "${dateTime.year}${_formatNumber(dateTime.month)}${_formatNumber(dateTime.day)}";
+  return "${dateTime.year}${formatNumber(dateTime.month)}${formatNumber(dateTime.day)}";
 }
 
-String _formatNumber(int number) {
+String formatTime(int year, int month, int day, DateTime dateTime) {
+  var formatter = DateFormat(timeFormat);
+  return '$year-${formatNumber(month)}-${formatNumber(day)} ${formatter.format(dateTime)}';
+}
+
+String formatDateByYMD(int year, int month, int day) {
+  return "$year${formatNumber(month)}${formatNumber(day)}";
+}
+
+String formatNumber(int number) {
   return number.toString().padLeft(2, '0');
 }
 

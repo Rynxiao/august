@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lunar/calendar/Lunar.dart';
 import 'package:lunar/calendar/Solar.dart';
+import 'package:simple_calendar/models/calendar/calendar_event.dart';
 
 import '../models/calendar/calendar_date.dart';
 import '../models/calendar/year_and_month.dart';
@@ -83,4 +84,31 @@ YearAndMonth getNextYearAndMonth(int year, int month) {
 Lunar getLunarDetail(int year, int month, int day) {
   Solar solar = Solar.fromYmd(year, month, day);
   return solar.getLunar();
+}
+
+List<CalendarEvent> getDateEvents(
+    List<CalendarEvent> dateEvents, CalendarDate date) {
+  return dateEvents.where((dateEvent) {
+    var isCycle = dateEvent.isCycle;
+    var cycleBy = dateEvent.cycleBy;
+
+    // 循环
+    if (isCycle == 1) {
+      // 农历循环
+      if (cycleBy == 1) {
+        var lunarDate = dateEvent.lunarDate;
+        var lunar = date.lunar;
+
+        return lunarDate.substring(5, lunarDate.length) ==
+            '${lunar.month}月${lunar.day}';
+      } else {
+        // 公历循环
+        var dateId = dateEvent.dateId;
+        return dateId.substring(4, dateId.length) ==
+            '${date.month}${date.day}';
+      }
+    } else {
+      return false;
+    }
+  }).toList();
 }

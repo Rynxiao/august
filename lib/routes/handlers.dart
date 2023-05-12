@@ -12,8 +12,13 @@ var homeHandler = Handler(
 });
 
 var eventCreateHandler = Handler(
-    handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
-      return const CreateEvent();
+    handlerFunc: (BuildContext? context, Map<String, dynamic> params) {
+      print('params: $params');
+      var year = int.parse(params["year"][0]);
+      var month = int.parse(params["month"][0]);
+      var day = int.parse(params["day"][0]);
+
+      return CreateEvent(year: year, month: month, day: day,);
     });
 
 var weatherHandler = Handler(

@@ -87,6 +87,7 @@ class CalendarGridItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var dateEvents = homeState.dateEvents;
     return GridView.count(
       crossAxisCount: 7,
       shrinkWrap: true,
@@ -111,6 +112,8 @@ class CalendarGridItem extends StatelessWidget {
         var opacity = (isPrevious || isNext) ? 0.5 : 1.0;
         var isToday = calendar.isToday(year, month, day);
         var isSelected = homeState.isSelected(year, month, day);
+        var events = getDateEvents(dateEvents, date);
+        var eventsLength = events.length;
 
         var highlightColor = themeData.highlightColor;
         var hintColor = themeData.hintColor;
@@ -143,6 +146,20 @@ class CalendarGridItem extends StatelessWidget {
                           overflow: TextOverflow.ellipsis,
                           style: themeData.textTheme.bodySmall
                               ?.copyWith(color: lunarDateColor),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: List.generate(
+                              eventsLength > 3 ? 3 : eventsLength, (index) {
+                            return Padding(
+                              padding:
+                                  const EdgeInsets.only(right: Spacing.one),
+                              child: CircleAvatar(
+                                radius: 2,
+                                backgroundColor: themeData.dividerColor,
+                              ),
+                            );
+                          }),
                         ),
                       ],
                     ),

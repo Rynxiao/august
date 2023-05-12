@@ -51,7 +51,7 @@ class _HomeState extends State<Home> {
         onPressed: () {
           navigateTo(
             context,
-            Routes.eventCreate,
+            '/eventCreate/${homeState.selectedYear}/${homeState.selectedMonth}/${homeState.selectedDay}',
             transitionType: TransitionType.inFromRight,
           );
         },
