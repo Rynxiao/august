@@ -52,7 +52,7 @@ class MyAppState extends State<MyApp> {
     final globalState = Provider.of<GlobalState>(context);
 
     return MaterialApp(
-      title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
       theme: globalState.isDarkMode ? darkTheme : lightTheme,
       onGenerateRoute: Application.router.generator,
     );
