@@ -36,6 +36,12 @@ List<String> getFestivals(CalendarDate date) {
   return festivals;
 }
 
+List<String> getFestivalsBy(Solar solar, Lunar lunar) {
+  final festivals = solar.getFestivals();
+  festivals.addAll(lunar.getFestivals());
+  return festivals;
+}
+
 Color getSubscriptBackgroundColor(LunarDate lunar, BuildContext context) {
   final highlightColor = Theme.of(context).highlightColor;
   final isWork = lunar.isWork;
@@ -109,6 +115,32 @@ List<CalendarEvent> getDateEvents(
       }
     } else {
       return dateEvent.lunarDate == date.lunar.date;
+    }
+  }).toList();
+}
+
+List<CalendarEvent> getDateEventsBy(
+    List<CalendarEvent> dateEvents, Solar solar, Lunar lunar) {
+  return dateEvents.where((dateEvent) {
+    var isCycle = dateEvent.isCycle;
+    var cycleBy = dateEvent.cycleBy;
+
+    // 循环
+    if (isCycle == 1) {
+      // 农历循环
+      if (cycleBy == 1) {
+        var lunarDate = dateEvent.lunarDate;
+
+        return lunarDate.substring(5, lunarDate.length) ==
+            '${lunar.getMonthInChinese()}月${lunar.getDayInChinese()}';
+      } else {
+        // 公历循环
+        var dateId = dateEvent.dateId;
+        return dateId.substring(4, dateId.length) ==
+            '${solar.getMonth()}${solar.getDay()}';
+      }
+    } else {
+      return dateEvent.lunarDate == lunar.toString();
     }
   }).toList();
 }

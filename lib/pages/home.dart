@@ -2,6 +2,7 @@ import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cupertino_datetime_picker/flutter_cupertino_datetime_picker.dart';
 import 'package:provider/provider.dart';
+import 'package:simple_calendar/components/calendar/date_events.dart';
 
 import '../components/custom_scaffold.dart';
 import '../components/calendar/lunar_detail.dart';
@@ -40,7 +41,16 @@ class _HomeState extends State<Home> {
             ),
             const WeekHeader(),
             const CalendarGrid(),
-            const LunarDetail(),
+            Expanded(
+              child: SingleChildScrollView(
+                child: Column(
+                  children: const [
+                    DateEvents(),
+                    LunarDetail(),
+                  ],
+                ),
+              ),
+            )
           ],
         ),
       ),
