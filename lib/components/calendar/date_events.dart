@@ -7,6 +7,7 @@ import 'package:simple_calendar/theme/fontweight.dart';
 import 'package:simple_calendar/theme/spacing.dart';
 import 'package:simple_calendar/utils/date_utils.dart';
 
+import '../../db/datebase_provider.dart';
 import '../../routes/routes.dart';
 import '../../states/home_state.dart';
 
@@ -106,16 +107,40 @@ class DateEvents extends StatelessWidget {
                             )
                           ],
                         ),
-                        IconButton(
-                          iconSize: 14,
-                          icon: const Icon(Icons.edit),
-                          onPressed: () {
-                            navigateTo(
-                              context,
-                              '/eventUpdate/${event.id}',
-                              transitionType: TransitionType.inFromRight,
-                            );
-                          },
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: Spacing.m),
+                          child: Row(
+                            children: [
+                              GestureDetector(
+                                onTap: () {
+                                  navigateTo(
+                                    context,
+                                    '/eventUpdate/${event.id}',
+                                    transitionType: TransitionType.inFromRight,
+                                  );
+                                },
+                                child: const Padding(
+                                  padding: EdgeInsets.only(right: Spacing.m),
+                                  child: Icon(
+                                    Icons.edit,
+                                    size: 14,
+                                  ),
+                                ),
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  deleteEvent(event.id, () {
+                                    homeState.setDateEvents();
+                                  });
+                                },
+                                child: Icon(
+                                  Icons.delete,
+                                  size: 14,
+                                  color: themeData.primaryColor,
+                                ),
+                              ),
+                            ],
+                          ),
                         )
                       ],
                     ),
@@ -138,6 +163,14 @@ class DateEvents extends StatelessWidget {
           ],
         ),
       );
+    }
+  }
+
+  Future<void> deleteEvent(String id, Null Function() onDeleted) async {
+    final deleted = await DatabaseProvider().deleteEventById(id);
+
+    if (deleted) {
+      onDeleted();
     }
   }
 }
