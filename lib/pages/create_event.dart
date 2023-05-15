@@ -73,13 +73,16 @@ class CreateEventState extends State<CreateEvent> with WidgetsBindingObserver {
           child: SafeArea(
             child: Column(
               children: [
-                CreateEventHeader(onAddEvent: () async {
-                  await addEvent(() {
-                    backToInitialState();
-                    homeState.setDateEvents();
-                    Navigator.of(context).pop();
-                  });
-                },),
+                EventHeader(
+                  title: '添加提醒',
+                  onAddOrUpdateEvent: () async {
+                    await addEvent(() {
+                      backToInitialState();
+                      homeState.setDateEvents();
+                      Navigator.of(context).pop();
+                    });
+                  },
+                ),
                 Container(
                   color: themeData.colorScheme.background,
                   child: Padding(
@@ -284,7 +287,7 @@ class CreateEventState extends State<CreateEvent> with WidgetsBindingObserver {
 
         final calendarEvent = CalendarEvent(
           id: const Uuid().v4(),
-          dateId: formatDate(date),
+          dateId: formatDateWith(date),
           title: title,
           content: content,
           date: getTimestamp(dateTime),

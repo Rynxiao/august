@@ -54,6 +54,14 @@ class DatabaseProvider {
     return events.map((event) => CalendarEvent.fromJson(event)).toList();
   }
 
+  Future<CalendarEvent?> getEventsById(String id) async {
+    final db = await database;
+    var events = await db.query(calendarEvent,
+        where: 'id = ?', whereArgs: [id], orderBy: 'createTime');
+    var calendarEvents = events.map((event) => CalendarEvent.fromJson(event)).toList();
+    return calendarEvents.isNotEmpty ? calendarEvents[0] : null;
+  }
+
   Future<List<CalendarEvent>> getEventsByDateId(String dateId) async {
     final db = await database;
     var events = await db.query(calendarEvent,

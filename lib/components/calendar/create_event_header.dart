@@ -3,10 +3,15 @@ import 'package:flutter/material.dart';
 import '../../theme/fontweight.dart';
 import '../../theme/spacing.dart';
 
-class CreateEventHeader extends StatelessWidget {
-  final Future<void> Function() onAddEvent;
+class EventHeader extends StatelessWidget {
+  final String title;
+  final Future<void> Function() onAddOrUpdateEvent;
 
-  const CreateEventHeader({super.key, required this.onAddEvent});
+  const EventHeader({
+    super.key,
+    required this.title,
+    required this.onAddOrUpdateEvent,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -35,15 +40,14 @@ class CreateEventHeader extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  '添加提醒',
+                  title,
                   style: themeData.textTheme.titleLarge,
                 ),
                 GestureDetector(
-                  onTap: onAddEvent,
+                  onTap: onAddOrUpdateEvent,
                   child: Text(
                     '完成',
-                    style:
-                    themeData.textTheme.titleMedium?.copyWith(
+                    style: themeData.textTheme.titleMedium?.copyWith(
                       color: themeData.primaryColor,
                       fontWeight: AppFontWeight.regular,
                     ),

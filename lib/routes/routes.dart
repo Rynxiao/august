@@ -8,6 +8,7 @@ import 'handlers.dart';
 class Routes {
   static String home = "/";
   static String eventCreate = "/eventCreate/:year/:month/:day";
+  static String eventUpdate = "/eventUpdate/:eventId";
   static String weather = "/weather";
   static String settings = "/settings";
 
@@ -19,6 +20,7 @@ class Routes {
         });
     router.define(home, handler: homeHandler);
     router.define(eventCreate, handler: eventCreateHandler);
+    router.define(eventUpdate, handler: eventUpdateHandler);
     router.define(weather, handler: weatherHandler);
     router.define(settings, handler: settingsHandler);
   }

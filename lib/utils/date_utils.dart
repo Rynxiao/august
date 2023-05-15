@@ -48,12 +48,20 @@ String formatDateTime(DateTime dateTime) {
   return formatter.format(dateTime);
 }
 
-String formatDateTimeHour(DateTime dateTime) {
+String formatDateTimeFromMilliseconds(int? timestamp) {
+  var dateTime = timestamp == null
+      ? DateTime.now()
+      : DateTime.fromMillisecondsSinceEpoch(timestamp).toLocal();
+  return formatDateTime(dateTime);
+}
+
+String formatDateHourFromMilliseconds(int timestamp) {
+  var dateTime = DateTime.fromMillisecondsSinceEpoch(timestamp).toLocal();
   var formatter = DateFormat(formatHour);
   return formatter.format(dateTime);
 }
 
-String formatDate(String dateTimeString) {
+String formatDateWith(String dateTimeString) {
   DateTime dateTime = DateTime.parse(dateTimeString);
   return "${dateTime.year}${formatNumber(dateTime.month)}${formatNumber(dateTime.day)}";
 }

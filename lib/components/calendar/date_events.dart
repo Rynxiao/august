@@ -1,3 +1,4 @@
+import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:simple_calendar/core/calendar_grid_utils.dart';
@@ -6,6 +7,7 @@ import 'package:simple_calendar/theme/fontweight.dart';
 import 'package:simple_calendar/theme/spacing.dart';
 import 'package:simple_calendar/utils/date_utils.dart';
 
+import '../../routes/routes.dart';
 import '../../states/home_state.dart';
 
 class DateEvents extends StatelessWidget {
@@ -73,10 +75,8 @@ class DateEvents extends StatelessWidget {
             Column(
               children: List.generate(events.length, (index) {
                 var event = events[index];
-                var createTime = formatDateTimeHour(
-                  DateTime.fromMillisecondsSinceEpoch(event.createTime)
-                      .toLocal(),
-                );
+                var createTime =
+                    formatDateHourFromMilliseconds(event.createTime);
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -100,18 +100,31 @@ class DateEvents extends StatelessWidget {
                                 style: titleStyle,
                               ),
                             ),
+                            Text(
+                              createTime,
+                              style: timeStyle,
+                            )
                           ],
                         ),
-                        Text(
-                          createTime,
-                          style: timeStyle,
+                        IconButton(
+                          iconSize: 14,
+                          icon: const Icon(Icons.edit),
+                          onPressed: () {
+                            navigateTo(
+                              context,
+                              '/eventUpdate/${event.id}',
+                              transitionType: TransitionType.inFromRight,
+                            );
+                          },
                         )
                       ],
                     ),
                     if (event.content.isNotEmpty)
                       Padding(
                         padding: const EdgeInsets.only(
-                            left: Spacing.s, top: Spacing.xxs),
+                          left: Spacing.s,
+                          top: Spacing.xxs,
+                        ),
                         child: Text(
                           event.content,
                           style: themeData.textTheme.bodySmall
