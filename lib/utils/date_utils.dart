@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 const String minDatetime = '1900-00-00 00:00:00';
 const String maxDatetime = '2101-00-00 00:00:00';
 const String format = 'yyyy-MM-dd HH:mm:ss';
+const String formatHour = 'HH:mm:ss';
 const String timeFormat = 'HH:mm:ss';
 
 Future<void> showDateTimePicker(
@@ -44,6 +45,11 @@ Future<void> showDateTimePicker(
 
 String formatDateTime(DateTime dateTime) {
   var formatter = DateFormat(format);
+  return formatter.format(dateTime);
+}
+
+String formatDateTimeHour(DateTime dateTime) {
+  var formatter = DateFormat(formatHour);
   return formatter.format(dateTime);
 }
 

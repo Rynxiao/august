@@ -9,8 +9,8 @@ class CalendarEvent {
   late String lunarDate;
   int isCycle = 1; // 0: 不循环，1: 循环
   int cycleBy = 0; // 0: 公历，1: 农历
-  int? createTime;
-  int? modifyTime;
+  int createTime = 0;
+  int modifyTime = 0;
   int deleted = 0;
 
   CalendarEvent({
@@ -22,8 +22,8 @@ class CalendarEvent {
     required this.lunarDate,
     this.isCycle = 0,
     this.cycleBy = 0,
-    this.createTime,
-    this.modifyTime,
+    this.createTime = 0,
+    this.modifyTime = 0,
     this.deleted = 0,
   }) {
     final now = DateTime.now();

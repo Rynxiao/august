@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:simple_calendar/core/calendar_grid_utils.dart';
 import 'package:simple_calendar/theme/fontsize.dart';
+import 'package:simple_calendar/theme/fontweight.dart';
 import 'package:simple_calendar/theme/spacing.dart';
+import 'package:simple_calendar/utils/date_utils.dart';
 
 import '../../states/home_state.dart';
 
@@ -31,8 +33,11 @@ class DateEvents extends StatelessWidget {
         fontSize: AppFontSize.regular,
         color: themeData.primaryColor,
       );
-      var titleStyle = themeData.textTheme.titleMedium?.copyWith(
-          fontSize: AppFontSize.regular
+      var titleStyle = themeData.textTheme.titleMedium
+          ?.copyWith(fontSize: AppFontSize.regular);
+      var timeStyle = titleStyle?.copyWith(
+        fontWeight: AppFontWeight.light,
+        color: themeData.colorScheme.secondary,
       );
 
       return Container(
@@ -68,30 +73,45 @@ class DateEvents extends StatelessWidget {
             Column(
               children: List.generate(events.length, (index) {
                 var event = events[index];
+                var createTime = formatDateTimeHour(
+                  DateTime.fromMillisecondsSinceEpoch(event.createTime)
+                      .toLocal(),
+                );
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    if (festivals.isNotEmpty || index != 0)
-                      const Divider(),
+                    if (festivals.isNotEmpty || index != 0) const Divider(),
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.only(right: Spacing.xs),
-                          child: CircleAvatar(
-                            radius: 2,
-                            backgroundColor: themeData.colorScheme.surface,
-                          ),
+                        Row(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(right: Spacing.xs),
+                              child: CircleAvatar(
+                                radius: 2,
+                                backgroundColor: themeData.colorScheme.surface,
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(right: Spacing.xs),
+                              child: Text(
+                                event.title,
+                                style: titleStyle,
+                              ),
+                            ),
+                          ],
                         ),
                         Text(
-                          event.title,
-                          style: titleStyle,
-                        ),
+                          createTime,
+                          style: timeStyle,
+                        )
                       ],
                     ),
                     if (event.content.isNotEmpty)
                       Padding(
-                        padding:
-                        const EdgeInsets.only(left: Spacing.s, top: Spacing.xxs),
+                        padding: const EdgeInsets.only(
+                            left: Spacing.s, top: Spacing.xxs),
                         child: Text(
                           event.content,
                           style: themeData.textTheme.bodySmall
