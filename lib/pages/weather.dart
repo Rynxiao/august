@@ -1,32 +1,76 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_weather_bg/flutter_weather_bg.dart';
 import 'package:provider/provider.dart';
+import 'package:simple_calendar/components/weather/currently_header.dart';
+import 'package:simple_calendar/components/weather/seven_day_forecast.dart';
 
+import '../components/weather/custom_clipper_container.dart';
+import '../components/weather/hourly_forecast.dart';
 import '../routes/routes.dart';
 import '../states/global_state.dart';
 
-class Weather extends StatelessWidget {
+class Weather extends StatefulWidget {
   const Weather({super.key});
 
+  @override
+  State<Weather> createState() => _WeatherState();
+}
+
+class _WeatherState extends State<Weather> {
   @override
   Widget build(BuildContext context) {
     final globalState = Provider.of<GlobalState>(context);
     final isDarkMode = globalState.isDarkMode;
-    double screenWidth = MediaQuery.of(context).size.width;
-    double screenHeight = MediaQuery.of(context).size.height;
+    var mediaQueryData = MediaQuery.of(context);
+    double screenWidth = mediaQueryData.size.width;
+    double screenHeight = mediaQueryData.size.height;
+    double safeAreaTop = mediaQueryData.padding.top;
 
     return Scaffold(
-      body: Column(
-        children: [
-          Expanded(
-            child: WeatherBg(
-              weatherType: WeatherType.thunder,
-              width: screenWidth,
-              height: screenHeight,
+      body: Stack(children: [
+        WeatherBg(
+          weatherType: WeatherType.thunder,
+          width: screenWidth,
+          height: screenHeight,
+        ),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Container(height: safeAreaTop),
+            Expanded(
+              child: NestedScrollView(
+                floatHeaderSlivers: true,
+                physics: const BouncingScrollPhysics(),
+                headerSliverBuilder: (context, innerBoxIsScrolled) {
+                  return [
+                    const SliverAppBar(
+                      pinned: true,
+                      stretch: true,
+                      collapsedHeight: 60.0,
+                      expandedHeight: 160.0,
+                      automaticallyImplyLeading: false,
+                      backgroundColor: Colors.transparent,
+                      shadowColor: Colors.transparent,
+                      flexibleSpace: CurrentlyHeader(),
+                    ),
+                  ];
+                },
+                body: CustomClipperContainer(
+                  child: ListView(
+                    padding: EdgeInsets.zero,
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    children: const [
+                      HourlyForecast(),
+                      SevenDayForecast(),
+                    ],
+                  ),
+                ),
+              ),
             ),
-          ),
-        ],
-      ),
+          ],
+        )
+      ]),
       bottomNavigationBar: renderBottomNavigationBar(context, 1),
     );
   }

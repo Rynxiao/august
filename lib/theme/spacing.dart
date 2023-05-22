@@ -9,4 +9,5 @@ class Spacing {
   static const double gaint = 80.0;
   static const double one = 1.0;
   static const double two = 2.0;
+  static const double forty = 40.0;
 }
