@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:simple_calendar/components/weather/weather_icon.dart';
+import 'package:simple_calendar/core/weather_utils.dart';
 import 'package:simple_calendar/models/weather/hourly.dart';
 import 'package:simple_calendar/states/weather_state.dart';
 import 'package:simple_calendar/utils/date_utils.dart';
@@ -82,7 +83,7 @@ class HourlyForecast extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(bottom: 12.0),
             child: WeatherIcon(
-              color: Colors.amber,
+              color: getIconColor(hourly.text),
               name: '${hourly.icon}-fill',
             ),
           ),

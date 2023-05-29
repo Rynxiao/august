@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:simple_calendar/components/weather/weather_icon.dart';
+import 'package:simple_calendar/core/weather_utils.dart';
 import 'dart:math' as math;
 
 import '../../states/weather_state.dart';
@@ -74,7 +75,7 @@ class CurrentlyHeader extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               WeatherIcon(
-                                color: AppColors.white,
+                                color: getIconColor(now.text),
                                 name: '${now.icon}-fill',
                                 size: 80,
                               ),
@@ -95,8 +96,9 @@ class CurrentlyHeader extends StatelessWidget {
                                         color: Colors.white,
                                         shadows: [
                                           BoxShadow(
-                                              color: Colors.amber,
-                                              blurRadius: 100)
+                                            color: AppColors.orangeRed,
+                                            blurRadius: 100,
+                                          )
                                         ]),
                                   ),
                                   const Padding(
@@ -108,7 +110,7 @@ class CurrentlyHeader extends StatelessWidget {
                                       "°C",
                                       style: TextStyle(
                                         fontSize: 28.0,
-                                        color: Colors.amber,
+                                        color: AppColors.orangeRed,
                                       ),
                                     ),
                                   ),
@@ -124,7 +126,7 @@ class CurrentlyHeader extends StatelessWidget {
                               padding: EdgeInsets.only(right: 8.0),
                               child: Icon(
                                 Icons.my_location,
-                                color: Colors.amber,
+                                color: AppColors.orangeRed,
                               ),
                             ),
                             Text(
