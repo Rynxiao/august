@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:simple_calendar/components/weather/weather_icon.dart';
+import 'package:simple_calendar/widgets/weather/weather_icon.dart';
 import 'package:simple_calendar/core/weather_utils.dart';
 import 'package:simple_calendar/models/weather/daily.dart';
 import 'package:simple_calendar/utils/date_utils.dart';

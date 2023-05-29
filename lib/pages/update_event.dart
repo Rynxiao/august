@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:lunar/calendar/Lunar.dart';
 import 'package:provider/provider.dart';
-import 'package:simple_calendar/components/calendar/create_event_header.dart';
-import 'package:simple_calendar/components/custom_scaffold.dart';
+import 'package:simple_calendar/widgets/calendar/create_event_header.dart';
+import 'package:simple_calendar/widgets/custom_scaffold.dart';
 import 'package:simple_calendar/models/calendar/calendar_event.dart';
 import 'package:simple_calendar/states/home_state.dart';
 import 'package:simple_calendar/theme/fontsize.dart';
 import 'package:simple_calendar/theme/fontweight.dart';
 import 'package:simple_calendar/utils/logger.dart';
-import 'package:uuid/uuid.dart';
 
 import '../db/datebase_provider.dart';
 import '../states/global_state.dart';

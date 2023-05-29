@@ -2,14 +2,14 @@ import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cupertino_datetime_picker/flutter_cupertino_datetime_picker.dart';
 import 'package:provider/provider.dart';
-import 'package:simple_calendar/components/calendar/date_events.dart';
+import 'package:simple_calendar/widgets/calendar/date_events.dart';
 
-import '../components/custom_scaffold.dart';
-import '../components/calendar/lunar_detail.dart';
-import '../components/calendar/month_header.dart';
+import '../widgets/custom_scaffold.dart';
+import '../widgets/calendar/lunar_detail.dart';
+import '../widgets/calendar/month_header.dart';
 import '../states/global_state.dart';
-import '../components/calendar/calendar_grid.dart';
-import '../components/calendar/week_header.dart';
+import '../widgets/calendar/calendar_grid.dart';
+import '../widgets/calendar/week_header.dart';
 import '../routes/routes.dart';
 import '../states/home_state.dart';
 import '../utils/date_utils.dart';
@@ -34,9 +34,14 @@ class _HomeState extends State<Home> {
           children: [
             MonthHeader(
               onNavigateToMonth: () {
-                showDateTimePicker(context, isDarkMode, (picked) {
-                  homeState.select(picked.year, picked.month, picked.day);
-                }, pickerMode: DateTimePickerMode.date);
+                showDateTimePicker(
+                  context,
+                  isDarkMode,
+                  (picked) {
+                    homeState.select(picked.year, picked.month, picked.day);
+                  },
+                  pickerMode: DateTimePickerMode.date,
+                );
               },
             ),
             const WeekHeader(),

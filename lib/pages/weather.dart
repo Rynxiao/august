@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_weather_bg/flutter_weather_bg.dart';
 import 'package:provider/provider.dart';
-import 'package:simple_calendar/components/weather/currently_header.dart';
-import 'package:simple_calendar/components/weather/seven_day_forecast.dart';
+import 'package:simple_calendar/widgets/weather/currently_header.dart';
+import 'package:simple_calendar/widgets/weather/seven_day_forecast.dart';
 
-import '../components/weather/current_detail.dart';
-import '../components/weather/custom_clipper_container.dart';
-import '../components/weather/hourly_forecast.dart';
+import '../widgets/weather/current_detail.dart';
+import '../widgets/weather/custom_clipper_container.dart';
+import '../widgets/weather/hourly_forecast.dart';
 import '../core/weather_utils.dart';
 import '../routes/routes.dart';
 import '../states/weather_state.dart';
