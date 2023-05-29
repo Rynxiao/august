@@ -8,12 +8,14 @@ class CustomScaffold extends StatelessWidget {
   final Widget? body;
   final Widget? bottomNavigationBar;
   final Widget? floatingActionButton;
+  final Color? appBarColor;
 
   const CustomScaffold({
     super.key,
     required this.body,
     this.bottomNavigationBar,
     this.floatingActionButton,
+    this.appBarColor,
   });
 
   @override
@@ -29,7 +31,7 @@ class CustomScaffold extends StatelessWidget {
           systemOverlayStyle: globalState.isDarkMode
               ? SystemUiOverlayStyle.light
               : SystemUiOverlayStyle.dark,
-          backgroundColor: themeData.colorScheme.background,
+          backgroundColor: appBarColor ?? themeData.colorScheme.background,
         ),
       ),
       backgroundColor: themeData.scaffoldBackgroundColor,

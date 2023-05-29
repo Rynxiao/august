@@ -11,6 +11,7 @@ class Routes {
   static String eventUpdate = "/eventUpdate/:eventId";
   static String weather = "/weather";
   static String settings = "/settings";
+  static String about = "/about";
 
   static void configureRoutes(FluroRouter router) {
     router.notFoundHandler = Handler(
@@ -23,6 +24,7 @@ class Routes {
     router.define(eventUpdate, handler: eventUpdateHandler);
     router.define(weather, handler: weatherHandler);
     router.define(settings, handler: settingsHandler);
+    router.define(about, handler: aboutHandler);
   }
 }
 
