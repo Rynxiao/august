@@ -1,5 +1,6 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:weather_icons/weather_icons.dart';
 
 class WeatherIcon extends StatelessWidget {
   final double? size;
@@ -20,6 +21,11 @@ class WeatherIcon extends StatelessWidget {
       width: size,
       height: size,
       color: color,
+      placeholderBuilder: (BuildContext context) => BoxedIcon(
+        WeatherIcons.na,
+        size: size,
+        color: color,
+      ),
     );
   }
 }

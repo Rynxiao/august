@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:simple_calendar/components/weather/weather_icon.dart';
 import 'dart:math' as math;
 
+import '../../states/weather_state.dart';
 import '../../theme/colors.dart';
 
 class CurrentlyHeader extends StatelessWidget {
@@ -9,6 +11,10 @@ class CurrentlyHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final weatherState = Provider.of<WeatherState>(context);
+    final now = weatherState.now;
+    final location = weatherState.location;
+
     return LayoutBuilder(
       builder: (context, _) {
         final settings = context
@@ -36,10 +42,10 @@ class CurrentlyHeader extends StatelessWidget {
                   horizontal: 18,
                   vertical: 20,
                 ),
-                child: const Center(
+                child: Center(
                   child: Text(
-                    '武汉市 晴 17/23°C',
-                    style: TextStyle(
+                    '${location.name} ${now.text} ${now.temp}°C',
+                    style: const TextStyle(
                       color: AppColors.white,
                     ),
                   ),
@@ -67,9 +73,9 @@ class CurrentlyHeader extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              const WeatherIcon(
+                              WeatherIcon(
                                 color: AppColors.white,
-                                name: '103-fill',
+                                name: '${now.icon}-fill',
                                 size: 80,
                               ),
                               const Text(
@@ -81,10 +87,10 @@ class CurrentlyHeader extends StatelessWidget {
                               ),
                               Row(
                                 crossAxisAlignment: CrossAxisAlignment.start,
-                                children: const [
+                                children: [
                                   Text(
-                                    "17",
-                                    style: TextStyle(
+                                    now.temp,
+                                    style: const TextStyle(
                                         fontSize: 70.0,
                                         color: Colors.white,
                                         shadows: [
@@ -93,7 +99,7 @@ class CurrentlyHeader extends StatelessWidget {
                                               blurRadius: 100)
                                         ]),
                                   ),
-                                  Padding(
+                                  const Padding(
                                     padding: EdgeInsets.only(
                                       top: 14.0,
                                       left: 4.0,
@@ -113,8 +119,8 @@ class CurrentlyHeader extends StatelessWidget {
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children: const [
-                            Padding(
+                          children: [
+                            const Padding(
                               padding: EdgeInsets.only(right: 8.0),
                               child: Icon(
                                 Icons.my_location,
@@ -122,8 +128,8 @@ class CurrentlyHeader extends StatelessWidget {
                               ),
                             ),
                             Text(
-                              "武汉市",
-                              style: TextStyle(
+                              location.name,
+                              style: const TextStyle(
                                 fontSize: 16.0,
                                 color: Colors.white,
                               ),

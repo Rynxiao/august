@@ -5,7 +5,8 @@ import 'package:intl/intl.dart';
 const String minDatetime = '1900-00-00 00:00:00';
 const String maxDatetime = '2101-00-00 00:00:00';
 const String format = 'yyyy-MM-dd HH:mm:ss';
-const String formatHour = 'HH:mm:ss';
+const String monthAndDayFormat = 'MM-dd';
+const String hourFormat = 'HH:mm:ss';
 const String timeFormat = 'HH:mm:ss';
 
 Future<void> showDateTimePicker(
@@ -43,9 +44,32 @@ Future<void> showDateTimePicker(
   );
 }
 
-String formatDateTime(DateTime dateTime) {
-  var formatter = DateFormat(format);
+String _format(DateTime dateTime, String dateFormat) {
+  var formatter = DateFormat(dateFormat);
   return formatter.format(dateTime);
+}
+
+String formatDateTime(DateTime dateTime) {
+  return _format(dateTime, format);
+}
+
+String formatMonthAndDay(String dateTimeString) {
+  var dateTime = DateTime.parse(dateTimeString);
+  return _format(dateTime, monthAndDayFormat);
+}
+
+bool isToday(String dateTimeString) {
+  var now = DateTime.now();
+  var date = DateTime.parse(dateTimeString);
+  return date.year == now.year &&
+      date.month == now.month &&
+      date.day == now.day;
+}
+
+bool isNow(String dateTimeString) {
+  var now = DateTime.now();
+  var date = DateTime.parse(dateTimeString);
+  return isToday(dateTimeString) && now.hour == date.hour;
 }
 
 String formatDateTimeFromMilliseconds(int? timestamp) {
@@ -57,7 +81,7 @@ String formatDateTimeFromMilliseconds(int? timestamp) {
 
 String formatDateHourFromMilliseconds(int timestamp) {
   var dateTime = DateTime.fromMillisecondsSinceEpoch(timestamp).toLocal();
-  var formatter = DateFormat(formatHour);
+  var formatter = DateFormat(hourFormat);
   return formatter.format(dateTime);
 }
 
@@ -81,4 +105,9 @@ String formatNumber(int number) {
 
 int getTimestamp(DateTime dateTime) {
   return dateTime.toUtc().millisecondsSinceEpoch;
+}
+
+int getHour(String dateTimeString) {
+  DateTime dateTime = DateTime.parse(dateTimeString).toLocal();
+  return dateTime.hour;
 }

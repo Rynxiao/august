@@ -1,12 +1,19 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:simple_calendar/components/weather/weather_icon.dart';
+import 'package:simple_calendar/models/weather/daily.dart';
+import 'package:simple_calendar/utils/date_utils.dart';
+
+import '../../states/weather_state.dart';
 
 class SevenDayForecast extends StatelessWidget {
   const SevenDayForecast({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final weatherState = Provider.of<WeatherState>(context);
+    final daily = weatherState.daily;
+
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20.0),
@@ -46,28 +53,27 @@ class SevenDayForecast extends StatelessWidget {
               ),
             ),
             const Divider(),
-            _buildSevenDayItem(),
-            _buildSevenDayItem(),
-            _buildSevenDayItem(),
-            _buildSevenDayItem(),
-            _buildSevenDayItem(),
-            _buildSevenDayItem(),
-            _buildSevenDayItem(),
-            _buildSevenDayItem(),
-            _buildSevenDayItem(),
-            _buildSevenDayItem(),
-            _buildSevenDayItem(),
-            _buildSevenDayItem(),
-            _buildSevenDayItem(),
-            _buildSevenDayItem(),
-            _buildSevenDayItem(),
+            ListView.separated(
+              padding: EdgeInsets.zero,
+              physics: const NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              itemCount: daily.length,
+              separatorBuilder: (BuildContext context, int index) =>
+                  const Divider(),
+              itemBuilder: (BuildContext context, int index) {
+                return _buildSevenDayItem(daily[index]);
+              },
+            ),
           ],
         ),
       ),
     );
   }
 
-  Column _buildSevenDayItem() {
+  Column _buildSevenDayItem(Daily daily) {
+    var dateText =
+        isToday(daily.fxDate) ? '今天' : formatMonthAndDay(daily.fxDate);
+
     return Column(
       children: [
         Padding(
@@ -76,12 +82,12 @@ class SevenDayForecast extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Row(
-                children: const [
-                  Padding(
-                    padding: EdgeInsets.only(right: 24.0),
+                children: [
+                  SizedBox(
+                    width: 90,
                     child: Text(
-                      "今天",
-                      style: TextStyle(
+                      dateText,
+                      style: const TextStyle(
                         color: Colors.white,
                         fontSize: 22.0,
                         fontWeight: FontWeight.w700,
@@ -90,7 +96,7 @@ class SevenDayForecast extends StatelessWidget {
                   ),
                   WeatherIcon(
                     color: Colors.white,
-                    name: '306-fill',
+                    name: '${daily.iconDay}-fill',
                     size: 28,
                   ),
                 ],
@@ -98,7 +104,7 @@ class SevenDayForecast extends StatelessWidget {
               Row(
                 children: [
                   Text(
-                    "25°C ",
+                    "${daily.tempMin}°C ",
                     style: TextStyle(
                       color: Colors.white.withOpacity(0.45),
                       fontSize: 22.0,
@@ -113,9 +119,9 @@ class SevenDayForecast extends StatelessWidget {
                       fontWeight: FontWeight.w700,
                     ),
                   ),
-                  const Text(
-                    " 32°C",
-                    style: TextStyle(
+                  Text(
+                    " ${daily.tempMax}°C",
+                    style: const TextStyle(
                       color: Colors.white,
                       fontSize: 22.0,
                       fontWeight: FontWeight.w700,
@@ -126,7 +132,6 @@ class SevenDayForecast extends StatelessWidget {
             ],
           ),
         ),
-        const Divider(),
       ],
     );
   }

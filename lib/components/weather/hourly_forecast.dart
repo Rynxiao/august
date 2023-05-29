@@ -1,11 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:simple_calendar/components/weather/weather_icon.dart';
+import 'package:simple_calendar/models/weather/hourly.dart';
+import 'package:simple_calendar/states/weather_state.dart';
+import 'package:simple_calendar/utils/date_utils.dart';
+import 'package:weather_icons/weather_icons.dart';
 
 class HourlyForecast extends StatelessWidget {
   const HourlyForecast({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final weatherState = Provider.of<WeatherState>(context);
+    final hourly = weatherState.hourly;
+
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20.0),
@@ -23,25 +31,18 @@ class HourlyForecast extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding:
-              const EdgeInsets.only(bottom: 12.0),
+              padding: const EdgeInsets.only(bottom: 12.0),
               child: Row(
                 children: [
-                  Padding(
-                    padding:
-                    const EdgeInsets.only(right: 8.0),
-                    child: Icon(
-                      Icons.punch_clock,
-                      color:
-                      Colors.white.withOpacity(0.6),
-                      size: 16,
-                    ),
+                  BoxedIcon(
+                    WeatherIcons.time_3,
+                    color: Colors.white.withOpacity(0.6),
+                    size: 18,
                   ),
                   Text(
                     "每小时天气预报",
                     style: TextStyle(
-                      color:
-                      Colors.white.withOpacity(0.6),
+                      color: Colors.white.withOpacity(0.6),
                       fontSize: 16.0,
                     ),
                   ),
@@ -51,24 +52,9 @@ class HourlyForecast extends StatelessWidget {
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: Row(
-                children: [
-                  _buildHourWeatherItem(),
-                  _buildHourWeatherItem(),
-                  _buildHourWeatherItem(),
-                  _buildHourWeatherItem(),
-                  _buildHourWeatherItem(),
-                  _buildHourWeatherItem(),
-                  _buildHourWeatherItem(),
-                  _buildHourWeatherItem(),
-                  _buildHourWeatherItem(),
-                  _buildHourWeatherItem(),
-                  _buildHourWeatherItem(),
-                  _buildHourWeatherItem(),
-                  _buildHourWeatherItem(),
-                  _buildHourWeatherItem(),
-                  _buildHourWeatherItem(),
-                  _buildHourWeatherItem(),
-                ],
+                children: List.generate(hourly.length, (index) {
+                  return _buildHourWeatherItem(hourly[index]);
+                }),
               ),
             ),
           ],
@@ -77,29 +63,32 @@ class HourlyForecast extends StatelessWidget {
     );
   }
 
-  Padding _buildHourWeatherItem() {
+  Padding _buildHourWeatherItem(Hourly hourly) {
     return Padding(
       padding: const EdgeInsets.only(right: 24.0),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: const [
+        children: [
           Padding(
-            padding: EdgeInsets.only(bottom: 12.0),
+            padding: const EdgeInsets.only(bottom: 12.0),
             child: Text(
-              "现在",
-              style: TextStyle(
+              "${getHour(hourly.fxTime)}:00",
+              style: const TextStyle(
                 color: Colors.white,
-                fontSize: 18.0,
+                fontSize: 16.0,
               ),
             ),
           ),
           Padding(
-            padding: EdgeInsets.only(bottom: 12.0),
-            child: WeatherIcon(color: Colors.amber, name: '100-fill'),
+            padding: const EdgeInsets.only(bottom: 12.0),
+            child: WeatherIcon(
+              color: Colors.amber,
+              name: '${hourly.icon}-fill',
+            ),
           ),
           Text(
-            "28°",
-            style: TextStyle(
+            "${hourly.temp}°",
+            style: const TextStyle(
               color: Colors.white,
               fontWeight: FontWeight.bold,
               fontSize: 24.0,

@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_weather_bg/flutter_weather_bg.dart';
-import 'package:provider/provider.dart';
 import 'package:simple_calendar/components/weather/currently_header.dart';
 import 'package:simple_calendar/components/weather/seven_day_forecast.dart';
 
+import '../components/weather/current_detail.dart';
 import '../components/weather/custom_clipper_container.dart';
 import '../components/weather/hourly_forecast.dart';
 import '../routes/routes.dart';
-import '../states/global_state.dart';
 
 class Weather extends StatefulWidget {
   const Weather({super.key});
@@ -19,8 +18,6 @@ class Weather extends StatefulWidget {
 class _WeatherState extends State<Weather> {
   @override
   Widget build(BuildContext context) {
-    final globalState = Provider.of<GlobalState>(context);
-    final isDarkMode = globalState.isDarkMode;
     var mediaQueryData = MediaQuery.of(context);
     double screenWidth = mediaQueryData.size.width;
     double screenHeight = mediaQueryData.size.height;
@@ -63,6 +60,7 @@ class _WeatherState extends State<Weather> {
                     children: const [
                       HourlyForecast(),
                       SevenDayForecast(),
+                      CurrentDetail(),
                     ],
                   ),
                 ),
