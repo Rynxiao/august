@@ -74,7 +74,7 @@ class Settings extends StatelessWidget {
                     ),
                     title: const Text('数据备份'),
                     trailing: Icon(
-                      Icons.downloading,
+                      Icons.sync,
                       color: themeData.colorScheme.onSecondary,
                     ),
                   ),

@@ -64,7 +64,7 @@ Color getIconColor(String weatherText) {
   if (weatherText == '晴') {
     return Colors.amber;
   } else if (weatherText.contains('云')) {
-    return const Color(0xFF8FA3C0);
+    return const Color(0xFFD3D3D3);
   } else if (weatherText.contains('雾')) {
     return const Color(0xFF3A4B65);
   } else if (weatherText.contains('霾')) {
