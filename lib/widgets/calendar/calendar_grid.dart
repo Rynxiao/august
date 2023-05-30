@@ -9,6 +9,9 @@ import '../../theme/spacing.dart';
 import '../../core/calendar_grid_utils.dart';
 import '../../states/home_state.dart';
 
+const double androidGridHeight = 60;
+const double iosGridHeight = 55.8;
+
 class CalendarGrid extends StatelessWidget {
   const CalendarGrid({
     Key? key,
@@ -26,7 +29,7 @@ class CalendarGrid extends StatelessWidget {
 
     return AnimatedContainer(
       color: themeData.colorScheme.background,
-      height: calendarDates.length > 35 ? 334 : 279, // 5 lines or 6 lines
+      height: _getCalendarGridContainerHeight(themeData, calendarDates),
       duration: const Duration(milliseconds: 300),
       margin: const EdgeInsets.only(bottom: Spacing.xs),
       child: Swiper(
@@ -68,6 +71,15 @@ class CalendarGrid extends StatelessWidget {
       ),
     );
   }
+
+  double _getCalendarGridContainerHeight(ThemeData themeData,
+      List<CalendarDate> calendarDates) {
+    // 5 lines or 6 lines
+    var lines = calendarDates.length > 35 ? 6 : 5;
+    var gridHeight = themeData.platform == TargetPlatform.android ? androidGridHeight : iosGridHeight;
+
+    return lines * gridHeight;
+  }
 }
 
 class CalendarGridItem extends StatelessWidget {
@@ -104,7 +116,7 @@ class CalendarGridItem extends StatelessWidget {
         final dateColor = getDateColor(date, context);
         final subscript = getSubscriptText(lunar);
         final subscriptBackgroundColor =
-            getSubscriptBackgroundColor(lunar, context);
+        getSubscriptBackgroundColor(lunar, context);
         final festivals = getFestivals(date);
         final lunarDateColor = getLunarDateColor(festivals, lunar, context);
         final lunarText = getLunarText(festivals, lunar);
@@ -152,7 +164,7 @@ class CalendarGridItem extends StatelessWidget {
                               eventsLength > 3 ? 3 : eventsLength, (index) {
                             return Padding(
                               padding:
-                                  const EdgeInsets.only(right: Spacing.one),
+                              const EdgeInsets.only(right: Spacing.one),
                               child: CircleAvatar(
                                 radius: 2,
                                 backgroundColor: themeData.dividerColor,

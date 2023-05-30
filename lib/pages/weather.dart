@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_weather_bg/flutter_weather_bg.dart';
 import 'package:provider/provider.dart';
 import 'package:simple_calendar/widgets/weather/currently_header.dart';
@@ -51,6 +52,7 @@ class _WeatherState extends State<Weather> {
                       stretch: true,
                       collapsedHeight: 60.0,
                       expandedHeight: 160.0,
+                      elevation: 0,
                       automaticallyImplyLeading: false,
                       backgroundColor: Colors.transparent,
                       shadowColor: Colors.transparent,
