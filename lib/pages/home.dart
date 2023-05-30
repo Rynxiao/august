@@ -1,6 +1,5 @@
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_cupertino_datetime_picker/flutter_cupertino_datetime_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:simple_calendar/widgets/calendar/date_events.dart';
 
@@ -40,7 +39,7 @@ class _HomeState extends State<Home> {
                   (picked) {
                     homeState.select(picked.year, picked.month, picked.day);
                   },
-                  pickerMode: DateTimePickerMode.date,
+                  dateFormat: 'yyyy年-M月-d日',
                 );
               },
             ),

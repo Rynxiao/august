@@ -72,11 +72,13 @@ class CalendarGrid extends StatelessWidget {
     );
   }
 
-  double _getCalendarGridContainerHeight(ThemeData themeData,
-      List<CalendarDate> calendarDates) {
+  double _getCalendarGridContainerHeight(
+      ThemeData themeData, List<CalendarDate> calendarDates) {
     // 5 lines or 6 lines
     var lines = calendarDates.length > 35 ? 6 : 5;
-    var gridHeight = themeData.platform == TargetPlatform.android ? androidGridHeight : iosGridHeight;
+    var gridHeight = themeData.platform == TargetPlatform.android
+        ? androidGridHeight
+        : iosGridHeight;
 
     return lines * gridHeight;
   }
@@ -116,7 +118,7 @@ class CalendarGridItem extends StatelessWidget {
         final dateColor = getDateColor(date, context);
         final subscript = getSubscriptText(lunar);
         final subscriptBackgroundColor =
-        getSubscriptBackgroundColor(lunar, context);
+            getSubscriptBackgroundColor(lunar, context);
         final festivals = getFestivals(date);
         final lunarDateColor = getLunarDateColor(festivals, lunar, context);
         final lunarText = getLunarText(festivals, lunar);
@@ -134,11 +136,12 @@ class CalendarGridItem extends StatelessWidget {
             homeState.select(year, month, day);
           },
           child: SizedBox(
-              width: double.infinity,
-              height: 50.0,
-              child: Opacity(
-                opacity: opacity,
-                child: Stack(children: [
+            width: double.infinity,
+            height: 50.0,
+            child: Opacity(
+              opacity: opacity,
+              child: Stack(
+                children: [
                   if (isToday)
                     PositionedBorder(color: hintColor.withOpacity(0.3)),
                   if (isSelected) PositionedBorder(color: highlightColor),
@@ -164,7 +167,7 @@ class CalendarGridItem extends StatelessWidget {
                               eventsLength > 3 ? 3 : eventsLength, (index) {
                             return Padding(
                               padding:
-                              const EdgeInsets.only(right: Spacing.one),
+                                  const EdgeInsets.only(right: Spacing.one),
                               child: CircleAvatar(
                                 radius: 2,
                                 backgroundColor: themeData.dividerColor,
@@ -191,8 +194,10 @@ class CalendarGridItem extends StatelessWidget {
                         ),
                       ),
                     ),
-                ]),
-              )),
+                ],
+              ),
+            ),
+          ),
         );
       }),
     );

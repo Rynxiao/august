@@ -14,6 +14,7 @@ Future<void> showDateTimePicker(
   bool isDarkMode,
   Null Function(dynamic picked) onPick, {
   DateTimePickerMode pickerMode = DateTimePickerMode.datetime,
+  String dateFormat = format,
 }) async {
   const defaultTheme = DateTimePickerTheme.Default;
   var colorScheme = Theme.of(context).colorScheme;
@@ -34,7 +35,7 @@ Future<void> showDateTimePicker(
     minDateTime: DateTime.parse(minDatetime),
     maxDateTime: DateTime.parse(maxDatetime),
     initialDateTime: DateTime.now(),
-    dateFormat: format,
+    dateFormat: dateFormat,
     locale: DateTimePickerLocale.zh_cn,
     pickerTheme: isDarkMode ? darkPickerTheme : defaultTheme,
     pickerMode: pickerMode,

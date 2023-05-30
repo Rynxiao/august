@@ -12,15 +12,16 @@ class PositionedBorder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Positioned.fill(
-        child: Container(
-      margin: const EdgeInsets.all(Spacing.xxs),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(Spacing.xs),
-        border: Border.all(
-          color: color,
-          width: width,
+      child: Container(
+        margin: const EdgeInsets.all(Spacing.xxs),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(Spacing.xs),
+          border: Border.all(
+            color: color,
+            width: width,
+          ),
         ),
       ),
-    ));
+    );
   }
 }
