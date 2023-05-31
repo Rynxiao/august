@@ -7,7 +7,7 @@ import 'package:simple_calendar/theme/fontsize.dart';
 import 'package:simple_calendar/theme/fontweight.dart';
 import 'package:simple_calendar/utils/logger.dart';
 
-import '../db/datebase_provider.dart';
+import '../db/calendar.dart';
 import '../states/global_state.dart';
 import '../theme/spacing.dart';
 import '../utils/date_utils.dart';
@@ -44,7 +44,7 @@ class UpdateEventState extends State<UpdateEvent> with WidgetsBindingObserver {
 
   Future<CalendarEvent?> loadInitialEventData() async {
     setState(() { _isLoading = true; });
-    var event =  await DatabaseProvider().getEventsById(widget.eventId);
+    var event =  await CalendarDB.getEventsById(widget.eventId);
     if (event != null) {
       _titleController.text = event.title;
       _contentController.text = event.content;
@@ -300,7 +300,7 @@ class UpdateEventState extends State<UpdateEvent> with WidgetsBindingObserver {
         calendarEvent.cycleBy = cycleBy;
 
         Logger.d(calendarEvent.toJson());
-        final updated = await DatabaseProvider().updateEvent(calendarEvent);
+        final updated = await CalendarDB.updateEvent(calendarEvent);
 
         if (updated) {
           onUpdate();

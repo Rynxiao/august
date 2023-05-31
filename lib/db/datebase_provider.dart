@@ -1,13 +1,13 @@
 import 'package:path/path.dart';
-import 'package:simple_calendar/models/calendar/calendar_event.dart';
+import 'package:simple_calendar/db/calendar.dart';
 import 'package:sqflite/sqflite.dart';
 
-import '../utils/date_utils.dart';
+import '../utils/logger.dart';
 
 class DatabaseProvider {
   static final DatabaseProvider _instance = DatabaseProvider._();
   static Database? _database;
-  static const String calendarEvent = 'calendar_event';
+  static const String commonSense = 'common_sense';
 
   DatabaseProvider._();
 
@@ -23,14 +23,15 @@ class DatabaseProvider {
 
   Future<Database> _initDatabase() async {
     final databasesPath = await getDatabasesPath();
-    final path = join(databasesPath, 'calendar.db');
+    final path = join(databasesPath, 'august.db');
+    Logger.d("database path: $path");
 
     return await openDatabase(
       path,
       version: 1,
       onCreate: (db, version) async {
         await db.execute('''
-            CREATE TABLE IF NOT EXISTS $calendarEvent (
+            CREATE TABLE IF NOT EXISTS ${CalendarDB.calendarEvent} (
               id TEXT,
               dateId TEXT,
               title TEXT,
@@ -44,73 +45,20 @@ class DatabaseProvider {
               deleted INTEGER
             )
           ''');
+        await db.execute('''
+            CREATE TABLE IF NOT EXISTS $commonSense (
+              id TEXT,
+              title TEXT,
+              content TEXT,
+              cover TEXT,
+              liked INTEGER,
+              read INTEGER,
+              createTime INTEGER,
+              modifyTime INTEGER,
+              deleted INTEGER
+            )
+          ''');
       },
     );
-  }
-
-  Future<List<CalendarEvent>> getEvents() async {
-    final db = await database;
-    var events = await db.query(calendarEvent);
-    return events.map((event) => CalendarEvent.fromJson(event)).toList();
-  }
-
-  Future<CalendarEvent?> getEventsById(String id) async {
-    final db = await database;
-    var events = await db.query(calendarEvent,
-        where: 'id = ?', whereArgs: [id], orderBy: 'createTime');
-    var calendarEvents = events.map((event) => CalendarEvent.fromJson(event)).toList();
-    return calendarEvents.isNotEmpty ? calendarEvents[0] : null;
-  }
-
-  Future<List<CalendarEvent>> getEventsByDateId(String dateId) async {
-    final db = await database;
-    var events = await db.query(calendarEvent,
-        where: 'dateId = ?', whereArgs: [dateId], orderBy: 'createTime');
-    return events.map((event) => CalendarEvent.fromJson(event)).toList();
-  }
-
-  Future<List<CalendarEvent>> getEventsByPeriod(int month) async {
-    int prevMonth = month - 1 <= 0 ? 12 : month - 1;
-    int nextMonth = month + 1 >= 12 ? 1 : month + 1;
-
-    final db = await database;
-    var events = await db.query(
-      calendarEvent,
-      where: 'dateId LIKE ? OR dateId LIKE ? OR dateId LIKE ?',
-      whereArgs: [
-        '%${formatNumber(prevMonth)}%',
-        '%${formatNumber(month)}%',
-        '%${formatNumber(nextMonth)}%'
-      ],
-      orderBy: 'createTime',
-    );
-    return events.map((event) => CalendarEvent.fromJson(event)).toList();
-  }
-
-  Future<bool> createEvent(CalendarEvent event) async {
-    final db = await database;
-    var index = await db.insert(calendarEvent, event.toJson());
-    return index > 0;
-  }
-
-  Future<bool> deleteEventById(String id) async {
-    final db = await database;
-    var index = await db.delete(
-      calendarEvent,
-      where: 'id = ?',
-      whereArgs: [id],
-    );
-    return index > 0;
-  }
-
-  Future<bool> updateEvent(CalendarEvent event) async {
-    final db = await database;
-    int change = await db.update(
-      calendarEvent,
-      event.toJson(),
-      where: 'id = ?',
-      whereArgs: [event.id],
-    );
-    return change > 0;
   }
 }

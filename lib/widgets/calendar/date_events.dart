@@ -7,7 +7,7 @@ import 'package:simple_calendar/theme/fontweight.dart';
 import 'package:simple_calendar/theme/spacing.dart';
 import 'package:simple_calendar/utils/date_utils.dart';
 
-import '../../db/datebase_provider.dart';
+import '../../db/calendar.dart';
 import '../../routes/routes.dart';
 import '../../states/home_state.dart';
 
@@ -167,7 +167,7 @@ class DateEvents extends StatelessWidget {
   }
 
   Future<void> deleteEvent(String id, Null Function() onDeleted) async {
-    final deleted = await DatabaseProvider().deleteEventById(id);
+    final deleted = await CalendarDB.deleteEventById(id);
 
     if (deleted) {
       onDeleted();

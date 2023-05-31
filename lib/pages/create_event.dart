@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:lunar/calendar/Lunar.dart';
 import 'package:provider/provider.dart';
+import 'package:simple_calendar/db/calendar.dart';
 import 'package:simple_calendar/widgets/calendar/event_appbar.dart';
 import 'package:simple_calendar/models/calendar/calendar_event.dart';
 import 'package:simple_calendar/states/home_state.dart';
@@ -10,7 +11,6 @@ import 'package:simple_calendar/theme/fontweight.dart';
 import 'package:simple_calendar/utils/logger.dart';
 import 'package:uuid/uuid.dart';
 
-import '../db/datebase_provider.dart';
 import '../states/global_state.dart';
 import '../theme/spacing.dart';
 import '../utils/date_utils.dart';
@@ -271,7 +271,7 @@ class CreateEventState extends State<CreateEvent> with WidgetsBindingObserver {
         );
 
         Logger.d(calendarEvent.toJson());
-        final created = await DatabaseProvider().createEvent(calendarEvent);
+        final created = await CalendarDB.createEvent(calendarEvent);
 
         if (created) {
           onCreated();

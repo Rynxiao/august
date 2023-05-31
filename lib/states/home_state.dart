@@ -1,8 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:simple_calendar/core/calendar_grid_utils.dart';
-import 'package:simple_calendar/db/datebase_provider.dart';
 
 import '../core/calendar.dart';
+import '../db/calendar.dart';
 import '../models/calendar/calendar_date.dart';
 import '../models/calendar/calendar_event.dart';
 
@@ -40,7 +40,7 @@ class HomeState extends ChangeNotifier {
 
   Future<void> setDateEvents({int? month}) async {
     List<CalendarEvent> dateEvents =
-        await DatabaseProvider().getEventsByPeriod(month ?? _selectedMonth);
+        await CalendarDB.getEventsByPeriod(month ?? _selectedMonth);
     _dateEvents = dateEvents;
     notifyListeners();
   }
@@ -67,11 +67,13 @@ class HomeState extends ChangeNotifier {
 
     final prevYearAndMonth = getPrevYearAndMonth(year, month);
     _prevCalendarDates = _calendar.getCalendarForMonth(
-        prevYearAndMonth.year, prevYearAndMonth.month, startWithSunday: true);
+        prevYearAndMonth.year, prevYearAndMonth.month,
+        startWithSunday: true);
 
     final nextYearAndMonth = getNextYearAndMonth(year, month);
     _nextCalendarDates = _calendar.getCalendarForMonth(
-        nextYearAndMonth.year, nextYearAndMonth.month, startWithSunday: true);
+        nextYearAndMonth.year, nextYearAndMonth.month,
+        startWithSunday: true);
 
     notifyListeners();
   }
