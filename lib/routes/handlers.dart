@@ -1,5 +1,6 @@
 import 'package:fluro/fluro.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:simple_calendar/pages/common_sense.dart';
 import 'package:simple_calendar/pages/create_event.dart';
 import 'package:simple_calendar/pages/home.dart';
 import 'package:simple_calendar/pages/update_event.dart';
@@ -40,10 +41,15 @@ var weatherHandler = Handler(
   return const Weather();
 });
 
+var commonSenseHandler = Handler(
+    handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
+  return const CommonSense();
+});
+
 var settingsHandler = Handler(
     handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
-  return const Settings();
-});
+      return const Settings();
+    });
 
 var aboutHandler = Handler(
     handlerFunc: (BuildContext? context, Map<String, List<String>> params) {

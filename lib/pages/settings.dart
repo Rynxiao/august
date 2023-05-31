@@ -106,7 +106,7 @@ class Settings extends StatelessWidget {
           ],
         ),
       ),
-      bottomNavigationBar: renderBottomNavigationBar(context, 2),
+      bottomNavigationBar: renderBottomNavigationBar(context, 3),
     );
   }
 }
