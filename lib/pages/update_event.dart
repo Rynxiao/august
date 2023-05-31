@@ -298,6 +298,7 @@ class UpdateEventState extends State<UpdateEvent> with WidgetsBindingObserver {
         calendarEvent.lunarDate = lunar.toString();
         calendarEvent.isCycle = isCycle;
         calendarEvent.cycleBy = cycleBy;
+        calendarEvent.modifyTime = getTimestamp(DateTime.now());
 
         Logger.d(calendarEvent.toJson());
         final updated = await CalendarDB.updateEvent(calendarEvent);

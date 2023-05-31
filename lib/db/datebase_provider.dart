@@ -3,11 +3,11 @@ import 'package:simple_calendar/db/calendar.dart';
 import 'package:sqflite/sqflite.dart';
 
 import '../utils/logger.dart';
+import 'common_sense.dart';
 
 class DatabaseProvider {
   static final DatabaseProvider _instance = DatabaseProvider._();
   static Database? _database;
-  static const String commonSense = 'common_sense';
 
   DatabaseProvider._();
 
@@ -46,13 +46,14 @@ class DatabaseProvider {
             )
           ''');
         await db.execute('''
-            CREATE TABLE IF NOT EXISTS $commonSense (
+            CREATE TABLE IF NOT EXISTS ${CommonSenseDB.commonSense} (
               id TEXT,
               title TEXT,
               content TEXT,
               cover TEXT,
               liked INTEGER,
               read INTEGER,
+              type INTEGER,
               createTime INTEGER,
               modifyTime INTEGER,
               deleted INTEGER

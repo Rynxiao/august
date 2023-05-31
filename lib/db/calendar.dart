@@ -19,16 +19,25 @@ class CalendarDB {
 
   static Future<CalendarEvent?> getEventsById(String id) async {
     final db = await getDatabase();
-    var events = await db.query(calendarEvent,
-        where: 'id = ?', whereArgs: [id], orderBy: 'createTime');
-    var calendarEvents = events.map((event) => CalendarEvent.fromJson(event)).toList();
+    var events = await db.query(
+      calendarEvent,
+      where: 'id = ?',
+      whereArgs: [id],
+      orderBy: 'createTime',
+    );
+    var calendarEvents =
+        events.map((event) => CalendarEvent.fromJson(event)).toList();
     return calendarEvents.isNotEmpty ? calendarEvents[0] : null;
   }
 
   static Future<List<CalendarEvent>> getEventsByDateId(String dateId) async {
     final db = await getDatabase();
-    var events = await db.query(calendarEvent,
-        where: 'dateId = ?', whereArgs: [dateId], orderBy: 'createTime');
+    var events = await db.query(
+      calendarEvent,
+      where: 'dateId = ?',
+      whereArgs: [dateId],
+      orderBy: 'createTime',
+    );
     return events.map((event) => CalendarEvent.fromJson(event)).toList();
   }
 
