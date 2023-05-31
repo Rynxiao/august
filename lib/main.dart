@@ -16,7 +16,7 @@ Future<void> main() async {
 
   final position = await _determinePosition();
   final weatherState = WeatherState(position);
-  await weatherState.getWeatherInfo();
+  // await weatherState.getWeatherInfo();
 
   final homeState = HomeState();
   await homeState.setDateEvents();

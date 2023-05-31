@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:lunar/calendar/Lunar.dart';
 import 'package:provider/provider.dart';
-import 'package:simple_calendar/widgets/calendar/create_event_header.dart';
-import 'package:simple_calendar/widgets/custom_scaffold.dart';
+import 'package:simple_calendar/widgets/calendar/event_appbar.dart';
 import 'package:simple_calendar/models/calendar/calendar_event.dart';
 import 'package:simple_calendar/states/home_state.dart';
 import 'package:simple_calendar/theme/fontsize.dart';
@@ -39,7 +39,6 @@ class CreateEventState extends State<CreateEvent> with WidgetsBindingObserver {
 
   bool _isCycle = true;
   bool _cycleBy = true;
-  final _controller = ScrollController();
 
   @override
   void initState() {
@@ -52,8 +51,6 @@ class CreateEventState extends State<CreateEvent> with WidgetsBindingObserver {
         DateTime.now(),
       ),
     );
-
-    WidgetsBinding.instance.addObserver(this);
   }
 
   @override
@@ -67,208 +64,185 @@ class CreateEventState extends State<CreateEvent> with WidgetsBindingObserver {
       onTap: () {
         FocusScope.of(context).requestFocus(FocusNode());
       },
-      child: CustomScaffold(
+      child: Scaffold(
+        appBar: EventAppBar(
+          title: '添加提醒',
+          onAddOrUpdateEvent: () async {
+            await addEvent(() {
+              backToInitialState();
+              homeState.setDateEvents();
+              Navigator.of(context).pop();
+            });
+          },
+        ),
+        backgroundColor: themeData.scaffoldBackgroundColor,
         body: SingleChildScrollView(
-          controller: _controller,
           child: SafeArea(
-            child: Column(
-              children: [
-                EventHeader(
-                  title: '添加提醒',
-                  onAddOrUpdateEvent: () async {
-                    await addEvent(() {
-                      backToInitialState();
-                      homeState.setDateEvents();
-                      Navigator.of(context).pop();
-                    });
-                  },
+            child: Container(
+              color: themeData.colorScheme.background,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  vertical: Spacing.s,
+                  horizontal: Spacing.m,
                 ),
-                Container(
-                  color: themeData.colorScheme.background,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                      vertical: Spacing.s,
-                      horizontal: Spacing.m,
-                    ),
-                    child: Form(
-                      key: _formKey,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Padding(
-                            padding: const EdgeInsets.only(bottom: Spacing.s),
-                            child: TextFormField(
-                              autofocus: true,
-                              autocorrect: false,
-                              controller: _titleController,
-                              decoration: InputDecoration(
-                                hintText: "提醒标题",
-                                hintStyle: TextStyle(
-                                  fontSize: AppFontSize.medium,
-                                  fontWeight: AppFontWeight.regular,
-                                  color: themeData.colorScheme.secondary,
-                                ),
-                                filled: true,
-                                fillColor: themeData.scaffoldBackgroundColor,
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10.0),
-                                  borderSide: BorderSide.none,
-                                ),
-                              ),
-                              validator: (value) {
-                                if (value != null) {
-                                  if (value.isEmpty) {
-                                    return "标题不能为空";
-                                  }
-                                }
-                                return null;
-                              },
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: Spacing.s),
+                        child: TextFormField(
+                          autofocus: true,
+                          autocorrect: false,
+                          controller: _titleController,
+                          decoration: InputDecoration(
+                            hintText: "提醒标题",
+                            hintStyle: TextStyle(
+                              fontSize: AppFontSize.medium,
+                              fontWeight: AppFontWeight.regular,
+                              color: themeData.colorScheme.secondary,
+                            ),
+                            filled: true,
+                            fillColor: themeData.scaffoldBackgroundColor,
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                              borderSide: BorderSide.none,
                             ),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.only(bottom: Spacing.s),
-                            child: TextFormField(
-                              autocorrect: false,
-                              controller: _contentController,
-                              maxLines: 3,
-                              maxLength: 100,
-                              keyboardType: TextInputType.multiline,
-                              decoration: InputDecoration(
-                                hintText: "提醒内容",
-                                hintStyle: TextStyle(
-                                  fontSize: AppFontSize.medium,
-                                  fontWeight: AppFontWeight.regular,
-                                  color: themeData.colorScheme.secondary,
-                                ),
-                                filled: true,
-                                fillColor: themeData.scaffoldBackgroundColor,
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10.0),
-                                  borderSide: BorderSide.none,
-                                ),
+                          validator: (value) {
+                            if (value != null) {
+                              if (value.isEmpty) {
+                                return "标题不能为空";
+                              }
+                            }
+                            return null;
+                          },
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: Spacing.s),
+                        child: TextFormField(
+                          autocorrect: false,
+                          controller: _contentController,
+                          maxLines: 3,
+                          maxLength: 100,
+                          keyboardType: TextInputType.multiline,
+                          decoration: InputDecoration(
+                            hintText: "提醒内容",
+                            hintStyle: TextStyle(
+                              fontSize: AppFontSize.medium,
+                              fontWeight: AppFontWeight.regular,
+                              color: themeData.colorScheme.secondary,
+                            ),
+                            filled: true,
+                            fillColor: themeData.scaffoldBackgroundColor,
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                              borderSide: BorderSide.none,
+                            ),
+                          ),
+                        ),
+                      ),
+                      InkWell(
+                        onTap: () {
+                          showDateTimePicker(context, isDarkMode, (picked) {
+                            _dateController.text = formatDateTime(picked);
+                          });
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.only(bottom: Spacing.s),
+                          child: TextFormField(
+                            controller: _dateController,
+                            decoration: InputDecoration(
+                              enabled: false,
+                              hintText: "选择时间和日期",
+                              hintStyle: TextStyle(
+                                fontSize: AppFontSize.medium,
+                                fontWeight: AppFontWeight.regular,
+                                color: themeData.colorScheme.secondary,
+                              ),
+                              filled: true,
+                              fillColor: themeData.scaffoldBackgroundColor,
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10.0),
+                                borderSide: BorderSide.none,
                               ),
                             ),
                           ),
-                          InkWell(
-                            onTap: () {
-                              showDateTimePicker(context, isDarkMode, (picked) {
-                                _dateController.text = formatDateTime(picked);
-                              });
-                            },
-                            child: Padding(
-                              padding: const EdgeInsets.only(bottom: Spacing.s),
-                              child: TextFormField(
-                                controller: _dateController,
-                                decoration: InputDecoration(
-                                  enabled: false,
-                                  hintText: "选择时间和日期",
-                                  hintStyle: TextStyle(
+                        ),
+                      ),
+                      Container(
+                        decoration: BoxDecoration(
+                          color: themeData.scaffoldBackgroundColor,
+                          borderRadius: BorderRadius.circular(10.0),
+                          // border: Border.all(color: Colors.transparent, width: 1)
+                        ),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: Spacing.s,
+                          vertical: Spacing.xs,
+                        ),
+                        child: Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment:
+                                  MainAxisAlignment.spaceBetween,
+                              children: [
+                                const Text(
+                                  "循环提醒",
+                                  style: TextStyle(
                                     fontSize: AppFontSize.medium,
                                     fontWeight: AppFontWeight.regular,
-                                    color: themeData.colorScheme.secondary,
-                                  ),
-                                  filled: true,
-                                  fillColor: themeData.scaffoldBackgroundColor,
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10.0),
-                                    borderSide: BorderSide.none,
                                   ),
                                 ),
-                              ),
-                            ),
-                          ),
-                          Container(
-                            decoration: BoxDecoration(
-                              color: themeData.scaffoldBackgroundColor,
-                              borderRadius: BorderRadius.circular(10.0),
-                              // border: Border.all(color: Colors.transparent, width: 1)
-                            ),
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: Spacing.s,
-                              vertical: Spacing.xs,
-                            ),
-                            child: Column(
-                              children: [
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    const Text(
-                                      "循环提醒",
-                                      style: TextStyle(
-                                        fontSize: AppFontSize.medium,
-                                        fontWeight: AppFontWeight.regular,
-                                      ),
-                                    ),
-                                    Switch(
-                                      value: _isCycle,
-                                      onChanged: (value) {
-                                        setState(() {
-                                          _isCycle = value;
-                                        });
-                                      },
-                                    ),
-                                  ],
-                                ),
-                                const Divider(),
-                                Opacity(
-                                  opacity: _isCycle ? 1 : 0.5,
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        "按${_cycleBy ? '农历' : '公历'}循环",
-                                        style: const TextStyle(
-                                          fontSize: AppFontSize.medium,
-                                          fontWeight: AppFontWeight.regular,
-                                        ),
-                                      ),
-                                      Switch(
-                                        value: _cycleBy,
-                                        onChanged: _isCycle
-                                            ? (value) {
-                                                setState(() {
-                                                  _cycleBy = value;
-                                                });
-                                              }
-                                            : null,
-                                      ),
-                                    ],
-                                  ),
+                                Switch(
+                                  value: _isCycle,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      _isCycle = value;
+                                    });
+                                  },
                                 ),
                               ],
                             ),
-                          ),
-                        ],
+                            const Divider(),
+                            Opacity(
+                              opacity: _isCycle ? 1 : 0.5,
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    "按${_cycleBy ? '农历' : '公历'}循环",
+                                    style: const TextStyle(
+                                      fontSize: AppFontSize.medium,
+                                      fontWeight: AppFontWeight.regular,
+                                    ),
+                                  ),
+                                  Switch(
+                                    value: _cycleBy,
+                                    onChanged: _isCycle
+                                        ? (value) {
+                                            setState(() {
+                                              _cycleBy = value;
+                                            });
+                                          }
+                                        : null,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
+                    ],
                   ),
                 ),
-              ],
+              ),
             ),
           ),
         ),
       ),
-    );
-  }
-
-  @override
-  void dispose() {
-    WidgetsBinding.instance.removeObserver(this);
-    super.dispose();
-  }
-
-  @override
-  void didChangeMetrics() {
-    super.didChangeMetrics();
-
-    final keyboardHeight = MediaQuery.of(context).viewInsets.bottom;
-
-    _controller.animateTo(
-      keyboardHeight,
-      duration: const Duration(milliseconds: 300),
-      curve: Curves.easeOut,
     );
   }
 

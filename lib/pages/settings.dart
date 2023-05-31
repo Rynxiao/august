@@ -1,12 +1,10 @@
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:simple_calendar/theme/fontsize.dart';
-import 'package:simple_calendar/theme/fontweight.dart';
 import 'package:simple_calendar/theme/spacing.dart';
 import 'package:simple_calendar/widgets/weather/weather_icon.dart';
 
-import '../widgets/custom_scaffold.dart';
+import '../widgets/custom_appbar.dart';
 import '../routes/routes.dart';
 import '../states/global_state.dart';
 
@@ -18,34 +16,22 @@ class Settings extends StatelessWidget {
     final globalState = Provider.of<GlobalState>(context);
     final isDarkMode = globalState.isDarkMode;
     final themeData = Theme.of(context);
-    var titleStyle = themeData.textTheme.headlineSmall?.copyWith(
-      fontSize: AppFontSize.extraLarge,
-      color: themeData.colorScheme.onSecondary,
-      fontWeight: AppFontWeight.bold,
-    );
 
-    return CustomScaffold(
-      appBarColor: themeData.scaffoldBackgroundColor,
+    return Scaffold(
+      appBar: CustomAppBar(
+        title: '设置',
+        automaticallyImplyLeading: false,
+        backgroundColor: themeData.scaffoldBackgroundColor,
+      ),
       body: SafeArea(
         child: Column(
           children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: Spacing.m),
-              child: Text(
-                "设置",
-                style: titleStyle,
-              ),
-            ),
             Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20.0),
                 color: themeData.colorScheme.background,
               ),
-              margin: const EdgeInsets.only(
-                left: Spacing.m,
-                right: Spacing.m,
-                bottom: Spacing.m
-              ),
+              margin: const EdgeInsets.all(Spacing.m),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [

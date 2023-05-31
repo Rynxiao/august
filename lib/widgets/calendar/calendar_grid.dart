@@ -9,6 +9,7 @@ import '../../theme/spacing.dart';
 import '../../core/calendar_grid_utils.dart';
 import '../../states/home_state.dart';
 
+// TODO dynamic calculate grid height
 const double androidGridHeight = 60;
 const double iosGridHeight = 55.8;
 
@@ -34,6 +35,8 @@ class CalendarGrid extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: Spacing.xs),
       child: Swiper(
         index: 1,
+        loop: false,
+        duration: 1,
         itemCount: list.length,
         onIndexChanged: (int index) {
           if (index == 0) {

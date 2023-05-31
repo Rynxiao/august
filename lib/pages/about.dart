@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:simple_calendar/theme/fontsize.dart';
 import 'package:simple_calendar/theme/spacing.dart';
+import 'package:simple_calendar/widgets/custom_appbar.dart';
 
 import '../states/global_state.dart';
 import '../routes/routes.dart';
@@ -14,28 +15,13 @@ class About extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final themeData = Theme.of(context);
-    final globalState = Provider.of<GlobalState>(context);
-    final isDarkMode = globalState.isDarkMode;
-
-    var titleStyle = themeData.textTheme.headlineSmall?.copyWith(
-      fontSize: AppFontSize.extraLarge,
-      color: themeData.colorScheme.onSecondary,
-      fontWeight: AppFontWeight.bold,
-    );
     var descriptionStyle = themeData.textTheme.bodyMedium?.copyWith(
       fontSize: AppFontSize.large,
     );
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('极简日历'),
-        titleTextStyle: titleStyle,
-        iconTheme: IconThemeData(
-          color: themeData.colorScheme.onSecondary,
-        ),
-        elevation: 0,
-        systemOverlayStyle:
-            isDarkMode ? SystemUiOverlayStyle.light : SystemUiOverlayStyle.dark,
+      appBar: CustomAppBar(
+        title: '关于',
         backgroundColor: themeData.scaffoldBackgroundColor,
       ),
       backgroundColor: themeData.scaffoldBackgroundColor,
@@ -49,6 +35,7 @@ class About extends StatelessWidget {
               ),
               padding: const EdgeInsets.symmetric(horizontal: Spacing.m),
               margin: const EdgeInsets.symmetric(
+                vertical: Spacing.m,
                 horizontal: Spacing.m,
               ),
               child: Column(

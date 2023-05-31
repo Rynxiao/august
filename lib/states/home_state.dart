@@ -67,11 +67,11 @@ class HomeState extends ChangeNotifier {
 
     final prevYearAndMonth = getPrevYearAndMonth(year, month);
     _prevCalendarDates = _calendar.getCalendarForMonth(
-        prevYearAndMonth.year, prevYearAndMonth.month);
+        prevYearAndMonth.year, prevYearAndMonth.month, startWithSunday: true);
 
     final nextYearAndMonth = getNextYearAndMonth(year, month);
     _nextCalendarDates = _calendar.getCalendarForMonth(
-        nextYearAndMonth.year, nextYearAndMonth.month);
+        nextYearAndMonth.year, nextYearAndMonth.month, startWithSunday: true);
 
     notifyListeners();
   }
