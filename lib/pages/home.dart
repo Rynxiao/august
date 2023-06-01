@@ -6,6 +6,7 @@ import 'package:simple_calendar/pages/settings.dart';
 import 'package:simple_calendar/pages/weather.dart';
 import 'package:simple_calendar/states/calendar_state.dart';
 import 'package:simple_calendar/states/global_state.dart';
+import 'package:simple_calendar/states/sense_state.dart';
 
 import '../routes/routes.dart';
 import '../widgets/custom_appbar.dart';
@@ -23,10 +24,11 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     final homeState = Provider.of<CalendarState>(context);
+    final senseState = Provider.of<SenseState>(context);
 
     return Scaffold(
       appBar: getAppBar(selectedIndex, context),
-      body: getBody(selectedIndex),
+      body: getBody(selectedIndex, senseState),
       bottomNavigationBar: renderBottomNavigationBar(
         context,
         selectedIndex,
@@ -40,14 +42,14 @@ class _HomeState extends State<Home> {
     );
   }
 
-  Widget getBody(int index) {
+  Widget getBody(int index, SenseState senseState) {
     switch (index) {
       case 0:
         return const Calendar();
       case 1:
         return const Weather();
       case 2:
-        return const CommonSense();
+        return CommonSense(senseState: senseState);
       case 3:
         return const Settings();
       default:

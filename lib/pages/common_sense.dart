@@ -1,25 +1,39 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:simple_calendar/models/commonSense/sense_type.dart';
+import 'package:simple_calendar/states/sense_state.dart';
 import 'package:simple_calendar/theme/fontsize.dart';
 import 'package:simple_calendar/theme/spacing.dart';
 
 import '../states/global_state.dart';
 
 class CommonSense extends StatefulWidget {
-  const CommonSense({super.key});
+  final SenseState senseState;
+
+  const CommonSense({super.key, required this.senseState});
 
   @override
   State<CommonSense> createState() => _CommonSenseState();
 }
 
 class _CommonSenseState extends State<CommonSense>
-    with SingleTickerProviderStateMixin {
+    with TickerProviderStateMixin {
   late TabController _tabController;
+
+  List<Tab> tabs = [];
 
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 7, vsync: this);
+
+    var types = widget.senseState.types;
+    types.insert(0, SenseType(id: '0', title: '最新'));
+
+    setState(() {
+      tabs = types.map((type) => Tab(text: type.title)).toList();
+    });
+
+    _tabController = TabController(length: types.length, vsync: this);
   }
 
   @override
@@ -51,15 +65,7 @@ class _CommonSenseState extends State<CommonSense>
                 unselectedLabelStyle: unselectedLabelStyle,
                 labelPadding: const EdgeInsets.only(right: Spacing.l),
                 indicatorPadding: const EdgeInsets.only(right: Spacing.l),
-                tabs: const [
-                  Tab(text: '最新'),
-                  Tab(text: '生活'),
-                  Tab(text: '医学'),
-                  Tab(text: '45435435'),
-                  Tab(text: '5654645654'),
-                  Tab(text: '67657657'),
-                  Tab(text: '72432423432'),
-                ],
+                tabs: tabs,
                 onTap: (index) {
                   _tabController.index = index;
                 },
@@ -102,11 +108,10 @@ class _CommonSenseState extends State<CommonSense>
       child: Container(
         color: backgroundColor,
         padding: const EdgeInsets.only(
-          left: Spacing.s,
-          right: Spacing.s,
-          top: Spacing.m,
-          bottom: Spacing.xs
-        ),
+            left: Spacing.s,
+            right: Spacing.s,
+            top: Spacing.m,
+            bottom: Spacing.xs),
         width: double.maxFinite,
         child: Flex(
           direction: Axis.horizontal,
