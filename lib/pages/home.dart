@@ -1,17 +1,13 @@
-import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:simple_calendar/widgets/calendar/date_events.dart';
+import 'package:simple_calendar/pages/calendar.dart';
+import 'package:simple_calendar/pages/common_sense.dart';
+import 'package:simple_calendar/pages/settings.dart';
+import 'package:simple_calendar/pages/weather.dart';
+import 'package:simple_calendar/states/calendar_state.dart';
 
-import '../widgets/custom_scaffold.dart';
-import '../widgets/calendar/lunar_detail.dart';
-import '../widgets/calendar/month_header.dart';
-import '../states/global_state.dart';
-import '../widgets/calendar/calendar_grid.dart';
-import '../widgets/calendar/week_header.dart';
 import '../routes/routes.dart';
-import '../states/home_state.dart';
-import '../utils/date_utils.dart';
+import '../widgets/custom_appbar.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -21,56 +17,88 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  var selectedIndex = 0;
+
   @override
   Widget build(BuildContext context) {
-    final homeState = Provider.of<HomeState>(context);
-    final globalState = Provider.of<GlobalState>(context);
-    final isDarkMode = globalState.isDarkMode;
+    var themeData = Theme.of(context);
+    final homeState = Provider.of<CalendarState>(context);
 
-    return CustomScaffold(
-      body: SafeArea(
-        child: Column(
-          children: [
-            MonthHeader(
-              onNavigateToMonth: () {
-                showDateTimePicker(
-                  context,
-                  isDarkMode,
-                  (picked) {
-                    homeState.select(picked.year, picked.month, picked.day);
-                  },
-                  dateFormat: 'yyyy年-M月-d日',
-                );
-              },
-            ),
-            const WeekHeader(),
-            const CalendarGrid(),
-            Expanded(
-              child: SingleChildScrollView(
-                child: Column(
-                  children: const [
-                    DateEvents(),
-                    LunarDetail(),
-                  ],
-                ),
-              ),
-            )
-          ],
-        ),
+    return Scaffold(
+      appBar: getAppBar(selectedIndex, themeData),
+      body: getBody(selectedIndex),
+      bottomNavigationBar: renderBottomNavigationBar(
+        context,
+        selectedIndex,
+        (index) {
+          setState(() {
+            selectedIndex = index;
+          });
+        },
       ),
-      bottomNavigationBar: renderBottomNavigationBar(context, 0),
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: getFloatingActionButton(selectedIndex, homeState),
+    );
+  }
+
+  Widget getBody(int index) {
+    switch (index) {
+      case 0:
+        return const Calendar();
+      case 1:
+        return const Weather();
+      case 2:
+        return const CommonSense();
+      case 3:
+        return const Settings();
+      default:
+        return const Calendar();
+    }
+  }
+
+  PreferredSizeWidget? getAppBar(int index, ThemeData themeData) {
+    switch (index) {
+      case 0:
+        return const PreferredSizeAppBar();
+      case 1:
+        return null;
+      case 2:
+        return CustomAppBar(
+          title: '小常识',
+          automaticallyImplyLeading: false,
+          backgroundColor: themeData.scaffoldBackgroundColor,
+          bottomHeight: kTextTabBarHeight,
+          bottom: const TabBar(
+            tabs: [
+              Tab(text: 'Tab 1'),
+              Tab(text: 'Tab 2'),
+              Tab(text: 'Tab 3'),
+            ],
+          ),
+        );
+      case 3:
+        return CustomAppBar(
+          title: '设置',
+          automaticallyImplyLeading: false,
+          backgroundColor: themeData.scaffoldBackgroundColor,
+        );
+      default:
+        return const PreferredSizeAppBar();
+    }
+  }
+
+  Widget? getFloatingActionButton(int index, CalendarState homeState) {
+    var route =
+        '/eventCreate/${homeState.selectedYear}/${homeState.selectedMonth}/${homeState.selectedDay}';
+    if (index == 0) {
+      return FloatingActionButton(
         backgroundColor: Theme.of(context).primaryColor,
         foregroundColor: Theme.of(context).colorScheme.onSurface,
         onPressed: () {
-          navigateTo(
-            context,
-            '/eventCreate/${homeState.selectedYear}/${homeState.selectedMonth}/${homeState.selectedDay}',
-            transitionType: TransitionType.inFromRight,
-          );
+          navigateTo(context, route);
         },
         child: const Icon(Icons.add),
-      ),
-    );
+      );
+    }
+    return null;
   }
 }

@@ -7,7 +7,7 @@ import '../../core/calendar.dart';
 import '../../models/calendar/calendar_date.dart';
 import '../../theme/spacing.dart';
 import '../../core/calendar_grid_utils.dart';
-import '../../states/home_state.dart';
+import '../../states/calendar_state.dart';
 
 // TODO dynamic calculate grid height
 const double androidGridHeight = 60;
@@ -20,7 +20,7 @@ class CalendarGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final homeState = Provider.of<HomeState>(context);
+    final homeState = Provider.of<CalendarState>(context);
     var calendarDates = homeState.calendarDates;
     var prevCalendarDates = homeState.prevCalendarDates;
     var nextCalendarDates = homeState.nextCalendarDates;
@@ -97,7 +97,7 @@ class CalendarGridItem extends StatelessWidget {
   });
 
   final List<CalendarDate> calendarDates;
-  final HomeState homeState;
+  final CalendarState homeState;
   final Calendar calendar;
   final ThemeData themeData;
 

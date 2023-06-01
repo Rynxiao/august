@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:simple_calendar/theme/fontsize.dart';
 import 'package:simple_calendar/theme/spacing.dart';
 
-import '../../states/home_state.dart';
+import '../../states/calendar_state.dart';
 
 class WeekHeader extends StatelessWidget {
   const WeekHeader({
@@ -12,7 +12,7 @@ class WeekHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final homeState = Provider.of<HomeState>(context);
+    final homeState = Provider.of<CalendarState>(context);
     final headers = homeState.calendar.getWeekdayHeaders(true);
     final themeData = Theme.of(context);
 

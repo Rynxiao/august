@@ -7,7 +7,7 @@ import 'package:provider/provider.dart';
 import 'routes/application.dart';
 import 'routes/routes.dart';
 import 'states/global_state.dart';
-import 'states/home_state.dart';
+import 'states/calendar_state.dart';
 import 'states/weather_state.dart';
 import 'theme/theme.dart';
 
@@ -18,7 +18,7 @@ Future<void> main() async {
   final weatherState = WeatherState(position);
   // await weatherState.getWeatherInfo();
 
-  final homeState = HomeState();
+  final homeState = CalendarState();
   await homeState.setDateEvents();
 
   runApp(

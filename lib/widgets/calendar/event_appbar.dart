@@ -20,6 +20,7 @@ class EventAppBar extends CustomAppBar {
 
     return CustomAppBar(
       title: title,
+      automaticallyImplyLeading: true,
       actions: [
         TextButton(
           onPressed: onAddOrUpdateEvent,

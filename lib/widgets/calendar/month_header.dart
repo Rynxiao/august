@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 
 import '../../theme/fontsize.dart';
 import '../../theme/spacing.dart';
-import '../../states/home_state.dart';
+import '../../states/calendar_state.dart';
 
 class MonthHeader extends StatelessWidget {
   final VoidCallback? onNavigateToMonth;
@@ -15,7 +15,7 @@ class MonthHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final homeState = Provider.of<HomeState>(context);
+    final homeState = Provider.of<CalendarState>(context);
     final themeData = Theme.of(context);
 
     return Container(
@@ -47,7 +47,7 @@ class MonthHeader extends StatelessWidget {
                 Positioned(
                   child: Padding(
                     padding: const EdgeInsets.only(right: Spacing.m),
-                    child: InkWell(
+                    child: GestureDetector(
                       onTap: () {
                         var now = DateTime.now();
                         if (!homeState.isSelected(now.year, now.month, now.day)) {

@@ -1,12 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../widgets/custom_appbar.dart';
-import '../routes/routes.dart';
 import '../states/global_state.dart';
 
-class CommonSense extends StatelessWidget {
+class CommonSense extends StatefulWidget {
   const CommonSense({super.key});
+
+  @override
+  State<CommonSense> createState() => _CommonSenseState();
+}
+
+class _CommonSenseState extends State<CommonSense> with SingleTickerProviderStateMixin {
+  late TabController _tabController;
+
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(length: 3, vsync: this);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -14,18 +25,19 @@ class CommonSense extends StatelessWidget {
     final isDarkMode = globalState.isDarkMode;
     final themeData = Theme.of(context);
 
-    return Scaffold(
-      appBar: CustomAppBar(
-        title: '小常识',
-        automaticallyImplyLeading: false,
-        backgroundColor: themeData.scaffoldBackgroundColor,
-      ),
-      body: const SafeArea(
-        child: Center(
-          child: Text('小常识'),
-        )
-      ),
-      bottomNavigationBar: renderBottomNavigationBar(context, 2),
+    return TabBarView(
+      controller: _tabController,
+      children: const [
+        Center(child: Text('Tab 1')),
+        Center(child: Text('Tab 2')),
+        Center(child: Text('Tab 3')),
+      ],
     );
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
   }
 }

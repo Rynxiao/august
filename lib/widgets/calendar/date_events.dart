@@ -9,7 +9,7 @@ import 'package:simple_calendar/utils/date_utils.dart';
 
 import '../../db/calendar.dart';
 import '../../routes/routes.dart';
-import '../../states/home_state.dart';
+import '../../states/calendar_state.dart';
 
 class DateEvents extends StatelessWidget {
   const DateEvents({
@@ -18,7 +18,7 @@ class DateEvents extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final homeState = Provider.of<HomeState>(context);
+    final homeState = Provider.of<CalendarState>(context);
     final themeData = Theme.of(context);
     final lunar = getLunarDetail(
       homeState.selectedYear,
@@ -113,11 +113,7 @@ class DateEvents extends StatelessWidget {
                             children: [
                               GestureDetector(
                                 onTap: () {
-                                  navigateTo(
-                                    context,
-                                    '/eventUpdate/${event.id}',
-                                    transitionType: TransitionType.inFromRight,
-                                  );
+                                  navigateTo(context, '/eventUpdate/${event.id}');
                                 },
                                 child: const Padding(
                                   padding: EdgeInsets.only(right: Spacing.m),

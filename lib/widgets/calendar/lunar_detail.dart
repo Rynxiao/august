@@ -5,7 +5,7 @@ import 'package:simple_calendar/core/lunar_untils.dart';
 import 'package:simple_calendar/theme/fontsize.dart';
 import 'package:simple_calendar/theme/spacing.dart';
 
-import '../../states/home_state.dart';
+import '../../states/calendar_state.dart';
 import '../../theme/colors.dart';
 
 class LunarDetail extends StatelessWidget {
@@ -15,7 +15,7 @@ class LunarDetail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final homeState = Provider.of<HomeState>(context);
+    final homeState = Provider.of<CalendarState>(context);
     final themeData = Theme.of(context);
     final lunar = getLunarDetail(
       homeState.selectedYear,

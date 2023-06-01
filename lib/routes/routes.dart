@@ -1,3 +1,4 @@
+import 'package:flashy_tab_bar2/flashy_tab_bar2.dart';
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:simple_calendar/routes/application.dart';
@@ -8,9 +9,6 @@ import 'handlers.dart';
 // https://pub.dev/packages/fluro
 class Routes {
   static String home = "/";
-  static String weather = "/weather";
-  static String commonSense = "/commonSense";
-  static String settings = "/settings";
   static String eventCreate = "/eventCreate/:year/:month/:day";
   static String eventUpdate = "/eventUpdate/:eventId";
   static String about = "/about";
@@ -22,74 +20,69 @@ class Routes {
       return;
     });
     router.define(home, handler: homeHandler);
-    router.define(weather, handler: weatherHandler);
-    router.define(commonSense, handler: commonSenseHandler);
-    router.define(settings, handler: settingsHandler);
     router.define(eventCreate, handler: eventCreateHandler);
     router.define(eventUpdate, handler: eventUpdateHandler);
     router.define(about, handler: aboutHandler);
   }
 }
 
-Container renderBottomNavigationBar(BuildContext context, int currentIndex) {
-  return Container(
-    decoration: BoxDecoration(
-      border: Border(
-        top: BorderSide(
-          color: Theme.of(context).dividerColor,
-          width: 0.2,
-        ),
+FlashyTabBar renderBottomNavigationBar(
+  BuildContext context,
+  int currentIndex,
+  Null Function(dynamic index) onSelect,
+) {
+  return FlashyTabBar(
+    selectedIndex: currentIndex,
+    showElevation: true,
+    backgroundColor: Theme.of(context).colorScheme.background,
+    onItemSelected: (index) {
+      onSelect(index);
+    },
+    items: [
+      FlashyTabBarItem(
+        activeColor: Theme.of(context).primaryColor,
+        inactiveColor: Theme.of(context).colorScheme.surface,
+        icon: const Icon(Icons.calendar_month),
+        title: const Text('万年历'),
       ),
-    ),
-    child: BottomNavigationBar(
-      items: const [
-        BottomNavigationBarItem(
-          icon: Icon(Icons.calendar_month),
-          label: '万年历',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.sunny),
-          label: '天气',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.lightbulb),
-          label: '常识',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.settings),
-          label: '设置',
-        ),
-      ],
-      selectedItemColor: Theme.of(context).primaryColor,
-      backgroundColor: Theme.of(context).colorScheme.background,
-      currentIndex: currentIndex,
-      type: BottomNavigationBarType.fixed,
-      onTap: (index) {
-        switch (index) {
-          case 0:
-            navigateTo(context, Routes.home);
-            break;
-          case 1:
-            navigateTo(context, Routes.weather);
-            break;
-          case 2:
-            navigateTo(context, Routes.commonSense);
-            break;
-          case 3:
-            navigateTo(context, Routes.settings);
-            break;
-        }
-      },
-    ),
+      FlashyTabBarItem(
+        activeColor: Theme.of(context).primaryColor,
+        inactiveColor: Theme.of(context).colorScheme.surface,
+        icon: const Icon(Icons.sunny),
+        title: const Text('天气'),
+      ),
+      FlashyTabBarItem(
+        activeColor: Theme.of(context).primaryColor,
+        inactiveColor: Theme.of(context).colorScheme.surface,
+        icon: const Icon(Icons.lightbulb),
+        title: const Text('小常识'),
+      ),
+      FlashyTabBarItem(
+        activeColor: Theme.of(context).primaryColor,
+        inactiveColor: Theme.of(context).colorScheme.surface,
+        icon: const Icon(Icons.settings),
+        title: const Text('设置'),
+      ),
+    ],
   );
 }
 
-void navigateTo(BuildContext context, String route,
-    {TransitionType transitionType = TransitionType.none}) {
+void navigateTo(
+  BuildContext context,
+  String route, {
+  TransitionType transitionType = TransitionType.inFromRight,
+  bool replace = false,
+  bool clearStack = false,
+  bool maintainState = true,
+  bool rootNavigator = false,
+}) {
   Application.router.navigateTo(
     context,
     route,
     transition: transitionType,
-    clearStack: true
+    replace: replace,
+    clearStack: clearStack,
+    maintainState: maintainState,
+    rootNavigator: rootNavigator,
   );
 }

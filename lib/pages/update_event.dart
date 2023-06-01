@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lunar/calendar/Lunar.dart';
 import 'package:provider/provider.dart';
 import 'package:simple_calendar/models/calendar/calendar_event.dart';
-import 'package:simple_calendar/states/home_state.dart';
+import 'package:simple_calendar/states/calendar_state.dart';
 import 'package:simple_calendar/theme/fontsize.dart';
 import 'package:simple_calendar/theme/fontweight.dart';
 import 'package:simple_calendar/utils/logger.dart';
@@ -63,7 +63,7 @@ class UpdateEventState extends State<UpdateEvent> with WidgetsBindingObserver {
   @override
   Widget build(BuildContext context) {
     final globalState = Provider.of<GlobalState>(context);
-    final homeState = Provider.of<HomeState>(context);
+    final homeState = Provider.of<CalendarState>(context);
     final themeData = Theme.of(context);
     final isDarkMode = globalState.isDarkMode;
 

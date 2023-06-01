@@ -6,7 +6,7 @@ import '../db/calendar.dart';
 import '../models/calendar/calendar_date.dart';
 import '../models/calendar/calendar_event.dart';
 
-class HomeState extends ChangeNotifier {
+class CalendarState extends ChangeNotifier {
   int _selectedYear = 1970;
   int _selectedMonth = 1;
   int _selectedDay = 1;
@@ -16,7 +16,7 @@ class HomeState extends ChangeNotifier {
   List<CalendarEvent> _dateEvents = [];
   final Calendar _calendar = Calendar();
 
-  HomeState() {
+  CalendarState() {
     final now = DateTime.now();
     setSelectedYMD(now.year, now.month, now.day);
     setCalendarDates(now.year, now.month);

@@ -1,13 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:provider/provider.dart';
 import 'package:simple_calendar/theme/fontsize.dart';
 import 'package:simple_calendar/theme/spacing.dart';
 import 'package:simple_calendar/widgets/custom_appbar.dart';
-
-import '../states/global_state.dart';
-import '../routes/routes.dart';
-import '../theme/fontweight.dart';
 
 class About extends StatelessWidget {
   const About({super.key});
@@ -70,7 +64,6 @@ class About extends StatelessWidget {
           ],
         ),
       ),
-      bottomNavigationBar: renderBottomNavigationBar(context, 2),
     );
   }
 }
