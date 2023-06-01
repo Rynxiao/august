@@ -5,6 +5,7 @@ import 'package:simple_calendar/pages/common_sense.dart';
 import 'package:simple_calendar/pages/settings.dart';
 import 'package:simple_calendar/pages/weather.dart';
 import 'package:simple_calendar/states/calendar_state.dart';
+import 'package:simple_calendar/states/global_state.dart';
 
 import '../routes/routes.dart';
 import '../widgets/custom_appbar.dart';
@@ -21,11 +22,10 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    var themeData = Theme.of(context);
     final homeState = Provider.of<CalendarState>(context);
 
     return Scaffold(
-      appBar: getAppBar(selectedIndex, themeData),
+      appBar: getAppBar(selectedIndex, context),
       body: getBody(selectedIndex),
       bottomNavigationBar: renderBottomNavigationBar(
         context,
@@ -55,7 +55,14 @@ class _HomeState extends State<Home> {
     }
   }
 
-  PreferredSizeWidget? getAppBar(int index, ThemeData themeData) {
+  PreferredSizeWidget? getAppBar(int index, BuildContext context) {
+    final globalState = Provider.of<GlobalState>(context);
+    var isDarkMode = globalState.isDarkMode;
+    var themeData = Theme.of(context);
+    var commonSenseAppBarBackgroundColor = isDarkMode
+        ? themeData.scaffoldBackgroundColor
+        : themeData.colorScheme.background;
+
     switch (index) {
       case 0:
         return const PreferredSizeAppBar();
@@ -65,15 +72,7 @@ class _HomeState extends State<Home> {
         return CustomAppBar(
           title: '小常识',
           automaticallyImplyLeading: false,
-          backgroundColor: themeData.scaffoldBackgroundColor,
-          bottomHeight: kTextTabBarHeight,
-          bottom: const TabBar(
-            tabs: [
-              Tab(text: 'Tab 1'),
-              Tab(text: 'Tab 2'),
-              Tab(text: 'Tab 3'),
-            ],
-          ),
+          backgroundColor: commonSenseAppBarBackgroundColor,
         );
       case 3:
         return CustomAppBar(

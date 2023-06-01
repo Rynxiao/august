@@ -55,8 +55,8 @@ class Now {
     obsTime = '';
     temp = '';
     feelsLike = '';
-    icon = '';
-    text = '';
+    icon = '100';
+    text = '晴';
     wind360 = '';
     windDir = '';
     windScale = '';
