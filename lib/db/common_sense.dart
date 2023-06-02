@@ -2,7 +2,6 @@ import 'package:simple_calendar/db/datebase_provider.dart';
 import 'package:simple_calendar/models/commonSense/common_sense.dart';
 import 'package:sqflite/sqflite.dart';
 
-import '../models/calendar/calendar_event.dart';
 import '../utils/date_utils.dart';
 
 class CommonSenseDB {
@@ -12,34 +11,49 @@ class CommonSenseDB {
     return await DatabaseProvider().database;
   }
 
-  static Future<List<CommonSense>> getAllCommonSense() async {
+  static Future<List<CommonSense>> getAllCommonSense(
+      {int pageSize = 20}) async {
     final db = await getDatabase();
-    var commonSenses = await db.query(commonSense);
+    var commonSenses = await db.query(
+      commonSense,
+      limit: pageSize,
+      orderBy: 'modifyTime asc',
+    );
     return commonSenses.map((event) => CommonSense.fromJson(event)).toList();
   }
 
   static Future<CommonSense?> getCommonSenseById(String id) async {
     final db = await getDatabase();
-    var events = await db.query(
+    var senses = await db.query(
       commonSense,
       where: 'id = ?',
       whereArgs: [id],
       orderBy: 'createTime',
     );
     var commonSenses =
-        events.map((event) => CommonSense.fromJson(event)).toList();
+        senses.map((sense) => CommonSense.fromJson(sense)).toList();
     return commonSenses.isNotEmpty ? commonSenses[0] : null;
+  }
+
+  static Future<List<CommonSense>> getCommonSenseByTypeId(
+      String typeId) async {
+    final db = await getDatabase();
+    var senses = await db.query(
+      commonSense,
+      where: 'type = ?',
+      whereArgs: [typeId],
+      orderBy: 'createTime',
+    );
+    return senses.map((sense) => CommonSense.fromJson(sense)).toList();
   }
 
   static Future<List<CommonSense>> getLikedCommonSenses() async {
     final db = await getDatabase();
-    var events = await db.query(
+    var commonSenses = await db.query(
       commonSense,
       where: 'liked = 1',
       orderBy: 'createTime',
     );
-    var commonSenses =
-        events.map((event) => CommonSense.fromJson(event)).toList();
     return commonSenses.map((event) => CommonSense.fromJson(event)).toList();
   }
 

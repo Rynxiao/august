@@ -14,13 +14,13 @@ import '../models/weather/now.dart';
 import '../network/api.dart';
 
 class SenseState extends ChangeNotifier {
-  List<SenseType> types = [];
+  List<SenseType> types = [SenseType(id: '0', title: '最新')];
 
   Future<void> getAllTypes() async {
     final responses = await SenseTypeDB.getAllSenseType();
 
     if (responses.isNotEmpty) {
-      types = responses;
+      types = { ...types, ...responses }.toList();
       notifyListeners();
     }
   }

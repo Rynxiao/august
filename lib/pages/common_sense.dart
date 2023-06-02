@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:simple_calendar/models/commonSense/sense_type.dart';
+import 'package:simple_calendar/db/common_sense.dart';
+import 'package:simple_calendar/models/commonSense/common_sense.dart' as sense;
 import 'package:simple_calendar/states/sense_state.dart';
 import 'package:simple_calendar/theme/fontsize.dart';
 import 'package:simple_calendar/theme/spacing.dart';
 
 import '../states/global_state.dart';
+import '../utils/date_utils.dart';
 
 class CommonSense extends StatefulWidget {
   final SenseState senseState;
@@ -21,15 +23,15 @@ class _CommonSenseState extends State<CommonSense>
   late TabController _tabController;
 
   List<Tab> tabs = [];
+  var typeId = '0';
 
   @override
   void initState() {
     super.initState();
 
     var types = widget.senseState.types;
-    types.insert(0, SenseType(id: '0', title: '最新'));
-
     setState(() {
+      typeId = types[0].id;
       tabs = types.map((type) => Tab(text: type.title)).toList();
     });
 
@@ -67,7 +69,9 @@ class _CommonSenseState extends State<CommonSense>
                 indicatorPadding: const EdgeInsets.only(right: Spacing.l),
                 tabs: tabs,
                 onTap: (index) {
-                  _tabController.index = index;
+                  setState(() {
+                    typeId = widget.senseState.types[index].id;
+                  });
                 },
               ),
               const Divider(),
@@ -75,27 +79,59 @@ class _CommonSenseState extends State<CommonSense>
           ),
         ),
         Expanded(
-          child: Center(
-            child: SingleChildScrollView(
-              child: Column(children: [
-                ListView.builder(
-                  padding: EdgeInsets.zero,
-                  physics: const NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  itemBuilder: (BuildContext context, int index) {
-                    return _buildSenseItem(context, backgroundColor);
-                  },
-                  itemCount: 10,
-                ),
-              ]),
-            ),
+          child: FutureBuilder(
+            future: typeId == '0'
+                ? CommonSenseDB.getAllCommonSense()
+                : CommonSenseDB.getCommonSenseByTypeId(typeId),
+            builder: (context, dataSnapshot) {
+              if (dataSnapshot.connectionState == ConnectionState.waiting) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              } else {
+                if (dataSnapshot.error != null) {
+                  return const Center(
+                    child: Text('加载错误，请稍候再试!!!'),
+                  );
+                } else {
+                  var senses = dataSnapshot.data;
+                  if (senses != null && senses.isNotEmpty) {
+                    return SingleChildScrollView(
+                      child: Column(children: [
+                        ListView.builder(
+                          padding: EdgeInsets.zero,
+                          physics: const NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          itemBuilder: (BuildContext context, int index) {
+                            return _buildSenseItem(
+                              context,
+                              backgroundColor,
+                              senses[index],
+                            );
+                          },
+                          itemCount: senses.length,
+                        ),
+                      ]),
+                    );
+                  } else {
+                    return const Center(
+                      child: Text('空空如也!'),
+                    );
+                  }
+                }
+              }
+            },
           ),
         ),
       ],
     );
   }
 
-  Widget _buildSenseItem(BuildContext context, Color backgroundColor) {
+  Widget _buildSenseItem(
+    BuildContext context,
+    Color backgroundColor,
+    sense.CommonSense commonSense,
+  ) {
     final themeData = Theme.of(context);
     var titleStyle = themeData.primaryTextTheme.titleMedium
         ?.copyWith(color: themeData.colorScheme.surface);
@@ -108,10 +144,11 @@ class _CommonSenseState extends State<CommonSense>
       child: Container(
         color: backgroundColor,
         padding: const EdgeInsets.only(
-            left: Spacing.s,
-            right: Spacing.s,
-            top: Spacing.m,
-            bottom: Spacing.xs),
+          left: Spacing.s,
+          right: Spacing.s,
+          top: Spacing.m,
+          bottom: Spacing.xs,
+        ),
         width: double.maxFinite,
         child: Flex(
           direction: Axis.horizontal,
@@ -125,7 +162,7 @@ class _CommonSenseState extends State<CommonSense>
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      '如果遇到人晕倒，应该先检查他们的呼吸和脉搏是否正常,检查他们的呼吸和脉搏是否正',
+                      commonSense.title,
                       style: titleStyle,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
@@ -137,21 +174,25 @@ class _CommonSenseState extends State<CommonSense>
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Text(
-                            '09-12',
+                            formatDateHourFromMilliseconds(
+                                commonSense.createTime),
                             style: dateStyle,
                           ),
                           Row(
                             children: [
-                              const Icon(
-                                Icons.fork_right,
-                                size: Spacing.l,
-                              ),
+                              if (commonSense.read == 1)
+                                const Icon(
+                                  Icons.fork_right,
+                                  size: Spacing.l,
+                                ),
                               IconButton(
                                 onPressed: () {},
                                 icon: Icon(
                                   Icons.favorite,
                                   size: Spacing.l,
-                                  color: themeData.highlightColor,
+                                  color: commonSense.liked == 1
+                                      ? themeData.highlightColor
+                                      : themeData.colorScheme.surface,
                                 ),
                               ),
                             ],
