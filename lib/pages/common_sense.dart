@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:simple_calendar/models/commonSense/common_sense.dart' as sense;
 import 'package:simple_calendar/network/sense.dart';
+import 'package:simple_calendar/routes/routes.dart';
 import 'package:simple_calendar/states/sense_state.dart';
 import 'package:simple_calendar/theme/colors.dart';
 import 'package:simple_calendar/theme/fontsize.dart';
@@ -141,7 +142,9 @@ class _CommonSenseState extends State<CommonSense>
     );
 
     return InkWell(
-      onTap: () {},
+      onTap: () {
+        navigateTo(context, '/senseDetail/${commonSense.id}');
+      },
       child: Container(
         color: backgroundColor,
         padding: const EdgeInsets.only(

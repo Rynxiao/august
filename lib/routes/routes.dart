@@ -12,6 +12,7 @@ class Routes {
   static String eventCreate = "/eventCreate/:year/:month/:day";
   static String eventUpdate = "/eventUpdate/:eventId";
   static String about = "/about";
+  static String senseDetail = "/senseDetail/:id";
 
   static void configureRoutes(FluroRouter router) {
     router.notFoundHandler = Handler(
@@ -23,6 +24,7 @@ class Routes {
     router.define(eventCreate, handler: eventCreateHandler);
     router.define(eventUpdate, handler: eventUpdateHandler);
     router.define(about, handler: aboutHandler);
+    router.define(senseDetail, handler: senseDetailHandler);
   }
 }
 

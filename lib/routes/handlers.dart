@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:simple_calendar/pages/common_sense.dart';
 import 'package:simple_calendar/pages/create_event.dart';
 import 'package:simple_calendar/pages/calendar.dart';
+import 'package:simple_calendar/pages/sense_detail.dart';
 import 'package:simple_calendar/pages/update_event.dart';
 import 'package:simple_calendar/pages/weather.dart';
 
@@ -40,4 +41,10 @@ var eventUpdateHandler = Handler(
 var aboutHandler = Handler(
     handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
       return const About();
+    });
+
+var senseDetailHandler = Handler(
+    handlerFunc: (BuildContext? context, Map<String, dynamic> params) {
+      var id = params["id"][0].toString();
+      return SenseDetail(id: id);
     });
