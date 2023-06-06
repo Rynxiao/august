@@ -9,6 +9,8 @@ import 'package:simple_calendar/states/global_state.dart';
 import 'package:simple_calendar/states/sense_state.dart';
 
 import '../routes/routes.dart';
+import '../theme/fontsize.dart';
+import '../theme/spacing.dart';
 import '../widgets/custom_appbar.dart';
 
 class Home extends StatefulWidget {
@@ -75,6 +77,22 @@ class _HomeState extends State<Home> {
           title: '小常识',
           automaticallyImplyLeading: false,
           backgroundColor: commonSenseAppBarBackgroundColor,
+          actions: [
+            TextButton(
+                onPressed: () {
+                  navigateTo(context, Routes.senseLikes);
+                },
+                child: Padding(
+                  padding: const EdgeInsets.only(right: Spacing.m),
+                  child: Text(
+                    '我的收藏',
+                    style: TextStyle(
+                      fontSize: AppFontSize.medium,
+                      color: themeData.primaryColor,
+                    ),
+                  ),
+                ))
+          ],
         );
       case 3:
         return CustomAppBar(

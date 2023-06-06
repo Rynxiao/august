@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:provider/provider.dart';
 import 'package:simple_calendar/models/commonSense/common_sense.dart';
 import 'package:simple_calendar/states/sense_state.dart';
 import 'package:simple_calendar/theme/fontsize.dart';
-import 'package:simple_calendar/theme/fontweight.dart';
 import 'package:simple_calendar/theme/spacing.dart';
 import 'package:simple_calendar/widgets/custom_appbar.dart';
 
@@ -27,10 +27,6 @@ class SenseDetail extends StatelessWidget {
     var descriptionStyle = themeData.textTheme.titleSmall?.copyWith(
       fontSize: AppFontSize.regular,
       color: themeData.dividerColor,
-    );
-    var contentStyle = themeData.textTheme.bodySmall?.copyWith(
-      fontSize: AppFontSize.medium,
-      color: Colors.white,
     );
 
     return Scaffold(
@@ -70,10 +66,7 @@ class SenseDetail extends StatelessWidget {
                     fit: BoxFit.cover,
                   ),
                 ),
-                Text(
-                  sense.content,
-                  style: contentStyle,
-                ),
+                MarkdownBody(data: sense.content,),
               ],
             ),
           ),

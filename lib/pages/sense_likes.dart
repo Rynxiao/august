@@ -10,122 +10,74 @@ import 'package:simple_calendar/theme/spacing.dart';
 
 import '../states/global_state.dart';
 import '../utils/date_utils.dart';
+import '../widgets/custom_appbar.dart';
 
-class CommonSense extends StatefulWidget {
-  final SenseState senseState;
-
-  const CommonSense({super.key, required this.senseState});
+class SenseLikes extends StatefulWidget {
+  const SenseLikes({super.key});
 
   @override
-  State<CommonSense> createState() => _CommonSenseState();
+  State<SenseLikes> createState() => _SenseLikesState();
 }
 
-class _CommonSenseState extends State<CommonSense>
-    with TickerProviderStateMixin {
-  late TabController _tabController;
-
-  List<Tab> tabs = [];
-  var typeId = '0';
-
-  @override
-  void initState() {
-    super.initState();
-
-    var types = widget.senseState.types;
-    setState(() {
-      typeId = types[0].id;
-      tabs = types.map((type) => Tab(text: type.title)).toList();
-    });
-
-    _tabController = TabController(length: types.length, vsync: this);
-  }
-
+class _SenseLikesState extends State<SenseLikes> {
   @override
   Widget build(BuildContext context) {
     final globalState = Provider.of<GlobalState>(context);
     final isDarkMode = globalState.isDarkMode;
     final themeData = Theme.of(context);
-    var unselectedLabelStyle = themeData.primaryTextTheme.bodyLarge;
-    var labelStyle = unselectedLabelStyle?.copyWith(
-      fontSize: AppFontSize.medium,
-    );
     var backgroundColor = isDarkMode
         ? themeData.scaffoldBackgroundColor
         : themeData.colorScheme.background;
 
-    return Column(
-      children: [
-        Container(
-          color: backgroundColor,
-          child: Column(
-            children: [
-              TabBar(
-                controller: _tabController,
-                isScrollable: true,
-                indicatorSize: TabBarIndicatorSize.label,
-                indicatorColor: themeData.primaryColor,
-                labelColor: themeData.colorScheme.surface,
-                labelStyle: labelStyle,
-                unselectedLabelStyle: unselectedLabelStyle,
-                labelPadding: const EdgeInsets.only(right: Spacing.l),
-                indicatorPadding: const EdgeInsets.only(right: Spacing.l),
-                tabs: tabs,
-                onTap: (index) {
-                  setState(() {
-                    typeId = widget.senseState.types[index].id;
-                  });
-                },
-              ),
-              const Divider(),
-            ],
-          ),
-        ),
-        Expanded(
-          child: FutureBuilder(
-            future: typeId == '0'
-                ? getCommonSenseByPage()
-                : getCommonSenseByTypeId(typeId),
-            builder: (context, dataSnapshot) {
-              if (dataSnapshot.connectionState == ConnectionState.waiting) {
+    return Scaffold(
+      appBar: CustomAppBar(
+        title: '我的收藏',
+        backgroundColor: themeData.scaffoldBackgroundColor,
+      ),
+      backgroundColor: themeData.scaffoldBackgroundColor,
+      body: SafeArea(
+        child: FutureBuilder(
+          future: getLikedCommonSenses(),
+          builder: (context, dataSnapshot) {
+            if (dataSnapshot.connectionState == ConnectionState.waiting) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            } else {
+              if (dataSnapshot.error != null) {
                 return const Center(
-                  child: CircularProgressIndicator(),
+                  child: Text('加载错误，请稍候再试!!!'),
                 );
               } else {
-                if (dataSnapshot.error != null) {
-                  return const Center(
-                    child: Text('加载错误，请稍候再试!!!'),
+                var senses = dataSnapshot.data;
+                if (senses != null && senses.isNotEmpty) {
+                  return SingleChildScrollView(
+                    child: Column(children: [
+                      ListView.builder(
+                        padding: EdgeInsets.zero,
+                        physics: const NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        itemBuilder: (BuildContext context, int index) {
+                          return _buildSenseItem(
+                            context,
+                            backgroundColor,
+                            senses[index],
+                          );
+                        },
+                        itemCount: senses.length,
+                      ),
+                    ]),
                   );
                 } else {
-                  var senses = dataSnapshot.data;
-                  if (senses != null && senses.isNotEmpty) {
-                    return SingleChildScrollView(
-                      child: Column(children: [
-                        ListView.builder(
-                          padding: EdgeInsets.zero,
-                          physics: const NeverScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          itemBuilder: (BuildContext context, int index) {
-                            return _buildSenseItem(
-                              context,
-                              backgroundColor,
-                              senses[index],
-                            );
-                          },
-                          itemCount: senses.length,
-                        ),
-                      ]),
-                    );
-                  } else {
-                    return const Center(
-                      child: Text('空空如也!'),
-                    );
-                  }
+                  return const Center(
+                    child: Text('空空如也!'),
+                  );
                 }
               }
-            },
-          ),
+            }
+          },
         ),
-      ],
+      ),
     );
   }
 
@@ -236,11 +188,5 @@ class _CommonSenseState extends State<CommonSense>
         ),
       ),
     );
-  }
-
-  @override
-  void dispose() {
-    _tabController.dispose();
-    super.dispose();
   }
 }

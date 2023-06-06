@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:simple_calendar/models/commonSense/common_sense.dart';
 import 'package:simple_calendar/pages/create_event.dart';
 import 'package:simple_calendar/pages/sense_detail.dart';
+import 'package:simple_calendar/pages/sense_likes.dart';
 import 'package:simple_calendar/pages/update_event.dart';
 
 import '../pages/about.dart';
@@ -45,4 +46,9 @@ var senseDetailHandler = Handler(
     handlerFunc: (BuildContext? context, Map<String, dynamic> params) {
       var sense = context?.settings?.arguments as CommonSense;
       return SenseDetail(sense: sense);
+    });
+
+var senseLikesHandler = Handler(
+    handlerFunc: (BuildContext? context, Map<String, dynamic> params) {
+      return const SenseLikes();
     });
