@@ -40,7 +40,7 @@ class About extends StatelessWidget {
                       bottom: Spacing.xs,
                     ),
                     child: Text(
-                      '极简日历是由yhhu线下开发。',
+                      '极简日历是由胡先生(Ryn)线下开发。',
                       style: descriptionStyle,
                     ),
                   ),
