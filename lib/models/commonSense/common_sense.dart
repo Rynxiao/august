@@ -1,5 +1,3 @@
-import 'package:simple_calendar/utils/date_utils.dart';
-
 class CommonSense {
   late String id;
   late String title;
@@ -7,10 +5,9 @@ class CommonSense {
   String cover = '';
   int liked = 0;  // 0: 没有收藏，1: 收藏
   int read = 0;   // 0: 未读，1: 已读
-  int type = 0;   // 0: 其他，1: 医学
-  int createTime = 0;
-  int modifyTime = 0;
-  int deleted = 0;
+  String type = '0';   // 0: 其他，1: 医学
+  String createdAt = '';
+  String updatedAt = '';
 
   CommonSense({
     required this.id,
@@ -19,8 +16,8 @@ class CommonSense {
     required this.cover,
   }) {
     final now = DateTime.now();
-    createTime = getTimestamp(now);
-    modifyTime = createTime;
+    createdAt = now.toLocal().toString();
+    updatedAt = updatedAt;
   }
 
   CommonSense.fromJson(dynamic json) {
@@ -31,9 +28,8 @@ class CommonSense {
     liked = json['liked'];
     read = json['read'];
     type = json['type'];
-    createTime = json['createTime'];
-    modifyTime = json['modifyTime'];
-    deleted = json['deleted'];
+    createdAt = json['createdAt'];
+    updatedAt = json['updatedAt'];
   }
 
   Map<String, dynamic> toJson() {
@@ -45,9 +41,8 @@ class CommonSense {
     map['liked'] = liked;
     map['read'] = read;
     map['type'] = type;
-    map['createTime'] = createTime;
-    map['modifyTime'] = modifyTime;
-    map['deleted'] = deleted;
+    map['createdAt'] = createdAt;
+    map['updatedAt'] = updatedAt;
     return map;
   }
 }

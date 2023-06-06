@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:simple_calendar/db/common_sense.dart';
 import 'package:simple_calendar/models/commonSense/common_sense.dart' as sense;
+import 'package:simple_calendar/network/sense.dart';
 import 'package:simple_calendar/states/sense_state.dart';
 import 'package:simple_calendar/theme/fontsize.dart';
 import 'package:simple_calendar/theme/spacing.dart';
@@ -81,8 +81,8 @@ class _CommonSenseState extends State<CommonSense>
         Expanded(
           child: FutureBuilder(
             future: typeId == '0'
-                ? CommonSenseDB.getAllCommonSense()
-                : CommonSenseDB.getCommonSenseByTypeId(typeId),
+                ? getCommonSenseByPage()
+                : getCommonSenseByTypeId(typeId),
             builder: (context, dataSnapshot) {
               if (dataSnapshot.connectionState == ConnectionState.waiting) {
                 return const Center(
@@ -160,6 +160,7 @@ class _CommonSenseState extends State<CommonSense>
                 padding: const EdgeInsets.only(right: Spacing.m),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       commonSense.title,
@@ -174,8 +175,7 @@ class _CommonSenseState extends State<CommonSense>
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Text(
-                            formatDateHourFromMilliseconds(
-                                commonSense.createTime),
+                            formatDateString(commonSense.createdAt),
                             style: dateStyle,
                           ),
                           Row(

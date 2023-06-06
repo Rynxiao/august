@@ -7,7 +7,7 @@ const String maxDatetime = '2101-00-00 00:00:00';
 const String format = 'yyyy-MM-dd HH:mm:ss';
 const String monthAndDayFormat = 'MM-dd';
 const String hourFormat = 'HH:mm:ss';
-const String timeFormat = 'HH:mm:ss';
+const String timeFormat = 'MM-dd HH:mm';
 
 Future<void> showDateTimePicker(
   BuildContext context,
@@ -91,8 +91,14 @@ String formatDateWith(String dateTimeString) {
   return "${dateTime.year}${formatNumber(dateTime.month)}${formatNumber(dateTime.day)}";
 }
 
-String formatTime(int year, int month, int day, DateTime dateTime) {
+String formatDateString(String dateTimeString) {
+  DateTime dateTime = DateTime.parse(dateTimeString);
   var formatter = DateFormat(timeFormat);
+  return formatter.format(dateTime);
+}
+
+String formatTime(int year, int month, int day, DateTime dateTime) {
+  var formatter = DateFormat(hourFormat);
   return '$year-${formatNumber(month)}-${formatNumber(day)} ${formatter.format(dateTime)}';
 }
 

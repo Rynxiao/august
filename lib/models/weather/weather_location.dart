@@ -13,7 +13,6 @@ class WeatherLocation {
   });
 
   WeatherLocation.fromJson(dynamic json) {
-    print("json $json");
     code = json['code'];
     if (json['location'] != null) {
       location = [];

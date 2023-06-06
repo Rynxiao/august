@@ -9,7 +9,7 @@ import '../models/weather/daily.dart';
 import '../models/weather/hourly.dart';
 import '../models/weather/location.dart';
 import '../models/weather/now.dart';
-import '../network/api.dart';
+import '../network/weather.dart';
 
 class WeatherState extends ChangeNotifier {
   Position position;

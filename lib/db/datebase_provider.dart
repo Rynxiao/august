@@ -1,10 +1,8 @@
 import 'package:path/path.dart';
 import 'package:simple_calendar/db/calendar.dart';
-import 'package:simple_calendar/db/sense_type.dart';
 import 'package:sqflite/sqflite.dart';
 
 import '../utils/logger.dart';
-import 'common_sense.dart';
 
 class DatabaseProvider {
   static final DatabaseProvider _instance = DatabaseProvider._();
@@ -44,27 +42,6 @@ class DatabaseProvider {
               createTime INTEGER,
               modifyTime INTEGER,
               deleted INTEGER
-            )
-          ''');
-        await db.execute('''
-            CREATE TABLE IF NOT EXISTS ${CommonSenseDB.commonSense} (
-              id TEXT,
-              title TEXT,
-              content TEXT,
-              cover TEXT,
-              liked INTEGER,
-              read INTEGER,
-              type INTEGER,
-              createTime INTEGER,
-              modifyTime INTEGER,
-              deleted INTEGER
-            )
-          ''');
-        await db.execute('''
-            CREATE TABLE IF NOT EXISTS ${SenseTypeDB.senseType} (
-              id TEXT,
-              title TEXT,
-              createTime INTEGER
             )
           ''');
       },

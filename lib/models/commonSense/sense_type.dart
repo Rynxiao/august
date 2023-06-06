@@ -3,27 +3,31 @@ import 'package:simple_calendar/utils/date_utils.dart';
 class SenseType {
   late String id;
   late String title;
-  int createTime = 0;
+  String createdAt = '';
+  String updatedAt = '';
 
   SenseType({
     required this.id,
     required this.title,
   }) {
     final now = DateTime.now();
-    createTime = getTimestamp(now);
+    createdAt = now.toLocal().toString();
+    updatedAt = updatedAt;
   }
 
   SenseType.fromJson(dynamic json) {
     id = json['id'];
     title = json['title'];
-    createTime = json['createTime'];
+    createdAt = json['createdAt'];
+    updatedAt = json['updatedAt'];
   }
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['id'] = id;
     map['title'] = title;
-    map['createTime'] = createTime;
+    map['createdAt'] = createdAt;
+    map['updatedAt'] = updatedAt;
     return map;
   }
 }
