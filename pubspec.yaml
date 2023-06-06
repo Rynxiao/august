@@ -44,3 +44,4 @@ flutter:
   assets:
     - .env
     - statics/icons/
+    - statics/images/

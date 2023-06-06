@@ -60,10 +60,19 @@ class SenseDetail extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(bottom: Spacing.m),
                   child: Image.network(
-                    'https://picsum.photos/250?image=9',
+                    sense.cover,
                     width: double.maxFinite,
                     height: 170,
                     fit: BoxFit.cover,
+                    errorBuilder: (BuildContext context, Object exception,
+                        StackTrace? stackTrace) {
+                      return Image.asset(
+                        'statics/images/default.jpg',
+                        fit: BoxFit.cover,
+                        width: double.maxFinite,
+                        height: 170,
+                      );
+                    },
                   ),
                 ),
                 MarkdownBody(data: sense.content,),

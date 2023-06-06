@@ -178,10 +178,19 @@ class _SenseLikesState extends State<SenseLikes> {
               borderRadius: BorderRadius.circular(Spacing.xs),
               // Image border
               child: Image.network(
-                'https://picsum.photos/250?image=9',
+                commonSense.cover,
                 fit: BoxFit.cover,
                 width: 120,
                 height: 90,
+                errorBuilder: (BuildContext context, Object exception,
+                    StackTrace? stackTrace) {
+                  return Image.asset(
+                    'statics/images/default.jpg',
+                    fit: BoxFit.cover,
+                    width: 120,
+                    height: 90,
+                  );
+                },
               ),
             ),
           ],
