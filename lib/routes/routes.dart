@@ -77,6 +77,7 @@ void navigateTo(
   bool clearStack = false,
   bool maintainState = true,
   bool rootNavigator = false,
+  RouteSettings? routeSettings,
 }) {
   Application.router.navigateTo(
     context,
@@ -86,5 +87,6 @@ void navigateTo(
     clearStack: clearStack,
     maintainState: maintainState,
     rootNavigator: rootNavigator,
+    routeSettings: routeSettings,
   );
 }

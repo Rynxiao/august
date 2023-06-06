@@ -143,7 +143,13 @@ class _CommonSenseState extends State<CommonSense>
 
     return InkWell(
       onTap: () {
-        navigateTo(context, '/senseDetail/${commonSense.id}');
+        navigateTo(
+          context,
+          '/senseDetail/${commonSense.id}',
+          routeSettings: RouteSettings(
+            arguments: commonSense,
+          ),
+        );
       },
       child: Container(
         color: backgroundColor,

@@ -1,11 +1,9 @@
 import 'package:fluro/fluro.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:simple_calendar/pages/common_sense.dart';
+import 'package:simple_calendar/models/commonSense/common_sense.dart';
 import 'package:simple_calendar/pages/create_event.dart';
-import 'package:simple_calendar/pages/calendar.dart';
 import 'package:simple_calendar/pages/sense_detail.dart';
 import 'package:simple_calendar/pages/update_event.dart';
-import 'package:simple_calendar/pages/weather.dart';
 
 import '../pages/about.dart';
 import '../pages/home.dart';
@@ -45,6 +43,6 @@ var aboutHandler = Handler(
 
 var senseDetailHandler = Handler(
     handlerFunc: (BuildContext? context, Map<String, dynamic> params) {
-      var id = params["id"][0].toString();
-      return SenseDetail(id: id);
+      var sense = context?.settings?.arguments as CommonSense;
+      return SenseDetail(sense: sense);
     });
