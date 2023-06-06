@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:simple_calendar/models/commonSense/common_sense.dart' as sense;
 import 'package:simple_calendar/network/sense.dart';
 import 'package:simple_calendar/states/sense_state.dart';
+import 'package:simple_calendar/theme/colors.dart';
 import 'package:simple_calendar/theme/fontsize.dart';
 import 'package:simple_calendar/theme/spacing.dart';
 
@@ -182,11 +183,15 @@ class _CommonSenseState extends State<CommonSense>
                             children: [
                               if (commonSense.read == 1)
                                 const Icon(
-                                  Icons.fork_right,
+                                  Icons.check_circle,
                                   size: Spacing.l,
+                                  color: AppColors.green,
                                 ),
                               IconButton(
-                                onPressed: () {},
+                                onPressed: () async {
+                                  await addToLikes(commonSense.id);
+                                  setState(() {});
+                                },
                                 icon: Icon(
                                   Icons.favorite,
                                   size: Spacing.l,

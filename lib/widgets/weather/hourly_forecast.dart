@@ -35,10 +35,13 @@ class HourlyForecast extends StatelessWidget {
               padding: const EdgeInsets.only(bottom: 12.0),
               child: Row(
                 children: [
-                  BoxedIcon(
-                    WeatherIcons.time_3,
-                    color: Colors.white.withOpacity(0.6),
-                    size: 18,
+                  Padding(
+                    padding: const EdgeInsets.only(right: 8.0),
+                    child: Icon(
+                      Icons.schedule,
+                      color: Colors.white.withOpacity(0.6),
+                      size: 16,
+                    ),
                   ),
                   Text(
                     "每小时天气预报",
