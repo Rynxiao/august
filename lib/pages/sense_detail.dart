@@ -43,6 +43,7 @@ class SenseDetail extends StatelessWidget {
     return Scaffold(
       appBar: CustomAppBar(
         title: sense.title,
+        backgroundColor: backgroundColor,
       ),
       backgroundColor: backgroundColor,
       body: SafeArea(

@@ -4,10 +4,10 @@ import 'package:provider/provider.dart';
 import 'package:simple_calendar/widgets/weather/currently_header.dart';
 import 'package:simple_calendar/widgets/weather/seven_day_forecast.dart';
 
+import '../core/weather_utils.dart';
 import '../widgets/weather/current_detail.dart';
 import '../widgets/weather/custom_clipper_container.dart';
 import '../widgets/weather/hourly_forecast.dart';
-import '../core/weather_utils.dart';
 import '../states/weather_state.dart';
 
 class Weather extends StatefulWidget {
@@ -31,8 +31,7 @@ class _WeatherState extends State<Weather> {
     return Stack(
       children: [
         WeatherBg(
-          // weatherType: getWeatherTypeBy(now.text, now.icon),
-          weatherType: WeatherType.sunny,
+          weatherType: getWeatherTypeBy(now.text, now.icon),
           width: screenWidth,
           height: screenHeight,
         ),
