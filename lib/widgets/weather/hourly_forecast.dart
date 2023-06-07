@@ -90,7 +90,7 @@ class HourlyForecast extends StatelessWidget {
             ),
           ),
           Text(
-            "${hourly.temp}°C",
+            "${hourly.temp}°",
             style: TextStyle(
               color: getTempColor(hourly.temp),
               fontWeight: FontWeight.bold,
