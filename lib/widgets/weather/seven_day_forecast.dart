@@ -18,7 +18,7 @@ class SevenDayForecast extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20.0),
-        color: Colors.white.withOpacity(0.15),
+        color: Colors.black.withOpacity(0.15),
       ),
       margin: const EdgeInsets.symmetric(
         horizontal: 18,
@@ -90,7 +90,7 @@ class SevenDayForecast extends StatelessWidget {
                       dateText,
                       style: const TextStyle(
                         color: Colors.white,
-                        fontSize: 22.0,
+                        fontSize: 20.0,
                         fontWeight: FontWeight.w700,
                       ),
                     ),
@@ -107,8 +107,8 @@ class SevenDayForecast extends StatelessWidget {
                   Text(
                     "${daily.tempMin}°C ",
                     style: TextStyle(
-                      color: Colors.white.withOpacity(0.45),
-                      fontSize: 22.0,
+                      color: getTempColor(daily.tempMin).withOpacity(0.45),
+                      fontSize: 20.0,
                       fontWeight: FontWeight.w700,
                     ),
                   ),
@@ -122,9 +122,9 @@ class SevenDayForecast extends StatelessWidget {
                   ),
                   Text(
                     " ${daily.tempMax}°C",
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 22.0,
+                    style: TextStyle(
+                      color: getTempColor(daily.tempMax),
+                      fontSize: 20.0,
                       fontWeight: FontWeight.w700,
                     ),
                   )

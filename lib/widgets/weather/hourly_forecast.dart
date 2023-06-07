@@ -5,7 +5,6 @@ import 'package:simple_calendar/core/weather_utils.dart';
 import 'package:simple_calendar/models/weather/hourly.dart';
 import 'package:simple_calendar/states/weather_state.dart';
 import 'package:simple_calendar/utils/date_utils.dart';
-import 'package:weather_icons/weather_icons.dart';
 
 class HourlyForecast extends StatelessWidget {
   const HourlyForecast({super.key});
@@ -18,7 +17,7 @@ class HourlyForecast extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20.0),
-        color: Colors.white.withOpacity(0.15),
+        color: Colors.black.withOpacity(0.15),
       ),
       margin: const EdgeInsets.symmetric(
         horizontal: 18,
@@ -91,11 +90,11 @@ class HourlyForecast extends StatelessWidget {
             ),
           ),
           Text(
-            "${hourly.temp}°",
-            style: const TextStyle(
-              color: Colors.white,
+            "${hourly.temp}°C",
+            style: TextStyle(
+              color: getTempColor(hourly.temp),
               fontWeight: FontWeight.bold,
-              fontSize: 24.0,
+              fontSize: 22.0,
             ),
           )
         ],

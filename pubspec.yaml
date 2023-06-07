@@ -32,6 +32,7 @@ dependencies:
   weather_icons: ^2.0.2
   flashy_tab_bar2: ^0.0.6
   flutter_markdown: ^0.6.15
+  cached_network_image: ^3.2.3
 
 dev_dependencies:
   flutter_test:

@@ -33,7 +33,7 @@ class CurrentDetail extends StatelessWidget {
 
           return Container(
             decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.15),
+              color: Colors.black.withOpacity(0.15),
               borderRadius: BorderRadius.circular(20.0),
             ),
             child: Center(

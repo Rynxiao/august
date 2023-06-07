@@ -3,14 +3,13 @@ import 'package:provider/provider.dart';
 import 'package:simple_calendar/models/commonSense/common_sense.dart' as sense;
 import 'package:simple_calendar/network/sense.dart';
 import 'package:simple_calendar/routes/routes.dart';
-import 'package:simple_calendar/states/sense_state.dart';
 import 'package:simple_calendar/theme/colors.dart';
-import 'package:simple_calendar/theme/fontsize.dart';
 import 'package:simple_calendar/theme/spacing.dart';
 
 import '../states/global_state.dart';
 import '../utils/date_utils.dart';
 import '../widgets/custom_appbar.dart';
+import '../widgets/network_image_container.dart';
 
 class SenseLikes extends StatefulWidget {
   const SenseLikes({super.key});
@@ -32,7 +31,7 @@ class _SenseLikesState extends State<SenseLikes> {
     return Scaffold(
       appBar: CustomAppBar(
         title: '我的收藏',
-        backgroundColor: themeData.scaffoldBackgroundColor,
+        backgroundColor: backgroundColor,
       ),
       backgroundColor: themeData.scaffoldBackgroundColor,
       body: SafeArea(
@@ -176,21 +175,10 @@ class _SenseLikesState extends State<SenseLikes> {
             ),
             ClipRRect(
               borderRadius: BorderRadius.circular(Spacing.xs),
-              // Image border
-              child: Image.network(
-                commonSense.cover,
-                fit: BoxFit.cover,
+              child: NetworkImageContainer(
+                imageUrl: commonSense.cover,
                 width: 120,
                 height: 90,
-                errorBuilder: (BuildContext context, Object exception,
-                    StackTrace? stackTrace) {
-                  return Image.asset(
-                    'statics/images/default.jpg',
-                    fit: BoxFit.cover,
-                    width: 120,
-                    height: 90,
-                  );
-                },
               ),
             ),
           ],

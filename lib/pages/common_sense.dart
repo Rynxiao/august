@@ -7,6 +7,7 @@ import 'package:simple_calendar/states/sense_state.dart';
 import 'package:simple_calendar/theme/colors.dart';
 import 'package:simple_calendar/theme/fontsize.dart';
 import 'package:simple_calendar/theme/spacing.dart';
+import 'package:simple_calendar/widgets/network_image_container.dart';
 
 import '../states/global_state.dart';
 import '../utils/date_utils.dart';
@@ -224,21 +225,10 @@ class _CommonSenseState extends State<CommonSense>
             ),
             ClipRRect(
               borderRadius: BorderRadius.circular(Spacing.xs),
-              // Image border
-              child: Image.network(
-                commonSense.cover,
-                fit: BoxFit.cover,
+              child: NetworkImageContainer(
+                imageUrl: commonSense.cover,
                 width: 120,
                 height: 90,
-                errorBuilder: (BuildContext context, Object exception,
-                    StackTrace? stackTrace) {
-                  return Image.asset(
-                    'statics/images/default.jpg',
-                    fit: BoxFit.cover,
-                    width: 120,
-                    height: 90,
-                  );
-                },
               ),
             ),
           ],

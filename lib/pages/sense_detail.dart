@@ -7,7 +7,9 @@ import 'package:simple_calendar/theme/fontsize.dart';
 import 'package:simple_calendar/theme/spacing.dart';
 import 'package:simple_calendar/widgets/custom_appbar.dart';
 
+import '../states/global_state.dart';
 import '../utils/date_utils.dart';
+import '../widgets/network_image_container.dart';
 
 class SenseDetail extends StatelessWidget {
   final CommonSense sense;
@@ -20,21 +22,29 @@ class SenseDetail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final themeData = Theme.of(context);
+    final globalState = Provider.of<GlobalState>(context);
+    final isDarkMode = globalState.isDarkMode;
     final senseState = Provider.of<SenseState>(context);
     var types = senseState.types;
     var typeName =
         types.where((type) => type.id == sense.type).toList()[0].title;
+    var contentStyle = themeData.textTheme.bodySmall?.copyWith(
+      fontSize: AppFontSize.medium,
+      color: themeData.colorScheme.surface,
+    );
     var descriptionStyle = themeData.textTheme.titleSmall?.copyWith(
       fontSize: AppFontSize.regular,
       color: themeData.dividerColor,
     );
+    var backgroundColor = isDarkMode
+        ? themeData.scaffoldBackgroundColor
+        : themeData.colorScheme.background;
 
     return Scaffold(
       appBar: CustomAppBar(
         title: sense.title,
-        backgroundColor: themeData.scaffoldBackgroundColor,
       ),
-      backgroundColor: themeData.scaffoldBackgroundColor,
+      backgroundColor: backgroundColor,
       body: SafeArea(
         child: SingleChildScrollView(
           child: Container(
@@ -59,23 +69,19 @@ class SenseDetail extends StatelessWidget {
                 ),
                 Padding(
                   padding: const EdgeInsets.only(bottom: Spacing.m),
-                  child: Image.network(
-                    sense.cover,
+                  child: NetworkImageContainer(
+                    imageUrl: sense.cover,
                     width: double.maxFinite,
                     height: 170,
-                    fit: BoxFit.cover,
-                    errorBuilder: (BuildContext context, Object exception,
-                        StackTrace? stackTrace) {
-                      return Image.asset(
-                        'statics/images/default.jpg',
-                        fit: BoxFit.cover,
-                        width: double.maxFinite,
-                        height: 170,
-                      );
-                    },
                   ),
                 ),
-                MarkdownBody(data: sense.content,),
+                MarkdownBody(
+                  data: sense.content,
+                  selectable: true,
+                  styleSheet: MarkdownStyleSheet(
+                    p: contentStyle
+                  ),
+                ),
               ],
             ),
           ),

@@ -31,7 +31,8 @@ class _WeatherState extends State<Weather> {
     return Stack(
       children: [
         WeatherBg(
-          weatherType: getWeatherTypeBy(now.text, now.icon),
+          // weatherType: getWeatherTypeBy(now.text, now.icon),
+          weatherType: WeatherType.sunny,
           width: screenWidth,
           height: screenHeight,
         ),

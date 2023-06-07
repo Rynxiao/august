@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_weather_bg/utils/weather_type.dart';
 
+import '../theme/colors.dart';
+
 WeatherType getWeatherTypeBy(String weatherText, String icon) {
   if (weatherText == '晴') {
     if (icon == '100') {
@@ -64,7 +66,7 @@ Color getIconColor(String weatherText) {
   if (weatherText == '晴') {
     return Colors.amber;
   } else if (weatherText.contains('云')) {
-    return const Color(0xFFD3D3D3);
+    return const Color(0xFFEEEEEE);
   } else if (weatherText.contains('雾')) {
     return const Color(0xFF3A4B65);
   } else if (weatherText.contains('霾')) {
@@ -74,4 +76,14 @@ Color getIconColor(String weatherText) {
   } else {
     return Colors.white;
   }
+}
+
+Color getTempColor(String temp) {
+  var tempInt = int.parse(temp);
+  if (tempInt > 30 && tempInt < 35) {
+    return AppColors.orangeRed;
+  } else if (tempInt >= 35) {
+    return Colors.red;
+  }
+  return Colors.white;
 }
