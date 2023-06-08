@@ -4,8 +4,10 @@ import 'package:lunar/calendar/Solar.dart';
 import 'package:simple_calendar/models/calendar/calendar_event.dart';
 
 import '../models/calendar/calendar_date.dart';
+import '../models/calendar/cycle_by.dart';
 import '../models/calendar/year_and_month.dart';
 import '../theme/colors.dart';
+import '../utils/date_utils.dart';
 
 String getLunarText(List<String> festivals, LunarDate lunar) {
   final solarTerm = lunar.solarTerm;
@@ -99,9 +101,9 @@ List<CalendarEvent> getDateEvents(
     var cycleBy = dateEvent.cycleBy;
 
     // 循环
-    if (isCycle == 1) {
+    if (isCycle == IsCycle.yes.value) {
       // 农历循环
-      if (cycleBy == 1) {
+      if (cycleBy == CycleBy.lunar.value) {
         var lunarDate = dateEvent.lunarDate;
         var lunar = date.lunar;
 
@@ -111,7 +113,7 @@ List<CalendarEvent> getDateEvents(
         // 公历循环
         var dateId = dateEvent.dateId;
         return dateId.substring(4, dateId.length) ==
-            '${date.month}${date.day}';
+            '${formatNumber(date.month)}${formatNumber(date.day)}';
       }
     } else {
       return dateEvent.lunarDate == date.lunar.date;
@@ -126,9 +128,9 @@ List<CalendarEvent> getDateEventsBy(
     var cycleBy = dateEvent.cycleBy;
 
     // 循环
-    if (isCycle == 1) {
+    if (isCycle == IsCycle.yes.value) {
       // 农历循环
-      if (cycleBy == 1) {
+      if (cycleBy == CycleBy.lunar.value) {
         var lunarDate = dateEvent.lunarDate;
 
         return lunarDate.substring(5, lunarDate.length) ==
@@ -137,7 +139,7 @@ List<CalendarEvent> getDateEventsBy(
         // 公历循环
         var dateId = dateEvent.dateId;
         return dateId.substring(4, dateId.length) ==
-            '${solar.getMonth()}${solar.getDay()}';
+            '${formatNumber(solar.getMonth())}${formatNumber(solar.getDay())}';
       }
     } else {
       return dateEvent.lunarDate == lunar.toString();
