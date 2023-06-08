@@ -74,7 +74,7 @@ FlashyTabBar renderBottomNavigationBar(
 void navigateTo(
   BuildContext context,
   String route, {
-  TransitionType transitionType = TransitionType.inFromRight,
+  TransitionType transitionType = TransitionType.cupertino,
   bool replace = false,
   bool clearStack = false,
   bool maintainState = true,
