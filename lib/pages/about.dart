@@ -10,7 +10,7 @@ class About extends StatelessWidget {
   Widget build(BuildContext context) {
     final themeData = Theme.of(context);
     var descriptionStyle = themeData.textTheme.bodyMedium?.copyWith(
-      fontSize: AppFontSize.large,
+      fontSize: AppFontSize.medium,
     );
 
     return Scaffold(
@@ -24,7 +24,7 @@ class About extends StatelessWidget {
           children: [
             Container(
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20.0),
+                borderRadius: BorderRadius.circular(Spacing.s),
                 color: themeData.colorScheme.background,
               ),
               padding: const EdgeInsets.symmetric(horizontal: Spacing.m),
@@ -40,7 +40,7 @@ class About extends StatelessWidget {
                       bottom: Spacing.xs,
                     ),
                     child: Text(
-                      '极简日历是由胡先生(Ryn)线下开发。',
+                      'App 八月 是由胡先生(Ryn)线下开发。',
                       style: descriptionStyle,
                     ),
                   ),

@@ -84,6 +84,7 @@ class _CommonSenseState extends State<CommonSense>
         ),
         Expanded(
           child: renderSenseList(
+            context,
             senseState.loading,
             senseState.error,
             senseState.senses,
@@ -108,6 +109,7 @@ class _CommonSenseState extends State<CommonSense>
 }
 
 Widget renderSenseList(
+  BuildContext context,
   bool loading,
   Object? error,
   List<sense.CommonSense> senses,
@@ -143,6 +145,15 @@ Widget renderSenseList(
               },
               itemCount: senses.length,
             ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: Spacing.m),
+              child: Text(
+                "~ 已经到底了 ~",
+                style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      fontSize: AppFontSize.regular,
+                    ),
+              ),
+            )
           ]),
         );
       } else {

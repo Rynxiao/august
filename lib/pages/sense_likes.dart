@@ -42,6 +42,7 @@ class _SenseLikesState extends State<SenseLikes> {
       backgroundColor: themeData.scaffoldBackgroundColor,
       body: SafeArea(
         child: renderSenseList(
+          context,
           senseState.loading,
           senseState.error,
           senseState.senses,
