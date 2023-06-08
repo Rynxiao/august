@@ -14,3 +14,7 @@ flutter clean && flutter pub get && flutter pub run flutter_native_splash:create
 # 安装release版本到app上
 flutter run --release --no-sound-null-safety
 ```
+
+### 后端repo
+
+[august-backend](https://github.com/Rynxiao/august-backend)
