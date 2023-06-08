@@ -21,7 +21,7 @@ class Settings extends StatelessWidget {
         children: [
           Container(
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20.0),
+              borderRadius: BorderRadius.circular(Spacing.s),
               color: themeData.colorScheme.background,
             ),
             margin: const EdgeInsets.all(Spacing.m),
@@ -62,7 +62,7 @@ class Settings extends StatelessWidget {
           ),
           Container(
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20.0),
+              borderRadius: BorderRadius.circular(Spacing.s),
               color: themeData.colorScheme.background,
             ),
             margin: const EdgeInsets.only(

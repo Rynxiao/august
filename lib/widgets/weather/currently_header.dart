@@ -43,6 +43,7 @@ class CurrentlyHeader extends StatelessWidget {
                   horizontal: 18,
                   vertical: 20,
                 ),
+                padding: const EdgeInsets.only(bottom: 20),
                 child: Center(
                   child: Text(
                     '${location.name} ${now.text} ${now.temp}°C',

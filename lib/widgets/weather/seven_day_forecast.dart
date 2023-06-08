@@ -6,6 +6,7 @@ import 'package:simple_calendar/models/weather/daily.dart';
 import 'package:simple_calendar/utils/date_utils.dart';
 
 import '../../states/weather_state.dart';
+import '../../theme/spacing.dart';
 
 class SevenDayForecast extends StatelessWidget {
   const SevenDayForecast({super.key});
@@ -17,7 +18,7 @@ class SevenDayForecast extends StatelessWidget {
 
     return Container(
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20.0),
+        borderRadius: BorderRadius.circular(Spacing.s),
         color: Colors.black.withOpacity(0.15),
       ),
       margin: const EdgeInsets.symmetric(

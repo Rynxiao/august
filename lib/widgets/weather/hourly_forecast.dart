@@ -6,6 +6,8 @@ import 'package:simple_calendar/models/weather/hourly.dart';
 import 'package:simple_calendar/states/weather_state.dart';
 import 'package:simple_calendar/utils/date_utils.dart';
 
+import '../../theme/spacing.dart';
+
 class HourlyForecast extends StatelessWidget {
   const HourlyForecast({super.key});
 
@@ -16,7 +18,7 @@ class HourlyForecast extends StatelessWidget {
 
     return Container(
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20.0),
+        borderRadius: BorderRadius.circular(Spacing.s),
         color: Colors.black.withOpacity(0.15),
       ),
       margin: const EdgeInsets.symmetric(

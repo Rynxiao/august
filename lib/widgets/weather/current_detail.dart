@@ -6,6 +6,7 @@ import 'package:weather_icons/weather_icons.dart';
 import '../../models/weather/now.dart';
 import '../../states/weather_state.dart';
 import '../../theme/colors.dart';
+import '../../theme/spacing.dart';
 
 class CurrentDetail extends StatelessWidget {
   const CurrentDetail({super.key});
@@ -34,7 +35,7 @@ class CurrentDetail extends StatelessWidget {
           return Container(
             decoration: BoxDecoration(
               color: Colors.black.withOpacity(0.15),
-              borderRadius: BorderRadius.circular(20.0),
+              borderRadius: BorderRadius.circular(Spacing.s),
             ),
             child: Center(
               child: Column(
@@ -49,22 +50,22 @@ class CurrentDetail extends StatelessWidget {
                         fallback: const IconData(0xf07b),
                       ),
                       color: AppColors.white,
-                      size: 46,
+                      size: 40,
                     ),
                   ),
                   Text(
                     item.name,
                     style: const TextStyle(
                       color: Colors.white,
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                      fontWeight: FontWeight.normal,
                     ),
                   ),
                   Text(
                     item.value,
                     style: const TextStyle(
                       color: Colors.white,
-                      fontSize: 16,
+                      fontSize: 14,
                     ),
                   )
                 ],
@@ -83,6 +84,6 @@ List<DailyItem> _buildWeatherDetailList(Now now) {
     DailyItem(iconName: 'wi-strong_wind', name: '风力等级', value: now.windScale),
     DailyItem(iconName: 'wi-humidity', name: '湿度', value: '${now.humidity}%'),
     DailyItem(iconName: 'wi-raindrops', name: '降水量', value: '${now.precip}cm/小时'),
-    DailyItem(iconName: 'wi-alien', name: '能见度', value: '${now.vis}/公里'),
+    DailyItem(iconName: 'wi-dust', name: '能见度', value: '${now.vis}/公里'),
   ];
 }
