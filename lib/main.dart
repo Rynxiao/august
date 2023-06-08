@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:provider/provider.dart';
+import 'package:simple_calendar/db/user_preference.dart';
 import 'package:simple_calendar/states/sense_state.dart';
 
 import 'routes/application.dart';
@@ -19,6 +20,9 @@ Future<void> main() async {
   final weatherState = WeatherState(position);
   await weatherState.getWeatherInfo();
 
+  var isDarkMode = await UserPreference.getThemeMode();
+  final globalState = GlobalState(isDarkMode);
+
   final calendarState = CalendarState();
   await calendarState.setDateEvents();
 
@@ -28,7 +32,7 @@ Future<void> main() async {
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (context) => GlobalState()),
+        ChangeNotifierProvider(create: (context) => globalState),
         ChangeNotifierProvider(create: (context) => calendarState),
         ChangeNotifierProvider(create: (context) => weatherState),
         ChangeNotifierProvider(create: (context) => senseState),
