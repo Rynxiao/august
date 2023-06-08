@@ -7,6 +7,7 @@ import 'package:simple_calendar/theme/fontsize.dart';
 import 'package:simple_calendar/theme/spacing.dart';
 import 'package:simple_calendar/widgets/custom_appbar.dart';
 
+import '../network/sense.dart';
 import '../states/global_state.dart';
 import '../utils/date_utils.dart';
 import '../widgets/network_image_container.dart';
@@ -57,13 +58,35 @@ class SenseDetail extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        typeName,
-                        style: descriptionStyle,
-                      ),
-                      Text(
-                        formatDateString(sense.updatedAt),
-                        style: descriptionStyle,
+                      Row(crossAxisAlignment: CrossAxisAlignment.center,children: [
+                        Padding(
+                          padding: const EdgeInsets.only(right: Spacing.m),
+                          child: Text(
+                            typeName,
+                            style: descriptionStyle,
+                          ),
+                        ),
+                        Text(
+                          formatDateString(sense.updatedAt),
+                          style: descriptionStyle,
+                        ),
+                      ],),
+
+                      IconButton(
+                        onPressed: () async {
+                          await addToLikes(
+                            sense.id,
+                            sense.liked == 0 ? 1 : 0,
+                          );
+                          senseState.toggleLike(sense);
+                        },
+                        icon: Icon(
+                          Icons.favorite,
+                          size: Spacing.l,
+                          color: sense.liked == 1
+                              ? themeData.highlightColor
+                              : themeData.colorScheme.surface,
+                        ),
                       ),
                     ],
                   ),
