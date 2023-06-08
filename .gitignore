@@ -328,3 +328,5 @@ lint/tmp/
 # Android Profiling
 *.hprof
 
+.env
+
